@@ -14,13 +14,5 @@
     "geographic_levels": ["State", "Mountain West", "US"],
     "source_systems": ["CDC BRFSS"],
     "last_observed_at": "2026-03-25T08:17:00-06:00"
-  },
-  {
-    "source_id": "utah-cancer-registry",
-    "display_name": "Utah Cancer Registry",
-    "available_years": [2011, 2012, 2014],
-    "geographic_levels": ["County", "State"],
-    "source_systems": ["Utah Cancer Registry"],
-    "last_observed_at": "2026-03-25T08:18:00-06:00"
   }
 ]
