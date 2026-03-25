@@ -1,0 +1,360 @@
+[
+  {
+    "source_id": "brfss",
+    "display_name": "BRFSS",
+    "short_description": "Behavioral Risk Factor Surveillance System.",
+    "source_type": "Public survey",
+    "update_frequency": "Annual",
+    "domains": [
+      "Breast cancer screening",
+      "Cervical cancer screening",
+      "Colorectal cancer screening",
+      "General health",
+      "Health care access",
+      "Insurance for cancer patients",
+      "Lung cancer screening"
+    ],
+    "geographic_levels": [
+      "Mountain West",
+      "State",
+      "US"
+    ],
+    "available_years": [
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "year_start": 2022,
+    "year_end": 2025,
+    "year_notes": "Coverage varies by geography and by domain across years.",
+    "source_systems": [
+      "CDC BRFSS"
+    ],
+    "provenance": {
+      "available_years": {
+        "source": "database",
+        "detail": "observed metadata",
+        "timestamp": "2026-03-25T08:17:00-06:00"
+      },
+      "caveats": {
+        "source": "manual",
+        "detail": "reviewed registry",
+        "timestamp": "2026-03-25"
+      },
+      "confidence": {
+        "source": "manual",
+        "detail": "reviewed registry",
+        "timestamp": "2026-03-25"
+      },
+      "display_name": {
+        "source": "manual",
+        "detail": "reviewed registry",
+        "timestamp": "2026-03-25"
+      },
+      "domains": {
+        "source": "manual",
+        "detail": "reviewed registry",
+        "timestamp": "2026-03-25"
+      },
+      "geographic_levels": {
+        "source": "database",
+        "detail": "observed metadata",
+        "timestamp": "2026-03-25T08:17:00-06:00"
+      },
+      "last_observed_at": {
+        "source": "database",
+        "detail": "observed metadata",
+        "timestamp": "2026-03-25T08:17:00-06:00"
+      },
+      "last_reviewed_at": {
+        "source": "manual",
+        "detail": "reviewed registry",
+        "timestamp": "2026-03-25"
+      },
+      "notes": {
+        "source": "manual",
+        "detail": "reviewed registry",
+        "timestamp": "2026-03-25"
+      },
+      "review_status": {
+        "source": "manual",
+        "detail": "reviewed registry",
+        "timestamp": "2026-03-25"
+      },
+      "short_description": {
+        "source": "manual",
+        "detail": "reviewed registry",
+        "timestamp": "2026-03-25"
+      },
+      "source_documents": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "source_systems": {
+        "source": "database",
+        "detail": "observed metadata",
+        "timestamp": "2026-03-25T08:17:00-06:00"
+      },
+      "source_type": {
+        "source": "manual",
+        "detail": "reviewed registry",
+        "timestamp": "2026-03-25"
+      },
+      "update_frequency": {
+        "source": "manual",
+        "detail": "reviewed registry",
+        "timestamp": "2026-03-25"
+      },
+      "year_end": {
+        "source": "database",
+        "detail": "observed metadata",
+        "timestamp": "2026-03-25T08:17:00-06:00"
+      },
+      "year_notes": {
+        "source": "manual",
+        "detail": "reviewed registry",
+        "timestamp": "2026-03-25"
+      },
+      "year_start": {
+        "source": "database",
+        "detail": "observed metadata",
+        "timestamp": "2026-03-25T08:17:00-06:00"
+      }
+    },
+    "confidence": "medium",
+    "review_status": "reviewed",
+    "last_observed_at": "2026-03-25T08:17:00-06:00",
+    "last_reviewed_at": "2026-03-25",
+    "notes": [
+      "The reviewed registry keeps SHAPE-facing domain labels even when the import source uses denser spreadsheet terminology."
+    ],
+    "caveats": [
+      "Not every geography is available for every year in the published SHAPE extracts."
+    ],
+    "source_documents": [
+      {
+        "name": "BRFSS codebook",
+        "type": "codebook",
+        "stale": true,
+        "last_updated": "2024-01-15"
+      }
+    ]
+  },
+  {
+    "source_id": "internal-hci-data",
+    "display_name": "Internal HCI Data",
+    "short_description": "Patient data for all HCI, HCI Registry, and treatment trials.",
+    "source_type": "Internal clinical source",
+    "update_frequency": "Pulled nightly, extracted annually",
+    "domains": [
+      "Cancer diagnosis",
+      "Cancer stage/grade",
+      "Health care access",
+      "Insurance",
+      "Race/Ethnicity",
+      "Rurality"
+    ],
+    "geographic_levels": [
+      "Mountain West",
+      "State",
+      "Zip code"
+    ],
+    "available_years": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "year_start": 2019,
+    "year_end": 2025,
+    "year_notes": "Live data also contains the current year and pre-2019 records, but direct use of the live layer is not typical for SHAPE reporting.",
+    "source_systems": [
+      "HCI Registry",
+      "Treatment Trials"
+    ],
+    "provenance": {
+      "available_years": {
+        "source": "database",
+        "detail": "observed metadata",
+        "timestamp": "2026-03-25T08:15:00-06:00"
+      },
+      "caveats": {
+        "source": "manual",
+        "detail": "reviewed registry",
+        "timestamp": "2026-03-25"
+      },
+      "confidence": {
+        "source": "manual",
+        "detail": "reviewed registry",
+        "timestamp": "2026-03-25"
+      },
+      "display_name": {
+        "source": "manual",
+        "detail": "reviewed registry",
+        "timestamp": "2026-03-25"
+      },
+      "domains": {
+        "source": "manual",
+        "detail": "reviewed registry",
+        "timestamp": "2026-03-25"
+      },
+      "geographic_levels": {
+        "source": "database",
+        "detail": "observed metadata",
+        "timestamp": "2026-03-25T08:15:00-06:00"
+      },
+      "last_observed_at": {
+        "source": "database",
+        "detail": "observed metadata",
+        "timestamp": "2026-03-25T08:15:00-06:00"
+      },
+      "last_reviewed_at": {
+        "source": "manual",
+        "detail": "reviewed registry",
+        "timestamp": "2026-03-25"
+      },
+      "notes": {
+        "source": "manual",
+        "detail": "reviewed registry",
+        "timestamp": "2026-03-25"
+      },
+      "review_status": {
+        "source": "manual",
+        "detail": "reviewed registry",
+        "timestamp": "2026-03-25"
+      },
+      "short_description": {
+        "source": "manual",
+        "detail": "reviewed registry",
+        "timestamp": "2026-03-25"
+      },
+      "source_documents": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "source_systems": {
+        "source": "database",
+        "detail": "observed metadata",
+        "timestamp": "2026-03-25T08:15:00-06:00"
+      },
+      "source_type": {
+        "source": "manual",
+        "detail": "reviewed registry",
+        "timestamp": "2026-03-25"
+      },
+      "update_frequency": {
+        "source": "manual",
+        "detail": "reviewed registry",
+        "timestamp": "2026-03-25"
+      },
+      "year_end": {
+        "source": "database",
+        "detail": "observed metadata",
+        "timestamp": "2026-03-25T08:15:00-06:00"
+      },
+      "year_notes": {
+        "source": "manual",
+        "detail": "reviewed registry",
+        "timestamp": "2026-03-25"
+      },
+      "year_start": {
+        "source": "database",
+        "detail": "observed metadata",
+        "timestamp": "2026-03-25T08:15:00-06:00"
+      }
+    },
+    "confidence": "high",
+    "review_status": "reviewed",
+    "last_observed_at": "2026-03-25T08:15:00-06:00",
+    "last_reviewed_at": "2026-03-25",
+    "notes": [
+      "Domains listed here reflect SHAPE usage rather than the source's full variable inventory."
+    ],
+    "caveats": [
+      "Older years can be extracted on request if a project requires them."
+    ],
+    "source_documents": [
+      {
+        "name": "HCI extract worksheet",
+        "type": "spreadsheet",
+        "stale": false
+      }
+    ]
+  },
+  {
+    "source_id": "utah-cancer-registry",
+    "display_name": "Utah Cancer Registry",
+    "short_description": "",
+    "source_type": "",
+    "update_frequency": "",
+    "domains": [],
+    "geographic_levels": [
+      "County",
+      "State"
+    ],
+    "available_years": [
+      2011,
+      2012,
+      2014
+    ],
+    "year_start": 2011,
+    "year_end": 2014,
+    "year_notes": "",
+    "source_systems": [
+      "Utah Cancer Registry"
+    ],
+    "provenance": {
+      "available_years": {
+        "source": "database",
+        "detail": "observed metadata",
+        "timestamp": "2026-03-25T08:18:00-06:00"
+      },
+      "display_name": {
+        "source": "database",
+        "detail": "observed metadata",
+        "timestamp": "2026-03-25T08:18:00-06:00"
+      },
+      "geographic_levels": {
+        "source": "database",
+        "detail": "observed metadata",
+        "timestamp": "2026-03-25T08:18:00-06:00"
+      },
+      "last_observed_at": {
+        "source": "database",
+        "detail": "observed metadata",
+        "timestamp": "2026-03-25T08:18:00-06:00"
+      },
+      "review_status": {
+        "source": "database",
+        "detail": "observed metadata",
+        "timestamp": "2026-03-25T08:18:00-06:00"
+      },
+      "source_systems": {
+        "source": "database",
+        "detail": "observed metadata",
+        "timestamp": "2026-03-25T08:18:00-06:00"
+      },
+      "year_end": {
+        "source": "database",
+        "detail": "observed metadata",
+        "timestamp": "2026-03-25T08:18:00-06:00"
+      },
+      "year_start": {
+        "source": "database",
+        "detail": "observed metadata",
+        "timestamp": "2026-03-25T08:18:00-06:00"
+      }
+    },
+    "confidence": "",
+    "review_status": "draft",
+    "last_observed_at": "2026-03-25T08:18:00-06:00",
+    "last_reviewed_at": "",
+    "notes": [],
+    "caveats": [],
+    "source_documents": []
+  }
+]

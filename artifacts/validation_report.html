@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>SHAPE Validation Report</title>
+  <style>
+    body {
+      font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+      margin: 32px;
+      color: #182229;
+      background: linear-gradient(180deg, #f7f1e8 0%, #fdfcf9 100%);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fffef8;
+      border: 1px solid #d9d0c2;
+    }
+    th, td {
+      text-align: left;
+      padding: 12px;
+      border-bottom: 1px solid #ece1d0;
+      vertical-align: top;
+    }
+    th {
+      background: #fff4df;
+    }
+    code {
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <h1>SHAPE Validation Report</h1>
+  <p>Generated 2026-03-25T10:04:06-06:00.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Severity</th>
+        <th>Code</th>
+        <th>Source</th>
+        <th>Field</th>
+        <th>Message</th>
+        <th>Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>info</td><td>stale_codebook</td><td>brfss</td><td>source_documents</td><td>A referenced codebook or source document is marked as stale.</td><td><code>{&quot;last_updated&quot;: &quot;2024-01-15&quot;, &quot;name&quot;: &quot;BRFSS codebook&quot;, &quot;stale&quot;: true, &quot;type&quot;: &quot;codebook&quot;}</code></td></tr>
+<tr><td>info</td><td>needs_review</td><td>utah-cancer-registry</td><td>review_status</td><td>Source is not yet marked as reviewed.</td><td><code>{&quot;review_status&quot;: &quot;draft&quot;}</code></td></tr>
+<tr><td>info</td><td>non_contiguous_years</td><td>utah-cancer-registry</td><td>available_years</td><td>Available years are non-contiguous.</td><td><code>{&quot;available_years&quot;: [2011, 2012, 2014]}</code></td></tr>
+<tr><td>warning</td><td>domain_mismatch</td><td>brfss</td><td>domains</td><td>Imported domains differ from the reviewed registry.</td><td><code>{&quot;imported&quot;: [&quot;Breast cancer screening&quot;, &quot;Cervical cancer screening&quot;, &quot;Colorectal cancer screening&quot;, &quot;General health&quot;, &quot;Health care access&quot;, &quot;Insurance&quot;, &quot;Lung cancer screening&quot;, &quot;Smoking&quot;], &quot;reviewed&quot;: [&quot;Breast cancer screening&quot;, &quot;Cervical cancer screening&quot;, &quot;Colorectal cancer screening&quot;, &quot;General health&quot;, &quot;Health care access&quot;, &quot;Insurance for cancer patients&quot;, &quot;Lung cancer screening&quot;]}</code></td></tr>
+<tr><td>warning</td><td>observed_year_drift</td><td>brfss</td><td>available_years</td><td>Observed years differ from the reviewed registry.</td><td><code>{&quot;observed&quot;: [2022, 2023, 2024, 2025], &quot;reviewed&quot;: [2022, 2023, 2024]}</code></td></tr>
+<tr><td>warning</td><td>observed_year_drift</td><td>internal-hci-data</td><td>available_years</td><td>Observed years differ from the reviewed registry.</td><td><code>{&quot;observed&quot;: [2019, 2020, 2021, 2022, 2023, 2024, 2025], &quot;reviewed&quot;: [2019, 2020, 2021, 2022, 2023, 2024]}</code></td></tr>
+<tr><td>warning</td><td>missing_reviewed_registry_entry</td><td>utah-cancer-registry</td><td></td><td>Source was observed or imported but is missing from the reviewed registry.</td><td><code>{}</code></td></tr>
+    </tbody>
+  </table>
+</body>
+</html>

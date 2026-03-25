@@ -1,0 +1,121 @@
+[
+  {
+    "code": "stale_codebook",
+    "severity": "info",
+    "source_id": "brfss",
+    "message": "A referenced codebook or source document is marked as stale.",
+    "field": "source_documents",
+    "details": {
+      "name": "BRFSS codebook",
+      "type": "codebook",
+      "stale": true,
+      "last_updated": "2024-01-15"
+    }
+  },
+  {
+    "code": "needs_review",
+    "severity": "info",
+    "source_id": "utah-cancer-registry",
+    "message": "Source is not yet marked as reviewed.",
+    "field": "review_status",
+    "details": {
+      "review_status": "draft"
+    }
+  },
+  {
+    "code": "non_contiguous_years",
+    "severity": "info",
+    "source_id": "utah-cancer-registry",
+    "message": "Available years are non-contiguous.",
+    "field": "available_years",
+    "details": {
+      "available_years": [
+        2011,
+        2012,
+        2014
+      ]
+    }
+  },
+  {
+    "code": "domain_mismatch",
+    "severity": "warning",
+    "source_id": "brfss",
+    "message": "Imported domains differ from the reviewed registry.",
+    "field": "domains",
+    "details": {
+      "imported": [
+        "Breast cancer screening",
+        "Cervical cancer screening",
+        "Colorectal cancer screening",
+        "General health",
+        "Health care access",
+        "Insurance",
+        "Lung cancer screening",
+        "Smoking"
+      ],
+      "reviewed": [
+        "Breast cancer screening",
+        "Cervical cancer screening",
+        "Colorectal cancer screening",
+        "General health",
+        "Health care access",
+        "Insurance for cancer patients",
+        "Lung cancer screening"
+      ]
+    }
+  },
+  {
+    "code": "observed_year_drift",
+    "severity": "warning",
+    "source_id": "brfss",
+    "message": "Observed years differ from the reviewed registry.",
+    "field": "available_years",
+    "details": {
+      "observed": [
+        2022,
+        2023,
+        2024,
+        2025
+      ],
+      "reviewed": [
+        2022,
+        2023,
+        2024
+      ]
+    }
+  },
+  {
+    "code": "observed_year_drift",
+    "severity": "warning",
+    "source_id": "internal-hci-data",
+    "message": "Observed years differ from the reviewed registry.",
+    "field": "available_years",
+    "details": {
+      "observed": [
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025
+      ],
+      "reviewed": [
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024
+      ]
+    }
+  },
+  {
+    "code": "missing_reviewed_registry_entry",
+    "severity": "warning",
+    "source_id": "utah-cancer-registry",
+    "message": "Source was observed or imported but is missing from the reviewed registry.",
+    "field": null,
+    "details": {}
+  }
+]

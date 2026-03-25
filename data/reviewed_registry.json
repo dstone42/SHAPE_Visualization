@@ -1,0 +1,72 @@
+[
+  {
+    "source_id": "internal-hci-data",
+    "display_name": "Internal HCI Data",
+    "short_description": "Patient data for all HCI, HCI Registry, and treatment trials.",
+    "source_type": "Internal clinical source",
+    "update_frequency": "Pulled nightly, extracted annually",
+    "domains": [
+      "Cancer diagnosis",
+      "Cancer stage/grade",
+      "Health care access",
+      "Insurance",
+      "Race/Ethnicity",
+      "Rurality"
+    ],
+    "geographic_levels": [
+      "Mountain West",
+      "State",
+      "Zip code"
+    ],
+    "available_years": [2019, 2020, 2021, 2022, 2023, 2024],
+    "year_notes": "Live data also contains the current year and pre-2019 records, but direct use of the live layer is not typical for SHAPE reporting.",
+    "source_systems": [
+      "HCI Registry",
+      "Treatment Trials"
+    ],
+    "confidence": "high",
+    "review_status": "reviewed",
+    "last_reviewed_at": "2026-03-25",
+    "notes": [
+      "Domains listed here reflect SHAPE usage rather than the source's full variable inventory."
+    ],
+    "caveats": [
+      "Older years can be extracted on request if a project requires them."
+    ]
+  },
+  {
+    "source_id": "brfss",
+    "display_name": "BRFSS",
+    "short_description": "Behavioral Risk Factor Surveillance System.",
+    "source_type": "Public survey",
+    "update_frequency": "Annual",
+    "domains": [
+      "Breast cancer screening",
+      "Cervical cancer screening",
+      "Colorectal cancer screening",
+      "General health",
+      "Health care access",
+      "Insurance for cancer patients",
+      "Lung cancer screening"
+    ],
+    "geographic_levels": [
+      "Mountain West",
+      "State",
+      "US"
+    ],
+    "available_years": [2022, 2023, 2024],
+    "year_notes": "Coverage varies by geography and by domain across years.",
+    "source_systems": [
+      "CDC BRFSS"
+    ],
+    "confidence": "medium",
+    "review_status": "reviewed",
+    "last_reviewed_at": "2026-03-25",
+    "notes": [
+      "The reviewed registry keeps SHAPE-facing domain labels even when the import source uses denser spreadsheet terminology."
+    ],
+    "caveats": [
+      "Not every geography is available for every year in the published SHAPE extracts."
+    ]
+  }
+]

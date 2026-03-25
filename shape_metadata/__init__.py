@@ -1,0 +1,2 @@
+"""SHAPE metadata pipeline package."""
+

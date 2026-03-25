@@ -1,0 +1,103 @@
+[
+  {
+    "source_id": "internal-hci-data",
+    "display_name": "Internal HCI Data",
+    "short_description": "",
+    "source_type": "",
+    "update_frequency": "",
+    "domains": [],
+    "geographic_levels": [
+      "Mountain West",
+      "State",
+      "Zip code"
+    ],
+    "available_years": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "year_start": 2019,
+    "year_end": 2025,
+    "year_notes": "",
+    "source_systems": [
+      "HCI Registry",
+      "Treatment Trials"
+    ],
+    "provenance": {},
+    "confidence": "",
+    "review_status": "draft",
+    "last_observed_at": "2026-03-25T08:15:00-06:00",
+    "last_reviewed_at": "",
+    "notes": [],
+    "caveats": [],
+    "source_documents": []
+  },
+  {
+    "source_id": "brfss",
+    "display_name": "BRFSS",
+    "short_description": "",
+    "source_type": "",
+    "update_frequency": "",
+    "domains": [],
+    "geographic_levels": [
+      "Mountain West",
+      "State",
+      "US"
+    ],
+    "available_years": [
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "year_start": 2022,
+    "year_end": 2025,
+    "year_notes": "",
+    "source_systems": [
+      "CDC BRFSS"
+    ],
+    "provenance": {},
+    "confidence": "",
+    "review_status": "draft",
+    "last_observed_at": "2026-03-25T08:17:00-06:00",
+    "last_reviewed_at": "",
+    "notes": [],
+    "caveats": [],
+    "source_documents": []
+  },
+  {
+    "source_id": "utah-cancer-registry",
+    "display_name": "Utah Cancer Registry",
+    "short_description": "",
+    "source_type": "",
+    "update_frequency": "",
+    "domains": [],
+    "geographic_levels": [
+      "County",
+      "State"
+    ],
+    "available_years": [
+      2011,
+      2012,
+      2014
+    ],
+    "year_start": 2011,
+    "year_end": 2014,
+    "year_notes": "",
+    "source_systems": [
+      "Utah Cancer Registry"
+    ],
+    "provenance": {},
+    "confidence": "",
+    "review_status": "draft",
+    "last_observed_at": "2026-03-25T08:18:00-06:00",
+    "last_reviewed_at": "",
+    "notes": [],
+    "caveats": [],
+    "source_documents": []
+  }
+]

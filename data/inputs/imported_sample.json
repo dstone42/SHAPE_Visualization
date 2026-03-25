@@ -1,0 +1,61 @@
+[
+  {
+    "source_id": "internal-hci-data",
+    "display_name": "Internal HCI Data",
+    "short_description": "Patient data inventory maintained for HCI treatment, registry, and reporting workflows.",
+    "source_type": "Internal clinical source",
+    "update_frequency": "Annual extract from nightly feed",
+    "domains": [
+      "Cancer diagnosis",
+      "Cancer stage/grade",
+      "Health care access",
+      "Insurance",
+      "Race/Ethnicity",
+      "Rurality"
+    ],
+    "geographic_levels": ["Zip code", "State", "Mountain West"],
+    "available_years": [2019, 2020, 2021, 2022, 2023, 2024, 2025],
+    "year_notes": "Spreadsheet documentation tracks the annual SHAPE extract window.",
+    "source_documents": [
+      {
+        "name": "HCI extract worksheet",
+        "type": "spreadsheet",
+        "stale": false
+      }
+    ],
+    "notes": [
+      "Spreadsheet entry reflects the current annual extract process."
+    ]
+  },
+  {
+    "source_id": "brfss",
+    "display_name": "BRFSS",
+    "short_description": "Behavioral Risk Factor Surveillance System.",
+    "source_type": "Public survey",
+    "update_frequency": "Annual",
+    "domains": [
+      "Breast cancer screening",
+      "Cervical cancer screening",
+      "Colorectal cancer screening",
+      "General health",
+      "Health care access",
+      "Insurance",
+      "Lung cancer screening",
+      "Smoking"
+    ],
+    "geographic_levels": ["State", "US"],
+    "available_years": [2022, 2023, 2024, 2025],
+    "year_notes": "Imported spreadsheet omits the Mountain West rollup in some rows.",
+    "source_documents": [
+      {
+        "name": "BRFSS codebook",
+        "type": "codebook",
+        "stale": true,
+        "last_updated": "2024-01-15"
+      }
+    ],
+    "notes": [
+      "Spreadsheet terminology combines insurance access and general coverage measures."
+    ]
+  }
+]
