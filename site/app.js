@@ -22,8 +22,8 @@ async function boot() {
   }
   state.dataset = dataset;
   renderShell(dataset);
-  bindControls();
   renderFilters(dataset.records);
+  bindControls();
   renderResults();
 }
 
@@ -41,6 +41,22 @@ function bindControls() {
       });
       renderResults();
     });
+  });
+
+  document.getElementById("clearFilters").addEventListener("click", () => {
+    clearAllFilters();
+  });
+
+  const filterDrawer = document.getElementById("filterDrawer");
+  document.addEventListener("click", (event) => {
+    if (filterDrawer.open && !filterDrawer.contains(event.target)) {
+      filterDrawer.open = false;
+    }
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      filterDrawer.open = false;
+    }
   });
 }
 
@@ -113,6 +129,7 @@ function renderFilters(records) {
 
 function renderResults() {
   const records = state.dataset.records.filter(matchesFilters);
+  renderToolbarStatus(records.length, state.dataset.records.length);
 
   const cardRoot = document.getElementById("cardView");
   const tableRoot = document.getElementById("tableView");
@@ -129,6 +146,46 @@ function renderResults() {
 
   cardRoot.innerHTML = records.map(renderCard).join("");
   tableRoot.innerHTML = renderTable(records);
+}
+
+function clearAllFilters() {
+  Object.values(state.filters).forEach((bucket) => bucket.clear());
+  document.querySelectorAll(".chip.is-active").forEach((chip) => chip.classList.remove("is-active"));
+  renderResults();
+}
+
+function renderToolbarStatus(resultCount, totalCount) {
+  const selectedCount = countSelectedFilters();
+  const selectedGroups = Object.values(state.filters).filter((bucket) => bucket.size > 0).length;
+  const refinements = [];
+
+  if (state.search) {
+    refinements.push("a search term");
+  }
+  if (selectedCount > 0) {
+    refinements.push(`${selectedCount} active filter${selectedCount === 1 ? "" : "s"}`);
+  }
+
+  const resultsMeta = document.getElementById("resultsMeta");
+  resultsMeta.textContent =
+    `Showing ${resultCount} of ${totalCount} sources` +
+    `${refinements.length ? ` with ${refinements.join(" and ")}` : ""}.`;
+
+  const countBadge = document.getElementById("activeFilterCount");
+  countBadge.textContent = String(selectedCount);
+  countBadge.classList.toggle("hidden", selectedCount === 0);
+
+  const clearButton = document.getElementById("clearFilters");
+  clearButton.disabled = selectedCount === 0;
+
+  const filterSummary = document.getElementById("filterSummary");
+  filterSummary.textContent = selectedCount === 0
+    ? "Keep the main view focused, then open filters when you need to narrow by domain, geography, update cadence, source type, or review status."
+    : `${selectedCount} filter${selectedCount === 1 ? "" : "s"} selected across ${selectedGroups} filter ${selectedGroups === 1 ? "group" : "groups"}.`;
+}
+
+function countSelectedFilters() {
+  return Object.values(state.filters).reduce((total, bucket) => total + bucket.size, 0);
 }
 
 function matchesFilters(record) {

@@ -10,36 +10,63 @@
   <main class="page-shell">
     <section class="hero">
       <p class="eyebrow">SHAPE Metadata Atlas</p>
-      <h1>Data source coverage, freshness, and provenance in one place.</h1>
+      <h1>SHAPE data source domains, freshness, and geographies.</h1>
       <p class="hero-copy">
-        This site is generated from the SHAPE metadata pipeline. Filters and source cards are built directly
-        from the published dataset so the interface stays aligned with the underlying registry.
+        Pulls metadata from multiple sources to provide an updated view of the data in SHAPE, what domains are covered, 
+        what geographic levels are included, and how frequently sources are updated.
       </p>
       <dl class="hero-stats" id="heroStats"></dl>
-      <p class="stamp">Generated <span id="generatedAt">2026-03-25T10:04:06-06:00</span></p>
+      <p class="stamp">Updated <span id="generatedAt">2026-03-25T16:06:44-06:00</span></p>
     </section>
-
-    <section class="controls">
-      <div class="control-group">
-        <label for="searchInput">Search</label>
-        <input id="searchInput" type="search" placeholder="Filter by source, notes, or domain">
-      </div>
-      <div class="view-toggle">
-        <button type="button" data-view="cards" class="is-active">Cards</button>
-        <button type="button" data-view="table">Table</button>
-      </div>
-    </section>
-
-    <section class="filters" id="filters"></section>
 
     <section class="summary-strip" id="warningStrip"></section>
+
+    <section class="controls">
+      <div class="controls-top">
+        <div class="control-heading">
+          <label for="searchInput">Search</label>
+          <p class="results-meta" id="resultsMeta"></p>
+        </div>
+        <div class="view-switcher">
+          <p class="view-label">View</p>
+          <div class="view-toggle">
+            <button type="button" data-view="cards" class="is-active">Cards</button>
+            <button type="button" data-view="table">Table</button>
+          </div>
+        </div>
+      </div>
+      <div class="search-row">
+        <div class="control-group">
+          <input id="searchInput" type="search" placeholder="Filter by source, notes, or domain">
+        </div>
+        <div class="toolbar-actions">
+          <details class="filter-drawer filter-drawer--inline" id="filterDrawer">
+            <summary>
+              <span>Refine Results</span>
+              <span class="filter-count hidden" id="activeFilterCount"></span>
+            </summary>
+            <div class="filter-drawer__panel">
+              <div class="filter-drawer__header">
+                <div>
+                  <p class="eyebrow">Refine Results</p>
+                  <h2>Filter sources</h2>
+                </div>
+                <button type="button" class="text-button" id="clearFilters">Clear all</button>
+              </div>
+              <p class="filter-summary" id="filterSummary"></p>
+              <section class="filters" id="filters"></section>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
 
     <section id="cardView" class="card-grid" aria-live="polite"></section>
     <section id="tableView" class="table-shell hidden" aria-live="polite"></section>
   </main>
 
   <script id="shapeMetadata" type="application/json">{
-  "generated_at": "2026-03-25T10:04:06-06:00",
+  "generated_at": "2026-03-25T16:06:44-06:00",
   "records": [
     {
       "source_id": "brfss",
@@ -326,78 +353,6 @@
           "stale": false
         }
       ]
-    },
-    {
-      "source_id": "utah-cancer-registry",
-      "display_name": "Utah Cancer Registry",
-      "short_description": "",
-      "source_type": "",
-      "update_frequency": "",
-      "domains": [],
-      "geographic_levels": [
-        "County",
-        "State"
-      ],
-      "available_years": [
-        2011,
-        2012,
-        2014
-      ],
-      "year_start": 2011,
-      "year_end": 2014,
-      "year_notes": "",
-      "source_systems": [
-        "Utah Cancer Registry"
-      ],
-      "provenance": {
-        "available_years": {
-          "source": "database",
-          "detail": "observed metadata",
-          "timestamp": "2026-03-25T08:18:00-06:00"
-        },
-        "display_name": {
-          "source": "database",
-          "detail": "observed metadata",
-          "timestamp": "2026-03-25T08:18:00-06:00"
-        },
-        "geographic_levels": {
-          "source": "database",
-          "detail": "observed metadata",
-          "timestamp": "2026-03-25T08:18:00-06:00"
-        },
-        "last_observed_at": {
-          "source": "database",
-          "detail": "observed metadata",
-          "timestamp": "2026-03-25T08:18:00-06:00"
-        },
-        "review_status": {
-          "source": "database",
-          "detail": "observed metadata",
-          "timestamp": "2026-03-25T08:18:00-06:00"
-        },
-        "source_systems": {
-          "source": "database",
-          "detail": "observed metadata",
-          "timestamp": "2026-03-25T08:18:00-06:00"
-        },
-        "year_end": {
-          "source": "database",
-          "detail": "observed metadata",
-          "timestamp": "2026-03-25T08:18:00-06:00"
-        },
-        "year_start": {
-          "source": "database",
-          "detail": "observed metadata",
-          "timestamp": "2026-03-25T08:18:00-06:00"
-        }
-      },
-      "confidence": "",
-      "review_status": "draft",
-      "last_observed_at": "2026-03-25T08:18:00-06:00",
-      "last_reviewed_at": "",
-      "notes": [],
-      "caveats": [],
-      "source_documents": []
     }
   ],
   "warnings": [
@@ -412,30 +367,6 @@
         "type": "codebook",
         "stale": true,
         "last_updated": "2024-01-15"
-      }
-    },
-    {
-      "code": "needs_review",
-      "severity": "info",
-      "source_id": "utah-cancer-registry",
-      "message": "Source is not yet marked as reviewed.",
-      "field": "review_status",
-      "details": {
-        "review_status": "draft"
-      }
-    },
-    {
-      "code": "non_contiguous_years",
-      "severity": "info",
-      "source_id": "utah-cancer-registry",
-      "message": "Available years are non-contiguous.",
-      "field": "available_years",
-      "details": {
-        "available_years": [
-          2011,
-          2012,
-          2014
-        ]
       }
     },
     {
@@ -511,14 +442,6 @@
           2024
         ]
       }
-    },
-    {
-      "code": "missing_reviewed_registry_entry",
-      "severity": "warning",
-      "source_id": "utah-cancer-registry",
-      "message": "Source was observed or imported but is missing from the reviewed registry.",
-      "field": null,
-      "details": {}
     }
   ]
 }</script>

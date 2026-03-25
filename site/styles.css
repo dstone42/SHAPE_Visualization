@@ -34,7 +34,6 @@ body {
 
 .hero,
 .controls,
-.filters,
 .summary-strip,
 .table-shell {
   background: var(--panel);
@@ -58,7 +57,7 @@ body {
 
 .hero h1 {
   margin: 0;
-  max-width: 12ch;
+  max-width: 20ch;
   font-size: clamp(2.4rem, 5vw, 4.4rem);
   line-height: 0.95;
 }
@@ -105,21 +104,33 @@ body {
 .controls {
   margin-top: 20px;
   padding: 20px 24px;
+  display: grid;
+  gap: 14px;
+}
+
+.controls-top,
+.search-row {
   display: flex;
-  gap: 16px;
-  justify-content: space-between;
   align-items: end;
+  justify-content: space-between;
+  gap: 16px;
   flex-wrap: wrap;
 }
 
-.control-group {
-  flex: 1 1 360px;
+.control-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.control-group label {
+.control-heading label {
   display: block;
-  margin-bottom: 8px;
   font-weight: 600;
+}
+
+.control-group {
+  min-width: 0;
+  flex: 1 1 460px;
 }
 
 .control-group input {
@@ -131,13 +142,43 @@ body {
   font: inherit;
 }
 
+.results-meta {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.94rem;
+  line-height: 1.4;
+}
+
+.toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.view-switcher {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.view-label {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
 .view-toggle {
   display: inline-flex;
   gap: 8px;
 }
 
 .view-toggle button,
-.chip {
+.chip,
+.filter-drawer summary {
   border: 1px solid var(--line);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.8);
@@ -145,6 +186,93 @@ body {
   padding: 10px 14px;
   font: inherit;
   cursor: pointer;
+}
+
+.filter-drawer {
+  position: relative;
+}
+
+.filter-drawer--inline summary {
+  min-height: 48px;
+  padding-inline: 16px;
+  background: rgba(214, 236, 235, 0.45);
+  border-color: rgba(0, 95, 115, 0.14);
+}
+
+.filter-drawer summary {
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-drawer summary::-webkit-details-marker {
+  display: none;
+}
+
+.filter-drawer[open] summary {
+  background: var(--accent-soft);
+  border-color: rgba(0, 95, 115, 0.16);
+  color: var(--accent);
+}
+
+.filter-count {
+  min-width: 1.5rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.filter-drawer__panel {
+  position: absolute;
+  top: calc(100% + 14px);
+  right: 0;
+  width: min(540px, calc(100vw - 56px));
+  max-height: min(70vh, 720px);
+  overflow: auto;
+  padding: 20px;
+  background: rgba(255, 252, 246, 0.96);
+  border: 1px solid rgba(217, 208, 194, 0.9);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+  z-index: 10;
+}
+
+.filter-drawer__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.filter-drawer__header h2 {
+  margin: 4px 0 0;
+  font-size: 1.18rem;
+}
+
+.filter-summary {
+  margin: 12px 0 18px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.text-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.text-button:disabled {
+  color: var(--line);
+  cursor: default;
 }
 
 .view-toggle button.is-active,
@@ -155,12 +283,16 @@ body {
 }
 
 .filters {
-  margin-top: 20px;
-  padding: 22px 24px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
 }
 
-.filter-section + .filter-section {
-  margin-top: 18px;
+.filter-section {
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(217, 208, 194, 0.72);
+  border-radius: 18px;
 }
 
 .filter-section h2 {
@@ -171,7 +303,12 @@ body {
 .chip-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
+}
+
+.chip {
+  padding: 8px 12px;
+  font-size: 0.95rem;
 }
 
 .summary-strip {
@@ -295,9 +432,48 @@ th {
 
   .hero,
   .controls,
-  .filters,
   .summary-strip,
   .card {
     border-radius: 20px;
+  }
+
+  .controls {
+    align-items: stretch;
+  }
+
+  .controls-top,
+  .search-row {
+    align-items: stretch;
+  }
+
+  .results-meta {
+    text-align: left;
+  }
+
+  .view-switcher {
+    align-items: flex-start;
+  }
+
+  .toolbar-actions {
+    width: 100%;
+  }
+
+  .filter-drawer,
+  .filter-drawer summary {
+    width: 100%;
+  }
+
+  .filter-drawer summary {
+    justify-content: space-between;
+  }
+
+  .filter-drawer__panel {
+    left: 0;
+    right: auto;
+    width: min(100%, calc(100vw - 40px));
+  }
+
+  .filters {
+    grid-template-columns: 1fr;
   }
 }

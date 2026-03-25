@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-25T10:04:06-06:00",
+  "generated_at": "2026-03-25T16:06:44-06:00",
   "records": [
     {
       "source_id": "brfss",
@@ -286,78 +286,6 @@
           "stale": false
         }
       ]
-    },
-    {
-      "source_id": "utah-cancer-registry",
-      "display_name": "Utah Cancer Registry",
-      "short_description": "",
-      "source_type": "",
-      "update_frequency": "",
-      "domains": [],
-      "geographic_levels": [
-        "County",
-        "State"
-      ],
-      "available_years": [
-        2011,
-        2012,
-        2014
-      ],
-      "year_start": 2011,
-      "year_end": 2014,
-      "year_notes": "",
-      "source_systems": [
-        "Utah Cancer Registry"
-      ],
-      "provenance": {
-        "available_years": {
-          "source": "database",
-          "detail": "observed metadata",
-          "timestamp": "2026-03-25T08:18:00-06:00"
-        },
-        "display_name": {
-          "source": "database",
-          "detail": "observed metadata",
-          "timestamp": "2026-03-25T08:18:00-06:00"
-        },
-        "geographic_levels": {
-          "source": "database",
-          "detail": "observed metadata",
-          "timestamp": "2026-03-25T08:18:00-06:00"
-        },
-        "last_observed_at": {
-          "source": "database",
-          "detail": "observed metadata",
-          "timestamp": "2026-03-25T08:18:00-06:00"
-        },
-        "review_status": {
-          "source": "database",
-          "detail": "observed metadata",
-          "timestamp": "2026-03-25T08:18:00-06:00"
-        },
-        "source_systems": {
-          "source": "database",
-          "detail": "observed metadata",
-          "timestamp": "2026-03-25T08:18:00-06:00"
-        },
-        "year_end": {
-          "source": "database",
-          "detail": "observed metadata",
-          "timestamp": "2026-03-25T08:18:00-06:00"
-        },
-        "year_start": {
-          "source": "database",
-          "detail": "observed metadata",
-          "timestamp": "2026-03-25T08:18:00-06:00"
-        }
-      },
-      "confidence": "",
-      "review_status": "draft",
-      "last_observed_at": "2026-03-25T08:18:00-06:00",
-      "last_reviewed_at": "",
-      "notes": [],
-      "caveats": [],
-      "source_documents": []
     }
   ],
   "warnings": [
@@ -372,30 +300,6 @@
         "type": "codebook",
         "stale": true,
         "last_updated": "2024-01-15"
-      }
-    },
-    {
-      "code": "needs_review",
-      "severity": "info",
-      "source_id": "utah-cancer-registry",
-      "message": "Source is not yet marked as reviewed.",
-      "field": "review_status",
-      "details": {
-        "review_status": "draft"
-      }
-    },
-    {
-      "code": "non_contiguous_years",
-      "severity": "info",
-      "source_id": "utah-cancer-registry",
-      "message": "Available years are non-contiguous.",
-      "field": "available_years",
-      "details": {
-        "available_years": [
-          2011,
-          2012,
-          2014
-        ]
       }
     },
     {
@@ -471,14 +375,6 @@
           2024
         ]
       }
-    },
-    {
-      "code": "missing_reviewed_registry_entry",
-      "severity": "warning",
-      "source_id": "utah-cancer-registry",
-      "message": "Source was observed or imported but is missing from the reviewed registry.",
-      "field": null,
-      "details": {}
     }
   ]
 }

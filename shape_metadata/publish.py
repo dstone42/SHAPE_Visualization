@@ -126,29 +126,56 @@ def _site_html(generated_at: str, embedded_json: str) -> str:
   <main class="page-shell">
     <section class="hero">
       <p class="eyebrow">SHAPE Metadata Atlas</p>
-      <h1>Data source coverage, freshness, and provenance in one place.</h1>
+      <h1>SHAPE data source domains, freshness, and geographies.</h1>
       <p class="hero-copy">
-        This site is generated from the SHAPE metadata pipeline. Filters and source cards are built directly
-        from the published dataset so the interface stays aligned with the underlying registry.
+        Pulls metadata from multiple sources to provide an updated view of the data in SHAPE, what domains are covered, 
+        what geographic levels are included, and how frequently sources are updated.
       </p>
       <dl class="hero-stats" id="heroStats"></dl>
-      <p class="stamp">Generated <span id="generatedAt">{html.escape(generated_at)}</span></p>
+      <p class="stamp">Updated <span id="generatedAt">{html.escape(generated_at)}</span></p>
     </section>
-
-    <section class="controls">
-      <div class="control-group">
-        <label for="searchInput">Search</label>
-        <input id="searchInput" type="search" placeholder="Filter by source, notes, or domain">
-      </div>
-      <div class="view-toggle">
-        <button type="button" data-view="cards" class="is-active">Cards</button>
-        <button type="button" data-view="table">Table</button>
-      </div>
-    </section>
-
-    <section class="filters" id="filters"></section>
 
     <section class="summary-strip" id="warningStrip"></section>
+
+    <section class="controls">
+      <div class="controls-top">
+        <div class="control-heading">
+          <label for="searchInput">Search</label>
+          <p class="results-meta" id="resultsMeta"></p>
+        </div>
+        <div class="view-switcher">
+          <p class="view-label">View</p>
+          <div class="view-toggle">
+            <button type="button" data-view="cards" class="is-active">Cards</button>
+            <button type="button" data-view="table">Table</button>
+          </div>
+        </div>
+      </div>
+      <div class="search-row">
+        <div class="control-group">
+          <input id="searchInput" type="search" placeholder="Filter by source, notes, or domain">
+        </div>
+        <div class="toolbar-actions">
+          <details class="filter-drawer filter-drawer--inline" id="filterDrawer">
+            <summary>
+              <span>Refine Results</span>
+              <span class="filter-count hidden" id="activeFilterCount"></span>
+            </summary>
+            <div class="filter-drawer__panel">
+              <div class="filter-drawer__header">
+                <div>
+                  <p class="eyebrow">Refine Results</p>
+                  <h2>Filter sources</h2>
+                </div>
+                <button type="button" class="text-button" id="clearFilters">Clear all</button>
+              </div>
+              <p class="filter-summary" id="filterSummary"></p>
+              <section class="filters" id="filters"></section>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
 
     <section id="cardView" class="card-grid" aria-live="polite"></section>
     <section id="tableView" class="table-shell hidden" aria-live="polite"></section>
@@ -199,7 +226,6 @@ body {
 
 .hero,
 .controls,
-.filters,
 .summary-strip,
 .table-shell {
   background: var(--panel);
@@ -223,7 +249,7 @@ body {
 
 .hero h1 {
   margin: 0;
-  max-width: 12ch;
+  max-width: 20ch;
   font-size: clamp(2.4rem, 5vw, 4.4rem);
   line-height: 0.95;
 }
@@ -270,21 +296,33 @@ body {
 .controls {
   margin-top: 20px;
   padding: 20px 24px;
+  display: grid;
+  gap: 14px;
+}
+
+.controls-top,
+.search-row {
   display: flex;
-  gap: 16px;
-  justify-content: space-between;
   align-items: end;
+  justify-content: space-between;
+  gap: 16px;
   flex-wrap: wrap;
 }
 
-.control-group {
-  flex: 1 1 360px;
+.control-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.control-group label {
+.control-heading label {
   display: block;
-  margin-bottom: 8px;
   font-weight: 600;
+}
+
+.control-group {
+  min-width: 0;
+  flex: 1 1 460px;
 }
 
 .control-group input {
@@ -296,13 +334,43 @@ body {
   font: inherit;
 }
 
+.results-meta {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.94rem;
+  line-height: 1.4;
+}
+
+.toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.view-switcher {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.view-label {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
 .view-toggle {
   display: inline-flex;
   gap: 8px;
 }
 
 .view-toggle button,
-.chip {
+.chip,
+.filter-drawer summary {
   border: 1px solid var(--line);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.8);
@@ -310,6 +378,93 @@ body {
   padding: 10px 14px;
   font: inherit;
   cursor: pointer;
+}
+
+.filter-drawer {
+  position: relative;
+}
+
+.filter-drawer--inline summary {
+  min-height: 48px;
+  padding-inline: 16px;
+  background: rgba(214, 236, 235, 0.45);
+  border-color: rgba(0, 95, 115, 0.14);
+}
+
+.filter-drawer summary {
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-drawer summary::-webkit-details-marker {
+  display: none;
+}
+
+.filter-drawer[open] summary {
+  background: var(--accent-soft);
+  border-color: rgba(0, 95, 115, 0.16);
+  color: var(--accent);
+}
+
+.filter-count {
+  min-width: 1.5rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.filter-drawer__panel {
+  position: absolute;
+  top: calc(100% + 14px);
+  right: 0;
+  width: min(540px, calc(100vw - 56px));
+  max-height: min(70vh, 720px);
+  overflow: auto;
+  padding: 20px;
+  background: rgba(255, 252, 246, 0.96);
+  border: 1px solid rgba(217, 208, 194, 0.9);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+  z-index: 10;
+}
+
+.filter-drawer__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.filter-drawer__header h2 {
+  margin: 4px 0 0;
+  font-size: 1.18rem;
+}
+
+.filter-summary {
+  margin: 12px 0 18px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.text-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.text-button:disabled {
+  color: var(--line);
+  cursor: default;
 }
 
 .view-toggle button.is-active,
@@ -320,12 +475,16 @@ body {
 }
 
 .filters {
-  margin-top: 20px;
-  padding: 22px 24px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
 }
 
-.filter-section + .filter-section {
-  margin-top: 18px;
+.filter-section {
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(217, 208, 194, 0.72);
+  border-radius: 18px;
 }
 
 .filter-section h2 {
@@ -336,7 +495,12 @@ body {
 .chip-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
+}
+
+.chip {
+  padding: 8px 12px;
+  font-size: 0.95rem;
 }
 
 .summary-strip {
@@ -460,10 +624,49 @@ th {
 
   .hero,
   .controls,
-  .filters,
   .summary-strip,
   .card {
     border-radius: 20px;
+  }
+
+  .controls {
+    align-items: stretch;
+  }
+
+  .controls-top,
+  .search-row {
+    align-items: stretch;
+  }
+
+  .results-meta {
+    text-align: left;
+  }
+
+  .view-switcher {
+    align-items: flex-start;
+  }
+
+  .toolbar-actions {
+    width: 100%;
+  }
+
+  .filter-drawer,
+  .filter-drawer summary {
+    width: 100%;
+  }
+
+  .filter-drawer summary {
+    justify-content: space-between;
+  }
+
+  .filter-drawer__panel {
+    left: 0;
+    right: auto;
+    width: min(100%, calc(100vw - 40px));
+  }
+
+  .filters {
+    grid-template-columns: 1fr;
   }
 }
 """
@@ -495,8 +698,8 @@ async function boot() {
   }
   state.dataset = dataset;
   renderShell(dataset);
-  bindControls();
   renderFilters(dataset.records);
+  bindControls();
   renderResults();
 }
 
@@ -514,6 +717,22 @@ function bindControls() {
       });
       renderResults();
     });
+  });
+
+  document.getElementById("clearFilters").addEventListener("click", () => {
+    clearAllFilters();
+  });
+
+  const filterDrawer = document.getElementById("filterDrawer");
+  document.addEventListener("click", (event) => {
+    if (filterDrawer.open && !filterDrawer.contains(event.target)) {
+      filterDrawer.open = false;
+    }
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      filterDrawer.open = false;
+    }
   });
 }
 
@@ -586,6 +805,7 @@ function renderFilters(records) {
 
 function renderResults() {
   const records = state.dataset.records.filter(matchesFilters);
+  renderToolbarStatus(records.length, state.dataset.records.length);
 
   const cardRoot = document.getElementById("cardView");
   const tableRoot = document.getElementById("tableView");
@@ -602,6 +822,46 @@ function renderResults() {
 
   cardRoot.innerHTML = records.map(renderCard).join("");
   tableRoot.innerHTML = renderTable(records);
+}
+
+function clearAllFilters() {
+  Object.values(state.filters).forEach((bucket) => bucket.clear());
+  document.querySelectorAll(".chip.is-active").forEach((chip) => chip.classList.remove("is-active"));
+  renderResults();
+}
+
+function renderToolbarStatus(resultCount, totalCount) {
+  const selectedCount = countSelectedFilters();
+  const selectedGroups = Object.values(state.filters).filter((bucket) => bucket.size > 0).length;
+  const refinements = [];
+
+  if (state.search) {
+    refinements.push("a search term");
+  }
+  if (selectedCount > 0) {
+    refinements.push(`${selectedCount} active filter${selectedCount === 1 ? "" : "s"}`);
+  }
+
+  const resultsMeta = document.getElementById("resultsMeta");
+  resultsMeta.textContent =
+    `Showing ${resultCount} of ${totalCount} sources` +
+    `${refinements.length ? ` with ${refinements.join(" and ")}` : ""}.`;
+
+  const countBadge = document.getElementById("activeFilterCount");
+  countBadge.textContent = String(selectedCount);
+  countBadge.classList.toggle("hidden", selectedCount === 0);
+
+  const clearButton = document.getElementById("clearFilters");
+  clearButton.disabled = selectedCount === 0;
+
+  const filterSummary = document.getElementById("filterSummary");
+  filterSummary.textContent = selectedCount === 0
+    ? "Keep the main view focused, then open filters when you need to narrow by domain, geography, update cadence, source type, or review status."
+    : `${selectedCount} filter${selectedCount === 1 ? "" : "s"} selected across ${selectedGroups} filter ${selectedGroups === 1 ? "group" : "groups"}.`;
+}
+
+function countSelectedFilters() {
+  return Object.values(state.filters).reduce((total, bucket) => total + bucket.size, 0);
 }
 
 function matchesFilters(record) {

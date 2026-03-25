@@ -13,30 +13,6 @@
     }
   },
   {
-    "code": "needs_review",
-    "severity": "info",
-    "source_id": "utah-cancer-registry",
-    "message": "Source is not yet marked as reviewed.",
-    "field": "review_status",
-    "details": {
-      "review_status": "draft"
-    }
-  },
-  {
-    "code": "non_contiguous_years",
-    "severity": "info",
-    "source_id": "utah-cancer-registry",
-    "message": "Available years are non-contiguous.",
-    "field": "available_years",
-    "details": {
-      "available_years": [
-        2011,
-        2012,
-        2014
-      ]
-    }
-  },
-  {
     "code": "domain_mismatch",
     "severity": "warning",
     "source_id": "brfss",
@@ -109,13 +85,5 @@
         2024
       ]
     }
-  },
-  {
-    "code": "missing_reviewed_registry_entry",
-    "severity": "warning",
-    "source_id": "utah-cancer-registry",
-    "message": "Source was observed or imported but is missing from the reviewed registry.",
-    "field": null,
-    "details": {}
   }
 ]
