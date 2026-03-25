@@ -94,8 +94,8 @@ class PipelineTest(unittest.TestCase):
             self.assertTrue((outputs["artifacts_dir"] / "imported_metadata.json").exists())
             self.assertTrue((outputs["artifacts_dir"] / "reviewed_registry_draft.json").exists())
             self.assertTrue((outputs["artifacts_dir"] / "validation_report.json").exists())
+            self.assertTrue((outputs["site_dir"] / "index.html").exists())
             self.assertTrue((outputs["site_dir"] / "metadata.json").exists())
-            self.assertTrue((root / "SHAPE Data.html").exists())
 
             warnings = json.loads((outputs["artifacts_dir"] / "validation_report.json").read_text())
             codes = {(warning["source_id"], warning["code"]) for warning in warnings}

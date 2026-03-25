@@ -14,7 +14,6 @@ def main() -> None:
     outputs = run_pipeline(Path(args.root))
     print(f"Wrote artifacts to {outputs['artifacts_dir']}")
     print(f"Wrote site to {outputs['site_dir']}")
-    print(f"Updated {outputs['root_html']}")
 
 
 if __name__ == "__main__":

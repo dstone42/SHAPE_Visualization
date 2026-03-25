@@ -15,7 +15,6 @@ Running the pipeline generates:
 - `site/styles.css`
 - `site/app.js`
 - `site/metadata.json`
-- `SHAPE Data.html`
 
 ## Default behavior
 
@@ -81,3 +80,4 @@ Set `SHAPE_CODEBOOK_SNAPSHOT=/path/to/file.json` to merge codebook-derived field
 - The reviewed registry remains the human-edited source for descriptive and interpretive fields.
 - Database-derived structural facts win for years, geography levels, and source systems.
 - The site builds its filters dynamically from the published dataset.
+- Share or archive the generated `site/` directory when you need to hand off the web output.

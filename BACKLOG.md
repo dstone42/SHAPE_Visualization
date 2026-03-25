@@ -15,7 +15,6 @@ This file is the local stand-in for issue tracking until the project is connecte
   - reviewed registry wins for descriptive fields
 - Validation warnings are generated for common drift and review conditions.
 - The generated site is data-driven and derives filter options from the dataset.
-- `SHAPE Data.html` works as a standalone file because metadata is embedded inline.
 - Tests cover artifact generation, warning generation, and data-driven filters.
 
 ## Placeholder Or Partial Pieces
@@ -130,4 +129,4 @@ Definition of done:
 - Review:
   - `artifacts/reviewed_registry_draft.json`
   - `artifacts/validation_report.html`
-  - `SHAPE Data.html`
+  - `site/index.html`

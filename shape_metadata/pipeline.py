@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import shutil
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -66,15 +65,10 @@ def run_pipeline(root: Path) -> dict[str, Path]:
     generated_at = generated_timestamp()
     publish_validation_report(warnings, artifacts_dir / "validation_report.html", generated_at)
     publish_site(merged_records, warnings, site_dir, generated_at)
-    shutil.copyfile(site_dir / "index.html", root / "SHAPE Data.html")
-    shutil.copyfile(site_dir / "styles.css", root / "styles.css")
-    shutil.copyfile(site_dir / "app.js", root / "app.js")
-    shutil.copyfile(site_dir / "metadata.json", root / "metadata.json")
 
     return {
         "artifacts_dir": artifacts_dir,
         "site_dir": site_dir,
-        "root_html": root / "SHAPE Data.html",
     }
 
 
