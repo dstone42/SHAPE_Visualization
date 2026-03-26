@@ -106,6 +106,8 @@ body {
   padding: 20px 24px;
   display: grid;
   gap: 14px;
+  position: relative;
+  z-index: 2;
 }
 
 .controls-top,
@@ -390,8 +392,50 @@ body {
   line-height: 1.6;
 }
 
+.detail-stack {
+  display: grid;
+  gap: 14px;
+}
+
+.details-meta {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.card-details {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(217, 208, 194, 0.85);
+}
+
+.card-details summary {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  list-style: none;
+}
+
+.card-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.card-details[open] summary {
+  margin-bottom: 14px;
+}
+
+.card-details__body {
+  display: grid;
+  gap: 16px;
+}
+
 .table-shell {
   margin-top: 24px;
+  position: relative;
+  z-index: 1;
   overflow-x: auto;
 }
 

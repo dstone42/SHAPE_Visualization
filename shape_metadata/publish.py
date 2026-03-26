@@ -298,6 +298,8 @@ body {
   padding: 20px 24px;
   display: grid;
   gap: 14px;
+  position: relative;
+  z-index: 2;
 }
 
 .controls-top,
@@ -582,8 +584,50 @@ body {
   line-height: 1.6;
 }
 
+.detail-stack {
+  display: grid;
+  gap: 14px;
+}
+
+.details-meta {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.card-details {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(217, 208, 194, 0.85);
+}
+
+.card-details summary {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  list-style: none;
+}
+
+.card-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.card-details[open] summary {
+  margin-bottom: 14px;
+}
+
+.card-details__body {
+  display: grid;
+  gap: 16px;
+}
+
 .table-shell {
   margin-top: 24px;
+  position: relative;
+  z-index: 1;
   overflow-x: auto;
 }
 
@@ -896,6 +940,7 @@ function renderCard(record) {
   const yearRange = record.available_years && record.available_years.length
     ? `${record.year_start} to ${record.year_end}`
     : "Unavailable";
+  const detailSummary = buildDetailSummary(record);
 
   return `
     <article class="card">
@@ -918,29 +963,82 @@ function renderCard(record) {
         ${(record.geographic_levels || []).map((level) => `<span class="meta-pill">${escapeHtml(level)}</span>`).join("")}
       </div>
 
-      <p class="section-label">Provenance</p>
-      <div class="provenance-list">
-        ${Object.entries(record.provenance || {})
-          .map(([field, details]) => `<span class="provenance-pill">${escapeHtml(field)}: ${escapeHtml(details.source)}</span>`)
-          .join("")}
-      </div>
-
-      ${renderTextList("Notes", record.notes)}
-      ${renderTextList("Caveats", record.caveats)}
-      ${record.year_notes ? `<p class="section-label">Year Notes</p><p>${escapeHtml(record.year_notes)}</p>` : ""}
-      <p class="section-label">Last Refresh</p>
-      <p>${escapeHtml(record.last_observed_at || "Not observed yet")}</p>
+      ${detailSummary ? `
+        <details class="card-details">
+          <summary>
+            <span>Open details</span>
+            <span class="details-meta">${escapeHtml(detailSummary)}</span>
+          </summary>
+          <div class="card-details__body">
+            ${renderDetailSections(record)}
+          </div>
+        </details>
+      ` : ""}
     </article>
   `;
+}
+
+function renderDetailSections(record) {
+  const sections = [];
+  const provenanceEntries = Object.entries(record.provenance || {});
+
+  if (provenanceEntries.length) {
+    sections.push(`
+      <section>
+        <p class="section-label">Provenance</p>
+        <div class="provenance-list">
+          ${provenanceEntries
+            .map(([field, details]) => `<span class="provenance-pill">${escapeHtml(field)}: ${escapeHtml(details.source)}</span>`)
+            .join("")}
+        </div>
+      </section>
+    `);
+  }
+
+  sections.push(renderTextList("Notes", record.notes));
+  sections.push(renderTextList("Caveats", record.caveats));
+
+  if (record.year_notes) {
+    sections.push(`<section><p class="section-label">Year Notes</p><p>${escapeHtml(record.year_notes)}</p></section>`);
+  }
+
+  sections.push(`
+    <section>
+      <p class="section-label">Last Refresh</p>
+      <p>${escapeHtml(record.last_observed_at || "Not observed yet")}</p>
+    </section>
+  `);
+
+  return `<div class="detail-stack">${sections.filter(Boolean).join("")}</div>`;
 }
 
 function renderTextList(label, values) {
   if (!values || values.length === 0) {
     return "";
   }
-  return `<p class="section-label">${escapeHtml(label)}</p><ul>${values
+  return `<section><p class="section-label">${escapeHtml(label)}</p><ul>${values
     .map((value) => `<li>${escapeHtml(value)}</li>`)
-    .join("")}</ul>`;
+    .join("")}</ul></section>`;
+}
+
+function buildDetailSummary(record) {
+  const summaryBits = [];
+  if (record.notes && record.notes.length) {
+    summaryBits.push(`${record.notes.length} note${record.notes.length === 1 ? "" : "s"}`);
+  }
+  if (record.caveats && record.caveats.length) {
+    summaryBits.push(`${record.caveats.length} caveat${record.caveats.length === 1 ? "" : "s"}`);
+  }
+  if (record.year_notes) {
+    summaryBits.push("year notes");
+  }
+  if (record.provenance && Object.keys(record.provenance).length) {
+    summaryBits.push("provenance");
+  }
+  if (record.last_observed_at) {
+    summaryBits.push("refresh info");
+  }
+  return summaryBits.join(" | ");
 }
 
 function renderTable(records) {
