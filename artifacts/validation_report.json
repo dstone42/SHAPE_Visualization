@@ -1,15 +1,202 @@
 [
   {
-    "code": "stale_codebook",
+    "code": "needs_review",
     "severity": "info",
-    "source_id": "brfss",
-    "message": "A referenced codebook or source document is marked as stale.",
-    "field": "source_documents",
+    "source_id": "acs",
+    "message": "Source is not yet marked as reviewed.",
+    "field": "review_status",
     "details": {
-      "name": "BRFSS codebook",
-      "type": "codebook",
-      "stale": true,
-      "last_updated": "2024-01-15"
+      "review_status": "draft"
+    }
+  },
+  {
+    "code": "needs_review",
+    "severity": "info",
+    "source_id": "ahar",
+    "message": "Source is not yet marked as reviewed.",
+    "field": "review_status",
+    "details": {
+      "review_status": "draft"
+    }
+  },
+  {
+    "code": "needs_review",
+    "severity": "info",
+    "source_id": "ccsg",
+    "message": "Source is not yet marked as reviewed.",
+    "field": "review_status",
+    "details": {
+      "review_status": "draft"
+    }
+  },
+  {
+    "code": "needs_review",
+    "severity": "info",
+    "source_id": "chas",
+    "message": "Source is not yet marked as reviewed.",
+    "field": "review_status",
+    "details": {
+      "review_status": "draft"
+    }
+  },
+  {
+    "code": "needs_review",
+    "severity": "info",
+    "source_id": "cif",
+    "message": "Source is not yet marked as reviewed.",
+    "field": "review_status",
+    "details": {
+      "review_status": "draft"
+    }
+  },
+  {
+    "code": "non_contiguous_years",
+    "severity": "info",
+    "source_id": "cif",
+    "message": "Available years are non-contiguous.",
+    "field": "available_years",
+    "details": {
+      "available_years": [
+        2015,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024
+      ]
+    }
+  },
+  {
+    "code": "needs_review",
+    "severity": "info",
+    "source_id": "edw",
+    "message": "Source is not yet marked as reviewed.",
+    "field": "review_status",
+    "details": {
+      "review_status": "draft"
+    }
+  },
+  {
+    "code": "needs_review",
+    "severity": "info",
+    "source_id": "epa",
+    "message": "Source is not yet marked as reviewed.",
+    "field": "review_status",
+    "details": {
+      "review_status": "draft"
+    }
+  },
+  {
+    "code": "non_contiguous_years",
+    "severity": "info",
+    "source_id": "epa",
+    "message": "Available years are non-contiguous.",
+    "field": "available_years",
+    "details": {
+      "available_years": [
+        1980,
+        2023,
+        2024
+      ]
+    }
+  },
+  {
+    "code": "needs_review",
+    "severity": "info",
+    "source_id": "fcc",
+    "message": "Source is not yet marked as reviewed.",
+    "field": "review_status",
+    "details": {
+      "review_status": "draft"
+    }
+  },
+  {
+    "code": "needs_review",
+    "severity": "info",
+    "source_id": "hints",
+    "message": "Source is not yet marked as reviewed.",
+    "field": "review_status",
+    "details": {
+      "review_status": "draft"
+    }
+  },
+  {
+    "code": "non_contiguous_years",
+    "severity": "info",
+    "source_id": "hints",
+    "message": "Available years are non-contiguous.",
+    "field": "available_years",
+    "details": {
+      "available_years": [
+        2017,
+        2018,
+        2019,
+        2020,
+        2022
+      ]
+    }
+  },
+  {
+    "code": "needs_review",
+    "severity": "info",
+    "source_id": "hpv-vaccination-coalition",
+    "message": "Source is not yet marked as reviewed.",
+    "field": "review_status",
+    "details": {
+      "review_status": "draft"
+    }
+  },
+  {
+    "code": "needs_review",
+    "severity": "info",
+    "source_id": "nhis",
+    "message": "Source is not yet marked as reviewed.",
+    "field": "review_status",
+    "details": {
+      "review_status": "draft"
+    }
+  },
+  {
+    "code": "needs_review",
+    "severity": "info",
+    "source_id": "ocoe",
+    "message": "Source is not yet marked as reviewed.",
+    "field": "review_status",
+    "details": {
+      "review_status": "draft"
+    }
+  },
+  {
+    "code": "needs_review",
+    "severity": "info",
+    "source_id": "shape-derived",
+    "message": "Source is not yet marked as reviewed.",
+    "field": "review_status",
+    "details": {
+      "review_status": "draft"
+    }
+  },
+  {
+    "code": "needs_review",
+    "severity": "info",
+    "source_id": "svi",
+    "message": "Source is not yet marked as reviewed.",
+    "field": "review_status",
+    "details": {
+      "review_status": "draft"
+    }
+  },
+  {
+    "code": "needs_review",
+    "severity": "info",
+    "source_id": "usda",
+    "message": "Source is not yet marked as reviewed.",
+    "field": "review_status",
+    "details": {
+      "review_status": "draft"
     }
   },
   {
@@ -20,14 +207,9 @@
     "field": "domains",
     "details": {
       "imported": [
-        "Breast cancer screening",
-        "Cervical cancer screening",
-        "Colorectal cancer screening",
-        "General health",
+        "Health behaviors",
         "Health care access",
-        "Insurance",
-        "Lung cancer screening",
-        "Smoking"
+        "Social determinants of health"
       ],
       "reviewed": [
         "Breast cancer screening",
@@ -37,52 +219,6 @@
         "Health care access",
         "Insurance for cancer patients",
         "Lung cancer screening"
-      ]
-    }
-  },
-  {
-    "code": "observed_year_drift",
-    "severity": "warning",
-    "source_id": "brfss",
-    "message": "Observed years differ from the reviewed registry.",
-    "field": "available_years",
-    "details": {
-      "observed": [
-        2022,
-        2023,
-        2024,
-        2025
-      ],
-      "reviewed": [
-        2022,
-        2023,
-        2024
-      ]
-    }
-  },
-  {
-    "code": "observed_year_drift",
-    "severity": "warning",
-    "source_id": "internal-hci-data",
-    "message": "Observed years differ from the reviewed registry.",
-    "field": "available_years",
-    "details": {
-      "observed": [
-        2019,
-        2020,
-        2021,
-        2022,
-        2023,
-        2024,
-        2025
-      ],
-      "reviewed": [
-        2019,
-        2020,
-        2021,
-        2022,
-        2023,
-        2024
       ]
     }
   }

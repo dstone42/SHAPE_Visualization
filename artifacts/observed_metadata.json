@@ -17,11 +17,10 @@
       2021,
       2022,
       2023,
-      2024,
-      2025
+      2024
     ],
     "year_start": 2019,
-    "year_end": 2025,
+    "year_end": 2024,
     "year_notes": "",
     "source_systems": [
       "HCI Registry",
@@ -51,11 +50,10 @@
     "available_years": [
       2022,
       2023,
-      2024,
-      2025
+      2024
     ],
     "year_start": 2022,
-    "year_end": 2025,
+    "year_end": 2024,
     "year_notes": "",
     "source_systems": [
       "CDC BRFSS"

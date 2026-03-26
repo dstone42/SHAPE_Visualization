@@ -1,5 +1,125 @@
 [
   {
+    "source_id": "acs",
+    "display_name": "ACS",
+    "short_description": "",
+    "source_type": "",
+    "update_frequency": "",
+    "domains": [
+      "Health care access",
+      "Internet and broadband/cellular access",
+      "Social determinants of health"
+    ],
+    "geographic_levels": [
+      "State"
+    ],
+    "available_years": [
+      2022
+    ],
+    "year_start": 2022,
+    "year_end": 2022,
+    "year_notes": "Access to internet: 2022 (5 year cycle)\nFinancial toxicity*: 2022 (5 year cycle)\nFood insecurity: 2022 (5 year cycle)\nInsurance type: 2022 (5 year cycle)\nPersons below 150% of poverty, 2017-2021: 2022 (5 year cycle)",
+    "source_systems": [],
+    "provenance": {
+      "available_years": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "display_name": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "domains": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "geographic_levels": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "review_status": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "source_documents": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "year_end": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "year_notes": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "year_start": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      }
+    },
+    "confidence": "",
+    "review_status": "draft",
+    "last_observed_at": "",
+    "last_reviewed_at": "",
+    "notes": [],
+    "caveats": [],
+    "source_documents": [
+      {
+        "name": "ACS worksheet",
+        "type": "spreadsheet",
+        "worksheet": "ACS"
+      },
+      {
+        "name": "ACS reference",
+        "type": "reference",
+        "url": "https://usa.ipums.org/usa-action/source_documents/enum_form_ACS(2022)_tag.xml"
+      },
+      {
+        "name": "ACS reference",
+        "type": "reference",
+        "url": "https://data.census.gov/table/ACSST5Y2022.S1701?q=acs%20poverty"
+      }
+    ]
+  },
+  {
+    "source_id": "ahar",
+    "display_name": "AHAR",
+    "short_description": "",
+    "source_type": "",
+    "update_frequency": "",
+    "domains": [
+      "Social determinants of health"
+    ],
+    "geographic_levels": [],
+    "available_years": [],
+    "year_start": null,
+    "year_end": null,
+    "year_notes": "",
+    "source_systems": [],
+    "provenance": {
+      "display_name": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "domains": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "review_status": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      }
+    },
+    "confidence": "",
+    "review_status": "draft",
+    "last_observed_at": "",
+    "last_reviewed_at": "",
+    "notes": [],
+    "caveats": [],
+    "source_documents": []
+  },
+  {
     "source_id": "brfss",
     "display_name": "BRFSS",
     "short_description": "Behavioral Risk Factor Surveillance System.",
@@ -22,11 +142,10 @@
     "available_years": [
       2022,
       2023,
-      2024,
-      2025
+      2024
     ],
     "year_start": 2022,
-    "year_end": 2025,
+    "year_end": 2024,
     "year_notes": "Coverage varies by geography and by domain across years.",
     "source_systems": [
       "CDC BRFSS"
@@ -134,10 +253,683 @@
     ],
     "source_documents": [
       {
-        "name": "BRFSS codebook",
-        "type": "codebook",
-        "stale": true,
-        "last_updated": "2024-01-15"
+        "name": "BRFSS worksheet",
+        "type": "spreadsheet",
+        "worksheet": "BRFSS"
+      },
+      {
+        "name": "BRFSS reference",
+        "type": "reference",
+        "url": "https://www.cdc.gov/brfss/annual_data/annual_data.htm"
+      }
+    ]
+  },
+  {
+    "source_id": "ccsg",
+    "display_name": "CCSG",
+    "short_description": "",
+    "source_type": "",
+    "update_frequency": "",
+    "domains": [
+      "Clinical trials"
+    ],
+    "geographic_levels": [],
+    "available_years": [],
+    "year_start": null,
+    "year_end": null,
+    "year_notes": "",
+    "source_systems": [],
+    "provenance": {
+      "display_name": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "domains": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "notes": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "review_status": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "source_documents": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      }
+    },
+    "confidence": "",
+    "review_status": "draft",
+    "last_observed_at": "",
+    "last_reviewed_at": "",
+    "notes": [
+      "Workbook marks this source as containing PHI."
+    ],
+    "caveats": [],
+    "source_documents": [
+      {
+        "name": "CCSG worksheet",
+        "type": "spreadsheet",
+        "worksheet": "CCSG"
+      }
+    ]
+  },
+  {
+    "source_id": "chas",
+    "display_name": "CHAS",
+    "short_description": "",
+    "source_type": "",
+    "update_frequency": "",
+    "domains": [
+      "Clinical trials",
+      "Health behaviors",
+      "Health care access",
+      "Internet and broadband/cellular access",
+      "Science and cancer-related communication, beliefs, knowledge & perceptions",
+      "Social determinants of health"
+    ],
+    "geographic_levels": [
+      "Zip code"
+    ],
+    "available_years": [
+      2023
+    ],
+    "year_start": 2023,
+    "year_end": 2023,
+    "year_notes": "",
+    "source_systems": [],
+    "provenance": {
+      "available_years": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "caveats": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "display_name": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "domains": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "geographic_levels": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "notes": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "review_status": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "source_documents": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "year_end": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "year_start": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      }
+    },
+    "confidence": "",
+    "review_status": "draft",
+    "last_observed_at": "",
+    "last_reviewed_at": "",
+    "notes": [
+      "Workbook marks this source as containing PHI."
+    ],
+    "caveats": [
+      "wellbeing/mental health/emotional wellbeing: I\u2019m not totally sure if it meets the definition you\u2019re looking for, but it could meet that definition. For example, HINTS doesn\u2019t have lung cancer screening, but it does have whether or not they discussed lung cancer screening with their doctor."
+    ],
+    "source_documents": [
+      {
+        "name": "CHAS worksheet",
+        "type": "spreadsheet",
+        "worksheet": "CHAS"
+      }
+    ]
+  },
+  {
+    "source_id": "cif",
+    "display_name": "CIF",
+    "short_description": "",
+    "source_type": "",
+    "update_frequency": "",
+    "domains": [
+      "Cancer incidence, stage & mortality",
+      "Environmental exposures",
+      "Health behaviors",
+      "Health care access",
+      "Internet and broadband/cellular access",
+      "Social determinants of health"
+    ],
+    "geographic_levels": [
+      "Census tract",
+      "County"
+    ],
+    "available_years": [
+      2015,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+    ],
+    "year_start": 2015,
+    "year_end": 2024,
+    "year_notes": "Travel time to lung cancer screening: Live\nTravel time to nearest colonoscopy: Live\nTravel time to nearest mammography: Live",
+    "source_systems": [],
+    "provenance": {
+      "available_years": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "display_name": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "domains": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "geographic_levels": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "review_status": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "source_documents": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "year_end": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "year_notes": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "year_start": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      }
+    },
+    "confidence": "",
+    "review_status": "draft",
+    "last_observed_at": "",
+    "last_reviewed_at": "",
+    "notes": [],
+    "caveats": [],
+    "source_documents": [
+      {
+        "name": "CIF worksheet",
+        "type": "spreadsheet",
+        "worksheet": "CIF"
+      },
+      {
+        "name": "CIF reference",
+        "type": "reference",
+        "url": "This data comes from a direct connection into their database, but here is their website: https://www.cdc.gov/united-states-cancer-statistics/index.html"
+      },
+      {
+        "name": "CIF reference",
+        "type": "reference",
+        "url": "https://statecancerprofiles.cancer.gov/index.html"
+      },
+      {
+        "name": "CIF reference",
+        "type": "reference",
+        "url": "https://www.cdc.gov/places/"
+      },
+      {
+        "name": "CIF reference",
+        "type": "reference",
+        "url": "https://www.fda.gov/radiation-emitting-products/mammography-information-patients/search-certified-facility"
+      },
+      {
+        "name": "CIF reference",
+        "type": "reference",
+        "url": "https://nppes.cms.hhs.gov/#/"
+      },
+      {
+        "name": "CIF reference",
+        "type": "reference",
+        "url": "https://www.acr.org/Clinical-Resources/Lung-Cancer-Screening-Resources/LCS-Locator-Tool"
+      },
+      {
+        "name": "CIF reference",
+        "type": "reference",
+        "url": "https://data.census.gov/"
+      },
+      {
+        "name": "CIF reference",
+        "type": "reference",
+        "url": "https://www.epa.gov/ejscreen"
+      },
+      {
+        "name": "CIF reference",
+        "type": "reference",
+        "url": "Deserts: https://www.ers.usda.gov/data-products/food-access-research-atlas/, Insecure: https://www.cdc.gov/places/"
+      },
+      {
+        "name": "CIF reference",
+        "type": "reference",
+        "url": "Insecure: https://www.cdc.gov/places/, the other variables: https://data.census.gov/"
+      },
+      {
+        "name": "CIF reference",
+        "type": "reference",
+        "url": "First four: https://broadbandmap.fcc.gov/home, Last one: https://data.census.gov/"
+      },
+      {
+        "name": "CIF reference",
+        "type": "reference",
+        "url": "In general, see https://cancerinfocus.org/datasources/ for this source."
+      }
+    ]
+  },
+  {
+    "source_id": "edw",
+    "display_name": "EDW",
+    "short_description": "",
+    "source_type": "",
+    "update_frequency": "",
+    "domains": [
+      "Cancer incidence, stage & mortality",
+      "Clinical trials",
+      "Health behaviors",
+      "Health care access",
+      "Social determinants of health"
+    ],
+    "geographic_levels": [],
+    "available_years": [],
+    "year_start": null,
+    "year_end": null,
+    "year_notes": "",
+    "source_systems": [],
+    "provenance": {
+      "caveats": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "display_name": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "domains": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "notes": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "review_status": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "source_documents": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      }
+    },
+    "confidence": "",
+    "review_status": "draft",
+    "last_observed_at": "",
+    "last_reviewed_at": "",
+    "notes": [
+      "Workbook marks this source as containing PHI."
+    ],
+    "caveats": [
+      "Financial toxicity*: **Not availabe, no substantial data found",
+      "Proportion of cancer patients enrolled: May be the same data from Kim",
+      "Representativeness of enrolled v. all patients: May be the same data from Kim"
+    ],
+    "source_documents": [
+      {
+        "name": "EDW worksheet",
+        "type": "spreadsheet",
+        "worksheet": "EDW"
+      }
+    ]
+  },
+  {
+    "source_id": "epa",
+    "display_name": "EPA",
+    "short_description": "",
+    "source_type": "",
+    "update_frequency": "",
+    "domains": [
+      "Environmental exposures"
+    ],
+    "geographic_levels": [
+      "County"
+    ],
+    "available_years": [
+      1980,
+      2023,
+      2024
+    ],
+    "year_start": 1980,
+    "year_end": 2024,
+    "year_notes": "Radon in area of residence: Not sure...",
+    "source_systems": [],
+    "provenance": {
+      "available_years": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "display_name": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "domains": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "geographic_levels": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "review_status": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "source_documents": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "year_end": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "year_notes": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "year_start": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      }
+    },
+    "confidence": "",
+    "review_status": "draft",
+    "last_observed_at": "",
+    "last_reviewed_at": "",
+    "notes": [],
+    "caveats": [],
+    "source_documents": [
+      {
+        "name": "EPA worksheet",
+        "type": "spreadsheet",
+        "worksheet": "EPA"
+      },
+      {
+        "name": "EPA reference",
+        "type": "reference",
+        "url": "https://aqs.epa.gov/aqsweb/airdata/download_files.html"
+      },
+      {
+        "name": "EPA reference",
+        "type": "reference",
+        "url": "https://www.epa.gov/radon/epa-map-radon-zones-and-supplemental-information"
+      }
+    ]
+  },
+  {
+    "source_id": "fcc",
+    "display_name": "FCC",
+    "short_description": "",
+    "source_type": "",
+    "update_frequency": "",
+    "domains": [
+      "Internet and broadband/cellular access"
+    ],
+    "geographic_levels": [],
+    "available_years": [
+      2023
+    ],
+    "year_start": 2023,
+    "year_end": 2023,
+    "year_notes": "",
+    "source_systems": [],
+    "provenance": {
+      "available_years": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "display_name": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "domains": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "review_status": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "source_documents": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "year_end": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "year_start": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      }
+    },
+    "confidence": "",
+    "review_status": "draft",
+    "last_observed_at": "",
+    "last_reviewed_at": "",
+    "notes": [],
+    "caveats": [],
+    "source_documents": [
+      {
+        "name": "FCC worksheet",
+        "type": "spreadsheet",
+        "worksheet": "FCC"
+      },
+      {
+        "name": "FCC reference",
+        "type": "reference",
+        "url": "https://broadbandmap.fcc.gov/data-download/nationwide-data?version=jun2023"
+      }
+    ]
+  },
+  {
+    "source_id": "hints",
+    "display_name": "HINTS",
+    "short_description": "",
+    "source_type": "",
+    "update_frequency": "",
+    "domains": [
+      "Clinical trials",
+      "Health behaviors",
+      "Internet and broadband/cellular access",
+      "Science and cancer-related communication, beliefs, knowledge & perceptions",
+      "Social determinants of health"
+    ],
+    "geographic_levels": [
+      "State"
+    ],
+    "available_years": [
+      2017,
+      2018,
+      2019,
+      2020,
+      2022
+    ],
+    "year_start": 2017,
+    "year_end": 2022,
+    "year_notes": "Access to internet: 5 Cycle 4, 5 Cycle 3, 5 Cycle 2, 5 Cycle 1\nAccess to internet: 6\nAccess to internet: 6, 5 Cycle 4, 5 Cycle 3, 5 Cycle 2, 5 Cycle 1\nBelief in cancer prevention: 6, 5 Cycle 4, 5 Cycle 3, 5 Cycle 2, 5 Cycle 1\nBelief that everything causes cancer: 6, 5 Cycle 4, 5 Cycle 3, 5 Cycle 2, 5 Cycle 1\nCervical cancer screening: 6, 5 Cycle 4, 5 Cycle 3, 5 Cycle 2, 5 Cycle 1\nConfidence in getting cancer information: 5 Cycle 4, 5 Cycle 2\nFatalism and cancer: 6, 5 Cycle 4, 5 Cycle 3, 5 Cycle 2, 5 Cycle 1\nFatalism and cancer: I'm listing by cycle of HINTS rather than year. I'm only listing the cycles I pulled data from. Here are the years of each cycle: 6: 2022, 5 Cycle 4: 2020, 5 Cycle 3: 2019, 5 Cycle 2: 2018, 5 Cycle 1: 2017\nFood insecurity: 6\nHave you ever been asked to be in a clinical trial: 5 Cycle 4\nHealth information seeking sources used: 5 Cycle 4, 5 Cycle 2\nHousing instability: 6\nKnowledge: 5 Cycle 4\nLung cancer screening: 5 Cycle 4, 5 Cycle 1\nSun protection use: 5 Cycle 2\nSun protection use: 6, 5 Cycle 2\nTobacco use / smoking: 5 Cycle 1\nTobacco use / smoking: 5 Cycle 3\nTobacco use / smoking: 5 Cycle 4, 5 Cycle 3, 5 Cycle 2, 5 Cycle 1\nTobacco use / smoking: 6, 5 Cycle 4, 5 Cycle 3, 5 Cycle 2, 5 Cycle 1\nView on cancer prevention recommendations: 6, 5 Cycle 4, 5 Cycle 3, 5 Cycle 2, 5 Cycle 1\nwellbeing/mental health/emotional wellbeing: 6\nwellbeing/mental health/emotional wellbeing: 6, 5 Cycle 4, 5 Cycle 3, 5 Cycle 1\nwellbeing/mental health/emotional wellbeing: 6, 5 Cycle 4, 5 Cycle 3, 5 Cycle 2, 5 Cycle 1",
+    "source_systems": [],
+    "provenance": {
+      "available_years": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "caveats": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "display_name": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "domains": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "geographic_levels": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "notes": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "review_status": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "source_documents": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "year_end": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "year_notes": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "year_start": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      }
+    },
+    "confidence": "",
+    "review_status": "draft",
+    "last_observed_at": "",
+    "last_reviewed_at": "",
+    "notes": [
+      "Workbook marks this source as requiring an application."
+    ],
+    "caveats": [
+      "Access to internet: Note: There was another question for broadband that didn't create stable measures",
+      "Breast cancer screening: Link is the same for this whole data source",
+      "Confidence in getting cancer information: This was divided into low, moderate, and high confidence, and only low confidence created a stable measure, so not sure if we can use that",
+      "Health behaviors / Lung cancer screening: I\u2019m not totally sure if it meets the definition you\u2019re looking for, but it could meet that definition. For example, HINTS doesn\u2019t have lung cancer screening, but it does have whether or not they discussed lung cancer screening with their doctor.",
+      "Health information seeking sources used: This had a lot of different responses, so only one group of responses created a stable measure due to only being in two cycles and having so many different measures from a single question",
+      "Science and cancer-related communication, beliefs, knowledge & perceptions / Confidence in getting cancer information: The measure is in the dataset but did not create a stable enough measure to pass the QC. It could be included in a different form of aggregation such as census division or IMFACc."
+    ],
+    "source_documents": [
+      {
+        "name": "HINTS worksheet",
+        "type": "spreadsheet",
+        "worksheet": "HINTS"
+      },
+      {
+        "name": "HINTS reference",
+        "type": "reference",
+        "url": "https://hints.cancer.gov/"
+      }
+    ]
+  },
+  {
+    "source_id": "hpv-vaccination-coalition",
+    "display_name": "HPV Vaccination Coalition",
+    "short_description": "",
+    "source_type": "",
+    "update_frequency": "",
+    "domains": [
+      "Health behaviors"
+    ],
+    "geographic_levels": [
+      "State"
+    ],
+    "available_years": [
+      2023
+    ],
+    "year_start": 2023,
+    "year_end": 2023,
+    "year_notes": "",
+    "source_systems": [],
+    "provenance": {
+      "available_years": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "display_name": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "domains": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "geographic_levels": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "review_status": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "source_documents": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "year_end": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "year_start": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      }
+    },
+    "confidence": "",
+    "review_status": "draft",
+    "last_observed_at": "",
+    "last_reviewed_at": "",
+    "notes": [],
+    "caveats": [],
+    "source_documents": [
+      {
+        "name": "HPV Vaccination Coalition worksheet",
+        "type": "spreadsheet",
+        "worksheet": "HPV Vaccination Coalition"
+      },
+      {
+        "name": "HPV Vaccination Coalition reference",
+        "type": "reference",
+        "url": "https://www.cdc.gov/teenvaxview/interactive/index.html"
       }
     ]
   },
@@ -166,11 +958,10 @@
       2021,
       2022,
       2023,
-      2024,
-      2025
+      2024
     ],
     "year_start": 2019,
-    "year_end": 2025,
+    "year_end": 2024,
     "year_notes": "Live data also contains the current year and pre-2019 records, but direct use of the live layer is not typical for SHAPE reporting.",
     "source_systems": [
       "HCI Registry",
@@ -232,10 +1023,6 @@
         "detail": "reviewed registry",
         "timestamp": "2026-03-25"
       },
-      "source_documents": {
-        "source": "spreadsheet",
-        "detail": "imported reference metadata"
-      },
       "source_systems": {
         "source": "database",
         "detail": "observed metadata",
@@ -277,12 +1064,253 @@
     "caveats": [
       "Older years can be extracted on request if a project requires them."
     ],
+    "source_documents": []
+  },
+  {
+    "source_id": "nhis",
+    "display_name": "NHIS",
+    "short_description": "",
+    "source_type": "",
+    "update_frequency": "",
+    "domains": [
+      "Health behaviors",
+      "Health care access",
+      "Internet and broadband/cellular access",
+      "Social determinants of health"
+    ],
+    "geographic_levels": [
+      "Census region"
+    ],
+    "available_years": [
+      2023
+    ],
+    "year_start": 2023,
+    "year_end": 2023,
+    "year_notes": "Access to internet: I have not checked if any of these are available in more years yet. This is just the year I have gotten so far",
+    "source_systems": [],
+    "provenance": {
+      "available_years": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "caveats": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "display_name": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "domains": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "geographic_levels": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "review_status": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "source_documents": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "year_end": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "year_notes": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "year_start": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      }
+    },
+    "confidence": "",
+    "review_status": "draft",
+    "last_observed_at": "",
+    "last_reviewed_at": "",
+    "notes": [],
+    "caveats": [
+      "Breast cancer screening: I\u2019m not totally sure if it meets the definition you\u2019re looking for, but it could meet that definition. For example, HINTS doesn\u2019t have lung cancer screening, but it does have whether or not they discussed lung cancer screening with their doctor.",
+      "Breast cancer screening: Link is the same for this whole data source",
+      "Colorectal cancer screening: I\u2019m not totally sure if it meets the definition you\u2019re looking for, but it could meet that definition. For example, HINTS doesn\u2019t have lung cancer screening, but it does have whether or not they discussed lung cancer screening with their doctor."
+    ],
     "source_documents": [
       {
-        "name": "HCI extract worksheet",
+        "name": "NHIS worksheet",
         "type": "spreadsheet",
-        "stale": false
+        "worksheet": "NHIS"
+      },
+      {
+        "name": "NHIS reference",
+        "type": "reference",
+        "url": "https://www.cdc.gov/nchs/nhis/documentation/index.html"
       }
     ]
+  },
+  {
+    "source_id": "ocoe",
+    "display_name": "OCOE",
+    "short_description": "",
+    "source_type": "",
+    "update_frequency": "",
+    "domains": [
+      "Health behaviors"
+    ],
+    "geographic_levels": [],
+    "available_years": [],
+    "year_start": null,
+    "year_end": null,
+    "year_notes": "",
+    "source_systems": [],
+    "provenance": {
+      "display_name": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "domains": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "review_status": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      }
+    },
+    "confidence": "",
+    "review_status": "draft",
+    "last_observed_at": "",
+    "last_reviewed_at": "",
+    "notes": [],
+    "caveats": [],
+    "source_documents": []
+  },
+  {
+    "source_id": "shape-derived",
+    "display_name": "SHAPE-derived",
+    "short_description": "",
+    "source_type": "",
+    "update_frequency": "",
+    "domains": [
+      "Clinical trials",
+      "Health care access",
+      "Social determinants of health"
+    ],
+    "geographic_levels": [],
+    "available_years": [],
+    "year_start": null,
+    "year_end": null,
+    "year_notes": "",
+    "source_systems": [],
+    "provenance": {
+      "display_name": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "domains": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "review_status": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "source_documents": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      }
+    },
+    "confidence": "",
+    "review_status": "draft",
+    "last_observed_at": "",
+    "last_reviewed_at": "",
+    "notes": [],
+    "caveats": [],
+    "source_documents": [
+      {
+        "name": "SHAPE-derived worksheet",
+        "type": "spreadsheet",
+        "worksheet": "SHAPE-derived"
+      }
+    ]
+  },
+  {
+    "source_id": "svi",
+    "display_name": "SVI",
+    "short_description": "",
+    "source_type": "",
+    "update_frequency": "",
+    "domains": [
+      "Social determinants of health"
+    ],
+    "geographic_levels": [],
+    "available_years": [],
+    "year_start": null,
+    "year_end": null,
+    "year_notes": "",
+    "source_systems": [],
+    "provenance": {
+      "display_name": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "domains": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "review_status": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      }
+    },
+    "confidence": "",
+    "review_status": "draft",
+    "last_observed_at": "",
+    "last_reviewed_at": "",
+    "notes": [],
+    "caveats": [],
+    "source_documents": []
+  },
+  {
+    "source_id": "usda",
+    "display_name": "USDA",
+    "short_description": "",
+    "source_type": "",
+    "update_frequency": "",
+    "domains": [
+      "Social determinants of health"
+    ],
+    "geographic_levels": [],
+    "available_years": [],
+    "year_start": null,
+    "year_end": null,
+    "year_notes": "",
+    "source_systems": [],
+    "provenance": {
+      "display_name": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "domains": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      },
+      "review_status": {
+        "source": "spreadsheet",
+        "detail": "imported reference metadata"
+      }
+    },
+    "confidence": "",
+    "review_status": "draft",
+    "last_observed_at": "",
+    "last_reviewed_at": "",
+    "notes": [],
+    "caveats": [],
+    "source_documents": []
   }
 ]

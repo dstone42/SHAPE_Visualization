@@ -1,14 +1,32 @@
 from __future__ import annotations
 
 import json
+import os
 import tempfile
 import unittest
+from html import escape
 from pathlib import Path
+from zipfile import ZipFile
 
 from shape_metadata.pipeline import run_pipeline
 
 
 class PipelineTest(unittest.TestCase):
+    def setUp(self) -> None:
+        self._saved_env = {
+            key: os.environ.get(key)
+            for key in ("SHAPE_IMPORTED_SNAPSHOT", "SHAPE_CODEBOOK_SNAPSHOT", "SHAPE_OBSERVED_SNAPSHOT")
+        }
+        for key in self._saved_env:
+            os.environ.pop(key, None)
+
+    def tearDown(self) -> None:
+        for key in ("SHAPE_IMPORTED_SNAPSHOT", "SHAPE_CODEBOOK_SNAPSHOT", "SHAPE_OBSERVED_SNAPSHOT"):
+            os.environ.pop(key, None)
+        for key, value in self._saved_env.items():
+            if value is not None:
+                os.environ[key] = value
+
     def test_pipeline_builds_artifacts_and_warnings(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
@@ -141,8 +159,180 @@ class PipelineTest(unittest.TestCase):
             self.assertIn('id="shapeMetadata"', index_html)
             self.assertEqual(metadata["records"][0]["domains"], ["Rurality"])
 
+    def test_pipeline_loads_env_and_parses_xlsx_import(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            (root / "data" / "inputs").mkdir(parents=True)
+
+            workbook_path = root / "data" / "inputs" / "imported_snapshot.xlsx"
+            self._write_test_workbook(
+                workbook_path,
+                {
+                    "Current state of SHAPE": [
+                        ["Health Assessment Domain", "Base Measure", "In SHAPE?", "Sources Currently in SHAPE", "Sources Planned or Active work in SHAPE", "Sources to be determined"],
+                        ["", "Health behaviors", "", "", "", ""],
+                        ["", "Breast cancer screening", "Yes", "BRFSS", "CMS", ""],
+                        ["", "Confidence in getting cancer information", "Yes", "HINTS**", "", ""],
+                        ["**", "The measure is in the dataset but did not create a stable enough measure to pass the QC.", "", "", "", ""],
+                    ],
+                    "Domains by data source": [
+                        ["", "BRFSS", "CMS", "HINTS"],
+                        ["Lowest geographic level", "State/County", "County", "State"],
+                        ["Has PHI?", "", "Yes", ""],
+                        ["Health behaviors", "", "", ""],
+                        ["Breast cancer screening", "Yes", "", "Yes"],
+                        ["Confidence in getting cancer information", "", "", "Yes"],
+                    ],
+                    "BRFFS": [
+                        ["Base Measure", "How does the source answer the domain? (ie. question)", "Years Included", "Link"],
+                        ["Health behaviors", "", "", ""],
+                        ["Breast cancer screening", "Women respondents aged 40+ who have had a mammogram in the past two years", "2022, 2023", "https://example.test/brfss"],
+                    ],
+                },
+            )
+
+            (root / ".env").write_text(
+                "SHAPE_IMPORTED_SNAPSHOT=data/inputs/imported_snapshot.xlsx\n",
+                encoding="utf-8",
+            )
+            self._write_json(
+                root / "data" / "reviewed_registry.json",
+                [
+                    {
+                        "source_id": "brfss",
+                        "display_name": "BRFSS",
+                        "domains": ["Health behaviors"],
+                        "review_status": "reviewed",
+                        "last_reviewed_at": "2026-03-25",
+                    }
+                ],
+            )
+            self._write_json(root / "data" / "inputs" / "observed_sample.json", [])
+
+            outputs = run_pipeline(root)
+            imported = json.loads((outputs["artifacts_dir"] / "imported_metadata.json").read_text())
+            imported_by_id = {record["source_id"]: record for record in imported}
+
+            self.assertEqual(imported_by_id["brfss"]["available_years"], [2022, 2023])
+            self.assertEqual(imported_by_id["brfss"]["geographic_levels"], ["County", "State"])
+            self.assertEqual(imported_by_id["brfss"]["domains"], ["Health behaviors"])
+            self.assertTrue(
+                any(document.get("worksheet") == "BRFFS" for document in imported_by_id["brfss"]["source_documents"])
+            )
+            self.assertTrue(
+                any(document.get("url") == "https://example.test/brfss" for document in imported_by_id["brfss"]["source_documents"])
+            )
+            self.assertNotIn("cms", imported_by_id)
+            self.assertTrue(
+                any("stable enough measure" in caveat for caveat in imported_by_id["hints"]["caveats"])
+            )
+
     def _write_json(self, path: Path, payload: object) -> None:
         path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+
+    def _write_test_workbook(self, path: Path, sheets: dict[str, list[list[str]]]) -> None:
+        with ZipFile(path, "w") as archive:
+            archive.writestr(
+                "[Content_Types].xml",
+                self._build_content_types_xml(len(sheets)),
+            )
+            archive.writestr(
+                "_rels/.rels",
+                """<?xml version="1.0" encoding="UTF-8"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+  <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/>
+</Relationships>
+""",
+            )
+            archive.writestr(
+                "xl/workbook.xml",
+                self._build_workbook_xml(list(sheets)),
+            )
+            archive.writestr(
+                "xl/_rels/workbook.xml.rels",
+                self._build_workbook_rels_xml(len(sheets)),
+            )
+
+            for index, (_, rows) in enumerate(sheets.items(), start=1):
+                archive.writestr(
+                    f"xl/worksheets/sheet{index}.xml",
+                    self._build_sheet_xml(rows),
+                )
+
+    def _build_content_types_xml(self, sheet_count: int) -> str:
+        overrides = [
+            '<Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>'
+        ]
+        for index in range(1, sheet_count + 1):
+            overrides.append(
+                f'<Override PartName="/xl/worksheets/sheet{index}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>'
+            )
+        joined = "\n  ".join(overrides)
+        return f"""<?xml version="1.0" encoding="UTF-8"?>
+<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
+  <Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>
+  <Default Extension="xml" ContentType="application/xml"/>
+  {joined}
+</Types>
+"""
+
+    def _build_workbook_xml(self, sheet_names: list[str]) -> str:
+        sheets_xml = []
+        for index, name in enumerate(sheet_names, start=1):
+            sheets_xml.append(
+                f'<sheet name="{escape(name, quote=True)}" sheetId="{index}" r:id="rId{index}"/>'
+            )
+        joined = "\n    ".join(sheets_xml)
+        return f"""<?xml version="1.0" encoding="UTF-8"?>
+<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"
+          xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">
+  <sheets>
+    {joined}
+  </sheets>
+</workbook>
+"""
+
+    def _build_workbook_rels_xml(self, sheet_count: int) -> str:
+        relationships = []
+        for index in range(1, sheet_count + 1):
+            relationships.append(
+                f'<Relationship Id="rId{index}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet{index}.xml"/>'
+            )
+        joined = "\n  ".join(relationships)
+        return f"""<?xml version="1.0" encoding="UTF-8"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+  {joined}
+</Relationships>
+"""
+
+    def _build_sheet_xml(self, rows: list[list[str]]) -> str:
+        row_xml = []
+        for row_number, values in enumerate(rows, start=1):
+            cells = []
+            for column_index, value in enumerate(values, start=1):
+                if value == "":
+                    continue
+                ref = f"{self._column_name(column_index)}{row_number}"
+                cells.append(
+                    f'<c r="{ref}" t="inlineStr"><is><t>{escape(value)}</t></is></c>'
+                )
+            row_xml.append(f'<row r="{row_number}">{"".join(cells)}</row>')
+        joined = "\n    ".join(row_xml)
+        return f"""<?xml version="1.0" encoding="UTF-8"?>
+<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
+  <sheetData>
+    {joined}
+  </sheetData>
+</worksheet>
+"""
+
+    def _column_name(self, index: int) -> str:
+        name = ""
+        current = index
+        while current:
+            current, remainder = divmod(current - 1, 26)
+            name = chr(65 + remainder) + name
+        return name
 
 
 if __name__ == "__main__":

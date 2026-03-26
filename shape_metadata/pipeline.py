@@ -6,7 +6,12 @@ from typing import Any, Iterable
 
 from .models import FieldProvenance, SourceRecord, ValidationWarning, normalize_years
 from .publish import generated_timestamp, publish_site, publish_validation_report
-from .sources import load_imported_records, load_observed_records, load_reviewed_registry
+from .sources import (
+    load_imported_records,
+    load_observed_records,
+    load_reviewed_registry,
+    load_runtime_environment,
+)
 
 STRUCTURAL_FIELDS = {
     "available_years",
@@ -42,6 +47,7 @@ TEXT_FIELDS = {
 
 def run_pipeline(root: Path) -> dict[str, Path]:
     root = root.resolve()
+    load_runtime_environment(root)
     observed_records = load_observed_records(root)
     imported_records = load_imported_records(root)
     reviewed_records = load_reviewed_registry(root)

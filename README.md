@@ -58,10 +58,20 @@ It defaults to table `shape_metadata_inventory`. Override with `SHAPE_SQLITE_TAB
 Supported modes:
 
 - `SHAPE_IMPORTED_SNAPSHOT=/path/to/file.json`
-- `SHAPE_IMPORTED_SNAPSHOT=/path/to/file.csv`
+- `SHAPE_IMPORTED_SNAPSHOT=/path/to/file.xlsx`
 - `BOX_DEVELOPER_TOKEN=...` and `BOX_FILE_ID=...`
 
-The Box adapter downloads a CSV or JSON file if `boxsdk` is installed in the runtime environment.
+The import layer now expects the spreadsheet in `.xlsx` form. The Box adapter downloads an Excel workbook by default, or JSON if `BOX_FILE_FORMAT=json` is set.
+
+### Local environment variables
+
+If a `.env` file exists at the workspace root, the pipeline loads it automatically before reading inputs.
+
+Example:
+
+```dotenv
+SHAPE_IMPORTED_SNAPSHOT=data/inputs/Metrics captured by database_ACTIVE.xlsx
+```
 
 ### Optional codebook import
 
