@@ -73,7 +73,7 @@ class PipelineTest(unittest.TestCase):
                 ],
             )
             self._write_json(
-                root / "data" / "inputs" / "observed_sample.json",
+                root / "data" / "inputs" / "observed_snapshot.json",
                 [
                     {
                         "source_id": "alpha",
@@ -102,7 +102,7 @@ class PipelineTest(unittest.TestCase):
                 ],
             )
             self._write_json(
-                root / "data" / "inputs" / "imported_sample.json",
+                root / "data" / "inputs" / "imported_snapshot.json",
                 [
                     {
                         "source_id": "alpha",
@@ -124,6 +124,8 @@ class PipelineTest(unittest.TestCase):
                     },
                 ],
             )
+            os.environ["SHAPE_OBSERVED_SNAPSHOT"] = str(root / "data" / "inputs" / "observed_snapshot.json")
+            os.environ["SHAPE_IMPORTED_SNAPSHOT"] = str(root / "data" / "inputs" / "imported_snapshot.json")
 
             outputs = run_pipeline(root)
 
@@ -162,9 +164,6 @@ class PipelineTest(unittest.TestCase):
                     }
                 ],
             )
-            self._write_json(root / "data" / "inputs" / "observed_sample.json", [])
-            self._write_json(root / "data" / "inputs" / "imported_sample.json", [])
-
             outputs = run_pipeline(root)
 
             app_js = (outputs["site_dir"] / "app.js").read_text()
@@ -226,8 +225,6 @@ class PipelineTest(unittest.TestCase):
                     }
                 ],
             )
-            self._write_json(root / "data" / "inputs" / "observed_sample.json", [])
-
             outputs = run_pipeline(root)
             imported = json.loads((outputs["artifacts_dir"] / "imported_metadata.json").read_text())
             imported_by_id = {record["source_id"]: record for record in imported}

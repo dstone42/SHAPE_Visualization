@@ -18,9 +18,9 @@ Running the pipeline generates:
 
 ## Default behavior
 
-Without credentials or source-specific configuration, the pipeline uses the seeded sample inputs in `data/inputs/` and the reviewed registry in `data/reviewed_registry.json`.
+Without source-specific configuration, the pipeline uses the reviewed registry in `data/reviewed_registry.json` and leaves the observed/imported layers empty.
 
-This makes the workspace immediately runnable while keeping the ingestion layer pluggable.
+This keeps the workspace runnable while requiring live sources or explicit snapshots for observed/imported data.
 
 ## Run
 

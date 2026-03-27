@@ -86,7 +86,7 @@ def load_observed_records(root: Path) -> list[SourceRecord]:
     if os.environ.get("SHAPE_MSSQL_USER") and os.environ.get("SHAPE_MSSQL_PASSWORD"):
         return _load_mssql_shape_doc_records()
 
-    return _load_json_records(root / "data" / "inputs" / "observed_sample.json")
+    return []
 
 
 def load_imported_records(root: Path) -> list[SourceRecord]:
@@ -96,7 +96,7 @@ def load_imported_records(root: Path) -> list[SourceRecord]:
     elif os.environ.get("BOX_DEVELOPER_TOKEN") and os.environ.get("BOX_FILE_ID"):
         imported_records = _load_box_records()
     else:
-        imported_records = _load_json_records(root / "data" / "inputs" / "imported_sample.json")
+        imported_records = []
 
     codebook_path = os.environ.get("SHAPE_CODEBOOK_SNAPSHOT")
     if codebook_path:
