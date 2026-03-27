@@ -41,17 +41,29 @@ python3 -m shape_metadata --root .
 Supported modes:
 
 - `SHAPE_OBSERVED_SNAPSHOT=/path/to/file.json`
-- `SHAPE_SQLITE_PATH=/path/to/file.sqlite`
+- `SHAPE_MSSQL_USER=...` and `SHAPE_MSSQL_PASSWORD=...`
 
-If `SHAPE_SQLITE_PATH` is set, the loader expects a table with rows that can be grouped by source:
+If the SQL Server credentials are set, the loader connects to the `SHAPE` database on host `HCI-DB`
+by default and reads schema-level documentation rows from `adm.shapeDoc`.
 
-- `source_id`
-- `display_name` (optional)
-- `year` (optional)
-- `geographic_level` (optional)
-- `source_system` (optional)
+Expected columns in `adm.shapeDoc`:
 
-It defaults to table `shape_metadata_inventory`. Override with `SHAPE_SQLITE_TABLE`.
+- `schema`
+- `table`
+- `column`
+- `description`
+- `updated_at`
+
+For now, the loader only uses rows where `table` and `column` are null, which treats each schema row as
+source-level documentation. Override the defaults with:
+
+- `SHAPE_MSSQL_HOST`
+- `SHAPE_MSSQL_DATABASE`
+- `SHAPE_MSSQL_TABLE`
+- `SHAPE_MSSQL_DRIVER`
+- `SHAPE_MSSQL_DRIVER_PATH`
+- `SHAPE_MSSQL_ENCRYPT`
+- `SHAPE_MSSQL_TRUST_SERVER_CERTIFICATE`
 
 ### Imported metadata
 
@@ -71,6 +83,13 @@ Example:
 
 ```dotenv
 SHAPE_IMPORTED_SNAPSHOT=data/inputs/Metrics captured by database_ACTIVE.xlsx
+SHAPE_MSSQL_HOST=HCI-DB
+SHAPE_MSSQL_DATABASE=SHAPE
+SHAPE_MSSQL_DRIVER=/opt/homebrew/lib/libmsodbcsql.18.dylib
+SHAPE_MSSQL_ENCRYPT=no
+SHAPE_MSSQL_TRUST_SERVER_CERTIFICATE=yes
+SHAPE_MSSQL_USER=
+SHAPE_MSSQL_PASSWORD=
 ```
 
 ### Optional codebook import

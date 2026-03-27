@@ -540,6 +540,22 @@ body {
   line-height: 1.6;
 }
 
+.card-description {
+  margin: 12px 0 0;
+}
+
+.card-description.is-collapsed {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+}
+
+.card-description-toggle {
+  margin-top: 8px;
+  margin-bottom: 20px;
+}
+
 .badge-row,
 .meta-list,
 .provenance-list {
@@ -778,6 +794,21 @@ function bindControls() {
       filterDrawer.open = false;
     }
   });
+
+  document.addEventListener("click", (event) => {
+    const toggle = event.target.closest("[data-description-toggle]");
+    if (!toggle) {
+      return;
+    }
+    const targetId = toggle.getAttribute("data-description-toggle");
+    const description = document.getElementById(targetId);
+    if (!description) {
+      return;
+    }
+    const isCollapsed = description.classList.toggle("is-collapsed");
+    toggle.textContent = isCollapsed ? "Show more" : "Show less";
+    toggle.setAttribute("aria-expanded", String(!isCollapsed));
+  });
 }
 
 function renderShell(dataset) {
@@ -941,12 +972,16 @@ function renderCard(record) {
     ? `${record.year_start} to ${record.year_end}`
     : "Unavailable";
   const detailSummary = buildDetailSummary(record);
+  const description = record.short_description || "No description yet.";
+  const descriptionId = `description-${escapeHtml(record.source_id)}`;
+  const shouldClamp = shouldClampDescription(description);
 
   return `
     <article class="card">
       <p class="eyebrow">${escapeHtml(record.source_type || "source")}</p>
       <h2>${escapeHtml(record.display_name || record.source_id)}</h2>
-      <p>${escapeHtml(record.short_description || "No description yet.")}</p>
+      <p id="${descriptionId}" class="card-description${shouldClamp ? " is-collapsed" : ""}">${escapeHtml(description)}</p>
+      ${shouldClamp ? `<button type="button" class="text-button card-description-toggle" data-description-toggle="${descriptionId}" aria-expanded="false">Show more</button>` : ""}
       <div class="badge-row">
         ${(record.domains || []).map((domain) => `<span class="badge">${escapeHtml(domain)}</span>`).join("")}
       </div>
@@ -1039,6 +1074,13 @@ function buildDetailSummary(record) {
     summaryBits.push("refresh info");
   }
   return summaryBits.join(" | ");
+}
+
+function shouldClampDescription(value) {
+  if (!value) {
+    return false;
+  }
+  return value.length > 280 || value.includes("\\n");
 }
 
 function renderTable(records) {

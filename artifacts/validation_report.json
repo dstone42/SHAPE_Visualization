@@ -12,6 +12,16 @@
   {
     "code": "needs_review",
     "severity": "info",
+    "source_id": "adi",
+    "message": "Source is not yet marked as reviewed.",
+    "field": "review_status",
+    "details": {
+      "review_status": "draft"
+    }
+  },
+  {
+    "code": "needs_review",
+    "severity": "info",
     "source_id": "ahar",
     "message": "Source is not yet marked as reviewed.",
     "field": "review_status",
@@ -23,6 +33,16 @@
     "code": "needs_review",
     "severity": "info",
     "source_id": "ccsg",
+    "message": "Source is not yet marked as reviewed.",
+    "field": "review_status",
+    "details": {
+      "review_status": "draft"
+    }
+  },
+  {
+    "code": "needs_review",
+    "severity": "info",
+    "source_id": "census",
     "message": "Source is not yet marked as reviewed.",
     "field": "review_status",
     "details": {
@@ -152,6 +172,16 @@
   {
     "code": "needs_review",
     "severity": "info",
+    "source_id": "imfac",
+    "message": "Source is not yet marked as reviewed.",
+    "field": "review_status",
+    "details": {
+      "review_status": "draft"
+    }
+  },
+  {
+    "code": "needs_review",
+    "severity": "info",
     "source_id": "nhis",
     "message": "Source is not yet marked as reviewed.",
     "field": "review_status",
@@ -163,6 +193,26 @@
     "code": "needs_review",
     "severity": "info",
     "source_id": "ocoe",
+    "message": "Source is not yet marked as reviewed.",
+    "field": "review_status",
+    "details": {
+      "review_status": "draft"
+    }
+  },
+  {
+    "code": "needs_review",
+    "severity": "info",
+    "source_id": "ruca",
+    "message": "Source is not yet marked as reviewed.",
+    "field": "review_status",
+    "details": {
+      "review_status": "draft"
+    }
+  },
+  {
+    "code": "needs_review",
+    "severity": "info",
+    "source_id": "rurality",
     "message": "Source is not yet marked as reviewed.",
     "field": "review_status",
     "details": {
@@ -192,12 +242,56 @@
   {
     "code": "needs_review",
     "severity": "info",
+    "source_id": "tt",
+    "message": "Source is not yet marked as reviewed.",
+    "field": "review_status",
+    "details": {
+      "review_status": "draft"
+    }
+  },
+  {
+    "code": "needs_review",
+    "severity": "info",
     "source_id": "usda",
     "message": "Source is not yet marked as reviewed.",
     "field": "review_status",
     "details": {
       "review_status": "draft"
     }
+  },
+  {
+    "code": "needs_review",
+    "severity": "info",
+    "source_id": "vcaa",
+    "message": "Source is not yet marked as reviewed.",
+    "field": "review_status",
+    "details": {
+      "review_status": "draft"
+    }
+  },
+  {
+    "code": "missing_reviewed_registry_entry",
+    "severity": "warning",
+    "source_id": "acs",
+    "message": "Source was observed or imported but is missing from the reviewed registry.",
+    "field": null,
+    "details": {}
+  },
+  {
+    "code": "missing_reviewed_registry_entry",
+    "severity": "warning",
+    "source_id": "adi",
+    "message": "Source was observed or imported but is missing from the reviewed registry.",
+    "field": null,
+    "details": {}
+  },
+  {
+    "code": "missing_reviewed_registry_entry",
+    "severity": "warning",
+    "source_id": "ahar",
+    "message": "Source was observed or imported but is missing from the reviewed registry.",
+    "field": null,
+    "details": {}
   },
   {
     "code": "domain_mismatch",
@@ -221,5 +315,117 @@
         "Lung cancer screening"
       ]
     }
+  },
+  {
+    "code": "missing_reviewed_registry_entry",
+    "severity": "warning",
+    "source_id": "census",
+    "message": "Source was observed or imported but is missing from the reviewed registry.",
+    "field": null,
+    "details": {}
+  },
+  {
+    "code": "missing_reviewed_registry_entry",
+    "severity": "warning",
+    "source_id": "chas",
+    "message": "Source was observed or imported but is missing from the reviewed registry.",
+    "field": null,
+    "details": {}
+  },
+  {
+    "code": "missing_reviewed_registry_entry",
+    "severity": "warning",
+    "source_id": "cif",
+    "message": "Source was observed or imported but is missing from the reviewed registry.",
+    "field": null,
+    "details": {}
+  },
+  {
+    "code": "missing_reviewed_registry_entry",
+    "severity": "warning",
+    "source_id": "epa",
+    "message": "Source was observed or imported but is missing from the reviewed registry.",
+    "field": null,
+    "details": {}
+  },
+  {
+    "code": "missing_reviewed_registry_entry",
+    "severity": "warning",
+    "source_id": "fcc",
+    "message": "Source was observed or imported but is missing from the reviewed registry.",
+    "field": null,
+    "details": {}
+  },
+  {
+    "code": "missing_reviewed_registry_entry",
+    "severity": "warning",
+    "source_id": "hints",
+    "message": "Source was observed or imported but is missing from the reviewed registry.",
+    "field": null,
+    "details": {}
+  },
+  {
+    "code": "missing_reviewed_registry_entry",
+    "severity": "warning",
+    "source_id": "imfac",
+    "message": "Source was observed or imported but is missing from the reviewed registry.",
+    "field": null,
+    "details": {}
+  },
+  {
+    "code": "missing_reviewed_registry_entry",
+    "severity": "warning",
+    "source_id": "nhis",
+    "message": "Source was observed or imported but is missing from the reviewed registry.",
+    "field": null,
+    "details": {}
+  },
+  {
+    "code": "missing_reviewed_registry_entry",
+    "severity": "warning",
+    "source_id": "ruca",
+    "message": "Source was observed or imported but is missing from the reviewed registry.",
+    "field": null,
+    "details": {}
+  },
+  {
+    "code": "missing_reviewed_registry_entry",
+    "severity": "warning",
+    "source_id": "rurality",
+    "message": "Source was observed or imported but is missing from the reviewed registry.",
+    "field": null,
+    "details": {}
+  },
+  {
+    "code": "missing_reviewed_registry_entry",
+    "severity": "warning",
+    "source_id": "svi",
+    "message": "Source was observed or imported but is missing from the reviewed registry.",
+    "field": null,
+    "details": {}
+  },
+  {
+    "code": "missing_reviewed_registry_entry",
+    "severity": "warning",
+    "source_id": "tt",
+    "message": "Source was observed or imported but is missing from the reviewed registry.",
+    "field": null,
+    "details": {}
+  },
+  {
+    "code": "missing_reviewed_registry_entry",
+    "severity": "warning",
+    "source_id": "usda",
+    "message": "Source was observed or imported but is missing from the reviewed registry.",
+    "field": null,
+    "details": {}
+  },
+  {
+    "code": "missing_reviewed_registry_entry",
+    "severity": "warning",
+    "source_id": "vcaa",
+    "message": "Source was observed or imported but is missing from the reviewed registry.",
+    "field": null,
+    "details": {}
   }
 ]

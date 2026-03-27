@@ -348,6 +348,22 @@ body {
   line-height: 1.6;
 }
 
+.card-description {
+  margin: 12px 0 0;
+}
+
+.card-description.is-collapsed {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+}
+
+.card-description-toggle {
+  margin-top: 8px;
+  margin-bottom: 20px;
+}
+
 .badge-row,
 .meta-list,
 .provenance-list {

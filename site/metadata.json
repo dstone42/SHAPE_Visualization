@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-03-26T10:42:01-06:00",
+  "generated_at": "2026-03-27T09:23:28-06:00",
   "records": [
     {
       "source_id": "acs",
       "display_name": "ACS",
-      "short_description": "",
+      "short_description": "American Community Survey (ACS) contains base population data. It collects similar data to the census but is run every year, so it has more up to date data but is slightly less accurate due to being a survey rather than a census. We pull a selection of variables relating to demographics, insurance, education, poverty, veteran status, etc.. The same variables can be available at different geographic levels (for example, DemographicState5YR2023 is also available for county and census tract). The estimates can be obtained on different years, so the year is listed in the table name. As indicated on each table, we only obtained 5-year estimates although ACS provides other windows.",
       "source_type": "",
       "update_frequency": "",
       "domains": [
@@ -21,7 +21,9 @@
       "year_start": 2022,
       "year_end": 2022,
       "year_notes": "Access to internet: 2022 (5 year cycle)\nFinancial toxicity*: 2022 (5 year cycle)\nFood insecurity: 2022 (5 year cycle)\nInsurance type: 2022 (5 year cycle)\nPersons below 150% of poverty, 2017-2021: 2022 (5 year cycle)",
-      "source_systems": [],
+      "source_systems": [
+        "MS SQL Server"
+      ],
       "provenance": {
         "available_years": {
           "source": "spreadsheet",
@@ -39,13 +41,28 @@
           "source": "spreadsheet",
           "detail": "imported reference metadata"
         },
+        "last_observed_at": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
         "review_status": {
           "source": "spreadsheet",
           "detail": "imported reference metadata"
         },
+        "short_description": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
         "source_documents": {
           "source": "spreadsheet",
           "detail": "imported reference metadata"
+        },
+        "source_systems": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
         },
         "year_end": {
           "source": "spreadsheet",
@@ -62,7 +79,7 @@
       },
       "confidence": "",
       "review_status": "draft",
-      "last_observed_at": "",
+      "last_observed_at": "2026-03-26T21:09:13",
       "last_reviewed_at": "",
       "notes": [],
       "caveats": [],
@@ -85,9 +102,59 @@
       ]
     },
     {
+      "source_id": "adi",
+      "display_name": "ADI",
+      "short_description": "Area Deprivation Index (ADI) ranks neighborhoods by socioeconomic disadvantage (the higher the rank, the more disadvantaged) within each state and within the whole nation. We currently only have one table for ADI for 2022 at the geographic level of the census block group, but others could be obtained.",
+      "source_type": "",
+      "update_frequency": "",
+      "domains": [],
+      "geographic_levels": [],
+      "available_years": [],
+      "year_start": null,
+      "year_end": null,
+      "year_notes": "",
+      "source_systems": [
+        "MS SQL Server"
+      ],
+      "provenance": {
+        "display_name": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "last_observed_at": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "review_status": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "short_description": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "source_systems": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        }
+      },
+      "confidence": "",
+      "review_status": "draft",
+      "last_observed_at": "2026-03-26T21:09:13",
+      "last_reviewed_at": "",
+      "notes": [],
+      "caveats": [],
+      "source_documents": []
+    },
+    {
       "source_id": "ahar",
       "display_name": "AHAR",
-      "short_description": "",
+      "short_description": "Annual Homeless Assessment Report (AHAR) reports homelessness across the US. It breaks down homelessness by many different factors. It's available at the state and national level for a few different years.",
       "source_type": "",
       "update_frequency": "",
       "domains": [
@@ -98,7 +165,9 @@
       "year_start": null,
       "year_end": null,
       "year_notes": "",
-      "source_systems": [],
+      "source_systems": [
+        "MS SQL Server"
+      ],
       "provenance": {
         "display_name": {
           "source": "spreadsheet",
@@ -108,14 +177,29 @@
           "source": "spreadsheet",
           "detail": "imported reference metadata"
         },
+        "last_observed_at": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
         "review_status": {
           "source": "spreadsheet",
           "detail": "imported reference metadata"
+        },
+        "short_description": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "source_systems": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
         }
       },
       "confidence": "",
       "review_status": "draft",
-      "last_observed_at": "",
+      "last_observed_at": "2026-03-26T21:09:13",
       "last_reviewed_at": "",
       "notes": [],
       "caveats": [],
@@ -150,13 +234,13 @@
       "year_end": 2024,
       "year_notes": "Coverage varies by geography and by domain across years.",
       "source_systems": [
-        "CDC BRFSS"
+        "MS SQL Server"
       ],
       "provenance": {
         "available_years": {
-          "source": "database",
-          "detail": "observed metadata",
-          "timestamp": "2026-03-25T08:17:00-06:00"
+          "source": "manual",
+          "detail": "reviewed registry",
+          "timestamp": "2026-03-25"
         },
         "caveats": {
           "source": "manual",
@@ -179,14 +263,14 @@
           "timestamp": "2026-03-25"
         },
         "geographic_levels": {
-          "source": "database",
-          "detail": "observed metadata",
-          "timestamp": "2026-03-25T08:17:00-06:00"
+          "source": "manual",
+          "detail": "reviewed registry",
+          "timestamp": "2026-03-25"
         },
         "last_observed_at": {
           "source": "database",
           "detail": "observed metadata",
-          "timestamp": "2026-03-25T08:17:00-06:00"
+          "timestamp": "2026-03-26T21:09:13"
         },
         "last_reviewed_at": {
           "source": "manual",
@@ -215,7 +299,7 @@
         "source_systems": {
           "source": "database",
           "detail": "observed metadata",
-          "timestamp": "2026-03-25T08:17:00-06:00"
+          "timestamp": "2026-03-26T21:09:13"
         },
         "source_type": {
           "source": "manual",
@@ -228,9 +312,9 @@
           "timestamp": "2026-03-25"
         },
         "year_end": {
-          "source": "database",
-          "detail": "observed metadata",
-          "timestamp": "2026-03-25T08:17:00-06:00"
+          "source": "manual",
+          "detail": "reviewed registry",
+          "timestamp": "2026-03-25"
         },
         "year_notes": {
           "source": "manual",
@@ -238,14 +322,14 @@
           "timestamp": "2026-03-25"
         },
         "year_start": {
-          "source": "database",
-          "detail": "observed metadata",
-          "timestamp": "2026-03-25T08:17:00-06:00"
+          "source": "manual",
+          "detail": "reviewed registry",
+          "timestamp": "2026-03-25"
         }
       },
       "confidence": "medium",
       "review_status": "reviewed",
-      "last_observed_at": "2026-03-25T08:17:00-06:00",
+      "last_observed_at": "2026-03-26T21:09:13",
       "last_reviewed_at": "2026-03-25",
       "notes": [
         "The reviewed registry keeps SHAPE-facing domain labels even when the import source uses denser spreadsheet terminology."
@@ -320,9 +404,59 @@
       ]
     },
     {
+      "source_id": "census",
+      "display_name": "Census",
+      "short_description": "The US Census data covers demographic data. We pull a few variables from the 2020 census for some base population measures (age, race and ethnicity, etc.). It is preferred to use the ACS data when possible because it's more recent. Additionally, the census data has FIPS codes which are unique geographic identifiers for each state, county, census tract, and so on. This is a rare case where a table from this schema could be joined with a table from another schema if that table uses a FIPS code instead of a name.",
+      "source_type": "",
+      "update_frequency": "",
+      "domains": [],
+      "geographic_levels": [],
+      "available_years": [],
+      "year_start": null,
+      "year_end": null,
+      "year_notes": "",
+      "source_systems": [
+        "MS SQL Server"
+      ],
+      "provenance": {
+        "display_name": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "last_observed_at": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "review_status": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "short_description": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "source_systems": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        }
+      },
+      "confidence": "",
+      "review_status": "draft",
+      "last_observed_at": "2026-03-26T21:09:13",
+      "last_reviewed_at": "",
+      "notes": [],
+      "caveats": [],
+      "source_documents": []
+    },
+    {
       "source_id": "chas",
       "display_name": "CHAS",
-      "short_description": "",
+      "short_description": "Community Health Assessment Survey (CHAS) is a survey conducted by HCI. It's specifically focused on gathering data on frontier populations, so it should not be used in general scenarios when survey data it covers is requested. It should only be used either when a survey variable it contains is asked for in the context of frontier areas or if the variable asked for is only available in the CHAS data and no other dataset.",
       "source_type": "",
       "update_frequency": "",
       "domains": [
@@ -342,7 +476,9 @@
       "year_start": 2023,
       "year_end": 2023,
       "year_notes": "",
-      "source_systems": [],
+      "source_systems": [
+        "MS SQL Server"
+      ],
       "provenance": {
         "available_years": {
           "source": "spreadsheet",
@@ -364,6 +500,11 @@
           "source": "spreadsheet",
           "detail": "imported reference metadata"
         },
+        "last_observed_at": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
         "notes": {
           "source": "spreadsheet",
           "detail": "imported reference metadata"
@@ -372,9 +513,19 @@
           "source": "spreadsheet",
           "detail": "imported reference metadata"
         },
+        "short_description": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
         "source_documents": {
           "source": "spreadsheet",
           "detail": "imported reference metadata"
+        },
+        "source_systems": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
         },
         "year_end": {
           "source": "spreadsheet",
@@ -387,7 +538,7 @@
       },
       "confidence": "",
       "review_status": "draft",
-      "last_observed_at": "",
+      "last_observed_at": "2026-03-26T21:09:13",
       "last_reviewed_at": "",
       "notes": [
         "Workbook marks this source as containing PHI."
@@ -406,7 +557,7 @@
     {
       "source_id": "cif",
       "display_name": "CIF",
-      "short_description": "",
+      "short_description": "Cancer InFocus (CIF) is a broad dataset. It's built by another cancer center who has a similar database to SHAPE, so it contains a wide variety of data sources including cancer incidence and mortality, social determinants of health, behavioral and environmental risk factors, cancer screening, and many others.",
       "source_type": "",
       "update_frequency": "",
       "domains": [
@@ -435,7 +586,9 @@
       "year_start": 2015,
       "year_end": 2024,
       "year_notes": "Travel time to lung cancer screening: Live\nTravel time to nearest colonoscopy: Live\nTravel time to nearest mammography: Live",
-      "source_systems": [],
+      "source_systems": [
+        "MS SQL Server"
+      ],
       "provenance": {
         "available_years": {
           "source": "spreadsheet",
@@ -453,13 +606,28 @@
           "source": "spreadsheet",
           "detail": "imported reference metadata"
         },
+        "last_observed_at": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
         "review_status": {
           "source": "spreadsheet",
           "detail": "imported reference metadata"
         },
+        "short_description": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
         "source_documents": {
           "source": "spreadsheet",
           "detail": "imported reference metadata"
+        },
+        "source_systems": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
         },
         "year_end": {
           "source": "spreadsheet",
@@ -476,7 +644,7 @@
       },
       "confidence": "",
       "review_status": "draft",
-      "last_observed_at": "",
+      "last_observed_at": "2026-03-26T21:09:13",
       "last_reviewed_at": "",
       "notes": [],
       "caveats": [],
@@ -616,7 +784,7 @@
     {
       "source_id": "epa",
       "display_name": "EPA",
-      "short_description": "",
+      "short_description": "Environmental Protection Agency (EPA) has many data sources, but we only pull radon potential and air quality index (AQI).",
       "source_type": "",
       "update_frequency": "",
       "domains": [
@@ -633,7 +801,9 @@
       "year_start": 1980,
       "year_end": 2024,
       "year_notes": "Radon in area of residence: Not sure...",
-      "source_systems": [],
+      "source_systems": [
+        "MS SQL Server"
+      ],
       "provenance": {
         "available_years": {
           "source": "spreadsheet",
@@ -651,13 +821,28 @@
           "source": "spreadsheet",
           "detail": "imported reference metadata"
         },
+        "last_observed_at": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
         "review_status": {
           "source": "spreadsheet",
           "detail": "imported reference metadata"
         },
+        "short_description": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
         "source_documents": {
           "source": "spreadsheet",
           "detail": "imported reference metadata"
+        },
+        "source_systems": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
         },
         "year_end": {
           "source": "spreadsheet",
@@ -674,7 +859,7 @@
       },
       "confidence": "",
       "review_status": "draft",
-      "last_observed_at": "",
+      "last_observed_at": "2026-03-26T21:09:13",
       "last_reviewed_at": "",
       "notes": [],
       "caveats": [],
@@ -699,7 +884,7 @@
     {
       "source_id": "fcc",
       "display_name": "FCC",
-      "short_description": "",
+      "short_description": "Federal Communications Commission (FCC) provides data about broadband and mobile internet speeds. This gives us a proxy of people who can access telehealth.",
       "source_type": "",
       "update_frequency": "",
       "domains": [
@@ -712,7 +897,9 @@
       "year_start": 2023,
       "year_end": 2023,
       "year_notes": "",
-      "source_systems": [],
+      "source_systems": [
+        "MS SQL Server"
+      ],
       "provenance": {
         "available_years": {
           "source": "spreadsheet",
@@ -726,13 +913,28 @@
           "source": "spreadsheet",
           "detail": "imported reference metadata"
         },
+        "last_observed_at": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
         "review_status": {
           "source": "spreadsheet",
           "detail": "imported reference metadata"
         },
+        "short_description": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
         "source_documents": {
           "source": "spreadsheet",
           "detail": "imported reference metadata"
+        },
+        "source_systems": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
         },
         "year_end": {
           "source": "spreadsheet",
@@ -745,7 +947,7 @@
       },
       "confidence": "",
       "review_status": "draft",
-      "last_observed_at": "",
+      "last_observed_at": "2026-03-26T21:09:13",
       "last_reviewed_at": "",
       "notes": [],
       "caveats": [],
@@ -765,7 +967,7 @@
     {
       "source_id": "hints",
       "display_name": "HINTS",
-      "short_description": "",
+      "short_description": "Health Information National Trends Survey (HINTS) has similar data to BRFSS with the addition of information covering health perceptions and health communication. This survey is much smaller than BRFSS, so BRFSS is preferred when a variable is in both datasets.",
       "source_type": "",
       "update_frequency": "",
       "domains": [
@@ -788,7 +990,9 @@
       "year_start": 2017,
       "year_end": 2022,
       "year_notes": "Access to internet: 5 Cycle 4, 5 Cycle 3, 5 Cycle 2, 5 Cycle 1\nAccess to internet: 6\nAccess to internet: 6, 5 Cycle 4, 5 Cycle 3, 5 Cycle 2, 5 Cycle 1\nBelief in cancer prevention: 6, 5 Cycle 4, 5 Cycle 3, 5 Cycle 2, 5 Cycle 1\nBelief that everything causes cancer: 6, 5 Cycle 4, 5 Cycle 3, 5 Cycle 2, 5 Cycle 1\nCervical cancer screening: 6, 5 Cycle 4, 5 Cycle 3, 5 Cycle 2, 5 Cycle 1\nConfidence in getting cancer information: 5 Cycle 4, 5 Cycle 2\nFatalism and cancer: 6, 5 Cycle 4, 5 Cycle 3, 5 Cycle 2, 5 Cycle 1\nFatalism and cancer: I'm listing by cycle of HINTS rather than year. I'm only listing the cycles I pulled data from. Here are the years of each cycle: 6: 2022, 5 Cycle 4: 2020, 5 Cycle 3: 2019, 5 Cycle 2: 2018, 5 Cycle 1: 2017\nFood insecurity: 6\nHave you ever been asked to be in a clinical trial: 5 Cycle 4\nHealth information seeking sources used: 5 Cycle 4, 5 Cycle 2\nHousing instability: 6\nKnowledge: 5 Cycle 4\nLung cancer screening: 5 Cycle 4, 5 Cycle 1\nSun protection use: 5 Cycle 2\nSun protection use: 6, 5 Cycle 2\nTobacco use / smoking: 5 Cycle 1\nTobacco use / smoking: 5 Cycle 3\nTobacco use / smoking: 5 Cycle 4, 5 Cycle 3, 5 Cycle 2, 5 Cycle 1\nTobacco use / smoking: 6, 5 Cycle 4, 5 Cycle 3, 5 Cycle 2, 5 Cycle 1\nView on cancer prevention recommendations: 6, 5 Cycle 4, 5 Cycle 3, 5 Cycle 2, 5 Cycle 1\nwellbeing/mental health/emotional wellbeing: 6\nwellbeing/mental health/emotional wellbeing: 6, 5 Cycle 4, 5 Cycle 3, 5 Cycle 1\nwellbeing/mental health/emotional wellbeing: 6, 5 Cycle 4, 5 Cycle 3, 5 Cycle 2, 5 Cycle 1",
-      "source_systems": [],
+      "source_systems": [
+        "MS SQL Server"
+      ],
       "provenance": {
         "available_years": {
           "source": "spreadsheet",
@@ -810,6 +1014,11 @@
           "source": "spreadsheet",
           "detail": "imported reference metadata"
         },
+        "last_observed_at": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
         "notes": {
           "source": "spreadsheet",
           "detail": "imported reference metadata"
@@ -818,9 +1027,19 @@
           "source": "spreadsheet",
           "detail": "imported reference metadata"
         },
+        "short_description": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
         "source_documents": {
           "source": "spreadsheet",
           "detail": "imported reference metadata"
+        },
+        "source_systems": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
         },
         "year_end": {
           "source": "spreadsheet",
@@ -837,7 +1056,7 @@
       },
       "confidence": "",
       "review_status": "draft",
-      "last_observed_at": "",
+      "last_observed_at": "2026-03-26T21:09:13",
       "last_reviewed_at": "",
       "notes": [
         "Workbook marks this source as requiring an application."
@@ -936,6 +1155,56 @@
       ]
     },
     {
+      "source_id": "imfac",
+      "display_name": "IMFAC",
+      "short_description": "Integrated Metropolitan-to-Frontier Area Codes (IMFAC) classifies each census tract or county as metropolitan, micropolitan, noncore, or frontier. It is a new alternative to RUCA that is more expressive for areas like ours that have lots of frontier area. It uses FIPS codes, so it would need to be joined with another dataset to be interpretable.",
+      "source_type": "",
+      "update_frequency": "",
+      "domains": [],
+      "geographic_levels": [],
+      "available_years": [],
+      "year_start": null,
+      "year_end": null,
+      "year_notes": "",
+      "source_systems": [
+        "MS SQL Server"
+      ],
+      "provenance": {
+        "display_name": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "last_observed_at": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "review_status": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "short_description": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "source_systems": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        }
+      },
+      "confidence": "",
+      "review_status": "draft",
+      "last_observed_at": "2026-03-26T21:09:13",
+      "last_reviewed_at": "",
+      "notes": [],
+      "caveats": [],
+      "source_documents": []
+    },
+    {
       "source_id": "internal-hci-data",
       "display_name": "Internal HCI Data",
       "short_description": "Patient data for all HCI, HCI Registry, and treatment trials.",
@@ -966,14 +1235,13 @@
       "year_end": 2024,
       "year_notes": "Live data also contains the current year and pre-2019 records, but direct use of the live layer is not typical for SHAPE reporting.",
       "source_systems": [
-        "HCI Registry",
-        "Treatment Trials"
+        "MS SQL Server"
       ],
       "provenance": {
         "available_years": {
-          "source": "database",
-          "detail": "observed metadata",
-          "timestamp": "2026-03-25T08:15:00-06:00"
+          "source": "manual",
+          "detail": "reviewed registry",
+          "timestamp": "2026-03-25"
         },
         "caveats": {
           "source": "manual",
@@ -996,14 +1264,14 @@
           "timestamp": "2026-03-25"
         },
         "geographic_levels": {
-          "source": "database",
-          "detail": "observed metadata",
-          "timestamp": "2026-03-25T08:15:00-06:00"
+          "source": "manual",
+          "detail": "reviewed registry",
+          "timestamp": "2026-03-25"
         },
         "last_observed_at": {
           "source": "database",
           "detail": "observed metadata",
-          "timestamp": "2026-03-25T08:15:00-06:00"
+          "timestamp": "2026-03-26T21:09:13"
         },
         "last_reviewed_at": {
           "source": "manual",
@@ -1028,7 +1296,7 @@
         "source_systems": {
           "source": "database",
           "detail": "observed metadata",
-          "timestamp": "2026-03-25T08:15:00-06:00"
+          "timestamp": "2026-03-26T21:09:13"
         },
         "source_type": {
           "source": "manual",
@@ -1041,9 +1309,9 @@
           "timestamp": "2026-03-25"
         },
         "year_end": {
-          "source": "database",
-          "detail": "observed metadata",
-          "timestamp": "2026-03-25T08:15:00-06:00"
+          "source": "manual",
+          "detail": "reviewed registry",
+          "timestamp": "2026-03-25"
         },
         "year_notes": {
           "source": "manual",
@@ -1051,14 +1319,14 @@
           "timestamp": "2026-03-25"
         },
         "year_start": {
-          "source": "database",
-          "detail": "observed metadata",
-          "timestamp": "2026-03-25T08:15:00-06:00"
+          "source": "manual",
+          "detail": "reviewed registry",
+          "timestamp": "2026-03-25"
         }
       },
       "confidence": "high",
       "review_status": "reviewed",
-      "last_observed_at": "2026-03-25T08:15:00-06:00",
+      "last_observed_at": "2026-03-26T21:09:13",
       "last_reviewed_at": "2026-03-25",
       "notes": [
         "Domains listed here reflect SHAPE usage rather than the source's full variable inventory."
@@ -1071,7 +1339,7 @@
     {
       "source_id": "nhis",
       "display_name": "NHIS",
-      "short_description": "",
+      "short_description": "National Health Interview Survey (NHIS) contains survey data similar to HINTS and BRFSS. However, it does not have a geographic level more specific than census region, so it's the least preferred survey dataset.",
       "source_type": "",
       "update_frequency": "",
       "domains": [
@@ -1089,7 +1357,9 @@
       "year_start": 2023,
       "year_end": 2023,
       "year_notes": "Access to internet: I have not checked if any of these are available in more years yet. This is just the year I have gotten so far",
-      "source_systems": [],
+      "source_systems": [
+        "MS SQL Server"
+      ],
       "provenance": {
         "available_years": {
           "source": "spreadsheet",
@@ -1111,13 +1381,28 @@
           "source": "spreadsheet",
           "detail": "imported reference metadata"
         },
+        "last_observed_at": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
         "review_status": {
           "source": "spreadsheet",
           "detail": "imported reference metadata"
         },
+        "short_description": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
         "source_documents": {
           "source": "spreadsheet",
           "detail": "imported reference metadata"
+        },
+        "source_systems": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
         },
         "year_end": {
           "source": "spreadsheet",
@@ -1134,7 +1419,7 @@
       },
       "confidence": "",
       "review_status": "draft",
-      "last_observed_at": "",
+      "last_observed_at": "2026-03-26T21:09:13",
       "last_reviewed_at": "",
       "notes": [],
       "caveats": [
@@ -1193,6 +1478,106 @@
       "source_documents": []
     },
     {
+      "source_id": "ruca",
+      "display_name": "RUCA",
+      "short_description": "Rural-Urban Commuting Area (RUCA) classifies each census tract or zip code as rural, urban, etc.. This has been the standard in the field, but we prefer to use IMFAC unless specified. It uses FIPS codes, so it would need to be joined with another dataset to be interpretable.",
+      "source_type": "",
+      "update_frequency": "",
+      "domains": [],
+      "geographic_levels": [],
+      "available_years": [],
+      "year_start": null,
+      "year_end": null,
+      "year_notes": "",
+      "source_systems": [
+        "MS SQL Server"
+      ],
+      "provenance": {
+        "display_name": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "last_observed_at": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "review_status": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "short_description": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "source_systems": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        }
+      },
+      "confidence": "",
+      "review_status": "draft",
+      "last_observed_at": "2026-03-26T21:09:13",
+      "last_reviewed_at": "",
+      "notes": [],
+      "caveats": [],
+      "source_documents": []
+    },
+    {
+      "source_id": "rurality",
+      "display_name": "Rurality",
+      "short_description": "The rurality schema has one table that is the result of a research project to classify the rurality of census tracts. It is interesting, but typically IMFAC or RUCA is preferred.",
+      "source_type": "",
+      "update_frequency": "",
+      "domains": [],
+      "geographic_levels": [],
+      "available_years": [],
+      "year_start": null,
+      "year_end": null,
+      "year_notes": "",
+      "source_systems": [
+        "MS SQL Server"
+      ],
+      "provenance": {
+        "display_name": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "last_observed_at": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "review_status": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "short_description": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "source_systems": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        }
+      },
+      "confidence": "",
+      "review_status": "draft",
+      "last_observed_at": "2026-03-26T21:09:13",
+      "last_reviewed_at": "",
+      "notes": [],
+      "caveats": [],
+      "source_documents": []
+    },
+    {
       "source_id": "shape-derived",
       "display_name": "SHAPE-derived",
       "short_description": "",
@@ -1244,7 +1629,7 @@
     {
       "source_id": "svi",
       "display_name": "SVI",
-      "short_description": "",
+      "short_description": "Social Vulnerability Index (SVI) identifies communities vulnerable to public health crises. The overall index can be viewed, or one can look at more specific indexes giving interpretability to the overall index. It is available at the county, census tract, or zcta level.",
       "source_type": "",
       "update_frequency": "",
       "domains": [
@@ -1255,7 +1640,9 @@
       "year_start": null,
       "year_end": null,
       "year_notes": "",
-      "source_systems": [],
+      "source_systems": [
+        "MS SQL Server"
+      ],
       "provenance": {
         "display_name": {
           "source": "spreadsheet",
@@ -1265,14 +1652,79 @@
           "source": "spreadsheet",
           "detail": "imported reference metadata"
         },
+        "last_observed_at": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
         "review_status": {
           "source": "spreadsheet",
           "detail": "imported reference metadata"
+        },
+        "short_description": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "source_systems": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
         }
       },
       "confidence": "",
       "review_status": "draft",
-      "last_observed_at": "",
+      "last_observed_at": "2026-03-26T21:09:13",
+      "last_reviewed_at": "",
+      "notes": [],
+      "caveats": [],
+      "source_documents": []
+    },
+    {
+      "source_id": "tt",
+      "display_name": "TT",
+      "short_description": "Travel time (tt) schema contains travel time geometries around HCI and each of its affiliates. This can show on a map how long it might take for patients to access one of our facilities.",
+      "source_type": "",
+      "update_frequency": "",
+      "domains": [],
+      "geographic_levels": [],
+      "available_years": [],
+      "year_start": null,
+      "year_end": null,
+      "year_notes": "",
+      "source_systems": [
+        "MS SQL Server"
+      ],
+      "provenance": {
+        "display_name": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "last_observed_at": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "review_status": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "short_description": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "source_systems": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        }
+      },
+      "confidence": "",
+      "review_status": "draft",
+      "last_observed_at": "2026-03-26T21:09:13",
       "last_reviewed_at": "",
       "notes": [],
       "caveats": [],
@@ -1281,7 +1733,7 @@
     {
       "source_id": "usda",
       "display_name": "USDA",
-      "short_description": "",
+      "short_description": "US Department of Agriculture (USDA) has many data sources, but we only pull their data on poverty. This is the preferred data source for poverty. It is available at the county and census tract level.",
       "source_type": "",
       "update_frequency": "",
       "domains": [
@@ -1292,7 +1744,9 @@
       "year_start": null,
       "year_end": null,
       "year_notes": "",
-      "source_systems": [],
+      "source_systems": [
+        "MS SQL Server"
+      ],
       "provenance": {
         "display_name": {
           "source": "spreadsheet",
@@ -1302,14 +1756,79 @@
           "source": "spreadsheet",
           "detail": "imported reference metadata"
         },
+        "last_observed_at": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
         "review_status": {
           "source": "spreadsheet",
           "detail": "imported reference metadata"
+        },
+        "short_description": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "source_systems": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
         }
       },
       "confidence": "",
       "review_status": "draft",
-      "last_observed_at": "",
+      "last_observed_at": "2026-03-26T21:09:13",
+      "last_reviewed_at": "",
+      "notes": [],
+      "caveats": [],
+      "source_documents": []
+    },
+    {
+      "source_id": "vcaa",
+      "display_name": "VCAA",
+      "short_description": "Vaccination Coverage Among Adolescents (VCAA) is used for HPV vaccination data. This has data for many geographic levels, age ranges, and years but they are all contained in the single table. It was released in 2023, but it has historical data as well.",
+      "source_type": "",
+      "update_frequency": "",
+      "domains": [],
+      "geographic_levels": [],
+      "available_years": [],
+      "year_start": null,
+      "year_end": null,
+      "year_notes": "",
+      "source_systems": [
+        "MS SQL Server"
+      ],
+      "provenance": {
+        "display_name": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "last_observed_at": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "review_status": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "short_description": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "source_systems": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        }
+      },
+      "confidence": "",
+      "review_status": "draft",
+      "last_observed_at": "2026-03-26T21:09:13",
       "last_reviewed_at": "",
       "notes": [],
       "caveats": [],
@@ -1330,6 +1849,16 @@
     {
       "code": "needs_review",
       "severity": "info",
+      "source_id": "adi",
+      "message": "Source is not yet marked as reviewed.",
+      "field": "review_status",
+      "details": {
+        "review_status": "draft"
+      }
+    },
+    {
+      "code": "needs_review",
+      "severity": "info",
       "source_id": "ahar",
       "message": "Source is not yet marked as reviewed.",
       "field": "review_status",
@@ -1341,6 +1870,16 @@
       "code": "needs_review",
       "severity": "info",
       "source_id": "ccsg",
+      "message": "Source is not yet marked as reviewed.",
+      "field": "review_status",
+      "details": {
+        "review_status": "draft"
+      }
+    },
+    {
+      "code": "needs_review",
+      "severity": "info",
+      "source_id": "census",
       "message": "Source is not yet marked as reviewed.",
       "field": "review_status",
       "details": {
@@ -1470,6 +2009,16 @@
     {
       "code": "needs_review",
       "severity": "info",
+      "source_id": "imfac",
+      "message": "Source is not yet marked as reviewed.",
+      "field": "review_status",
+      "details": {
+        "review_status": "draft"
+      }
+    },
+    {
+      "code": "needs_review",
+      "severity": "info",
       "source_id": "nhis",
       "message": "Source is not yet marked as reviewed.",
       "field": "review_status",
@@ -1481,6 +2030,26 @@
       "code": "needs_review",
       "severity": "info",
       "source_id": "ocoe",
+      "message": "Source is not yet marked as reviewed.",
+      "field": "review_status",
+      "details": {
+        "review_status": "draft"
+      }
+    },
+    {
+      "code": "needs_review",
+      "severity": "info",
+      "source_id": "ruca",
+      "message": "Source is not yet marked as reviewed.",
+      "field": "review_status",
+      "details": {
+        "review_status": "draft"
+      }
+    },
+    {
+      "code": "needs_review",
+      "severity": "info",
+      "source_id": "rurality",
       "message": "Source is not yet marked as reviewed.",
       "field": "review_status",
       "details": {
@@ -1510,12 +2079,56 @@
     {
       "code": "needs_review",
       "severity": "info",
+      "source_id": "tt",
+      "message": "Source is not yet marked as reviewed.",
+      "field": "review_status",
+      "details": {
+        "review_status": "draft"
+      }
+    },
+    {
+      "code": "needs_review",
+      "severity": "info",
       "source_id": "usda",
       "message": "Source is not yet marked as reviewed.",
       "field": "review_status",
       "details": {
         "review_status": "draft"
       }
+    },
+    {
+      "code": "needs_review",
+      "severity": "info",
+      "source_id": "vcaa",
+      "message": "Source is not yet marked as reviewed.",
+      "field": "review_status",
+      "details": {
+        "review_status": "draft"
+      }
+    },
+    {
+      "code": "missing_reviewed_registry_entry",
+      "severity": "warning",
+      "source_id": "acs",
+      "message": "Source was observed or imported but is missing from the reviewed registry.",
+      "field": null,
+      "details": {}
+    },
+    {
+      "code": "missing_reviewed_registry_entry",
+      "severity": "warning",
+      "source_id": "adi",
+      "message": "Source was observed or imported but is missing from the reviewed registry.",
+      "field": null,
+      "details": {}
+    },
+    {
+      "code": "missing_reviewed_registry_entry",
+      "severity": "warning",
+      "source_id": "ahar",
+      "message": "Source was observed or imported but is missing from the reviewed registry.",
+      "field": null,
+      "details": {}
     },
     {
       "code": "domain_mismatch",
@@ -1539,6 +2152,118 @@
           "Lung cancer screening"
         ]
       }
+    },
+    {
+      "code": "missing_reviewed_registry_entry",
+      "severity": "warning",
+      "source_id": "census",
+      "message": "Source was observed or imported but is missing from the reviewed registry.",
+      "field": null,
+      "details": {}
+    },
+    {
+      "code": "missing_reviewed_registry_entry",
+      "severity": "warning",
+      "source_id": "chas",
+      "message": "Source was observed or imported but is missing from the reviewed registry.",
+      "field": null,
+      "details": {}
+    },
+    {
+      "code": "missing_reviewed_registry_entry",
+      "severity": "warning",
+      "source_id": "cif",
+      "message": "Source was observed or imported but is missing from the reviewed registry.",
+      "field": null,
+      "details": {}
+    },
+    {
+      "code": "missing_reviewed_registry_entry",
+      "severity": "warning",
+      "source_id": "epa",
+      "message": "Source was observed or imported but is missing from the reviewed registry.",
+      "field": null,
+      "details": {}
+    },
+    {
+      "code": "missing_reviewed_registry_entry",
+      "severity": "warning",
+      "source_id": "fcc",
+      "message": "Source was observed or imported but is missing from the reviewed registry.",
+      "field": null,
+      "details": {}
+    },
+    {
+      "code": "missing_reviewed_registry_entry",
+      "severity": "warning",
+      "source_id": "hints",
+      "message": "Source was observed or imported but is missing from the reviewed registry.",
+      "field": null,
+      "details": {}
+    },
+    {
+      "code": "missing_reviewed_registry_entry",
+      "severity": "warning",
+      "source_id": "imfac",
+      "message": "Source was observed or imported but is missing from the reviewed registry.",
+      "field": null,
+      "details": {}
+    },
+    {
+      "code": "missing_reviewed_registry_entry",
+      "severity": "warning",
+      "source_id": "nhis",
+      "message": "Source was observed or imported but is missing from the reviewed registry.",
+      "field": null,
+      "details": {}
+    },
+    {
+      "code": "missing_reviewed_registry_entry",
+      "severity": "warning",
+      "source_id": "ruca",
+      "message": "Source was observed or imported but is missing from the reviewed registry.",
+      "field": null,
+      "details": {}
+    },
+    {
+      "code": "missing_reviewed_registry_entry",
+      "severity": "warning",
+      "source_id": "rurality",
+      "message": "Source was observed or imported but is missing from the reviewed registry.",
+      "field": null,
+      "details": {}
+    },
+    {
+      "code": "missing_reviewed_registry_entry",
+      "severity": "warning",
+      "source_id": "svi",
+      "message": "Source was observed or imported but is missing from the reviewed registry.",
+      "field": null,
+      "details": {}
+    },
+    {
+      "code": "missing_reviewed_registry_entry",
+      "severity": "warning",
+      "source_id": "tt",
+      "message": "Source was observed or imported but is missing from the reviewed registry.",
+      "field": null,
+      "details": {}
+    },
+    {
+      "code": "missing_reviewed_registry_entry",
+      "severity": "warning",
+      "source_id": "usda",
+      "message": "Source was observed or imported but is missing from the reviewed registry.",
+      "field": null,
+      "details": {}
+    },
+    {
+      "code": "missing_reviewed_registry_entry",
+      "severity": "warning",
+      "source_id": "vcaa",
+      "message": "Source was observed or imported but is missing from the reviewed registry.",
+      "field": null,
+      "details": {}
     }
   ]
 }

@@ -24,9 +24,9 @@ This file is the local stand-in for issue tracking until the project is connecte
   - a simple SQLite table shape
 - The real SHAPE database introspection query has not been implemented yet.
 - The Box import path is scaffolded, but it still needs:
-  - real credentials at runtime
-  - the actual file ID
-  - field mapping for the real spreadsheet structure
+  - approval to use the Box SDK in the runtime environment
+  - working runtime credentials and the actual file ID
+  - final wiring from the Box download step into the pipeline
 - Codebook ingestion is only a simple structured merge right now.
 - There is no hosted issue tracker, remote repository, CI, or scheduled job yet.
 - The reviewed registry still contains seeded sample content based on the initial HTML and sample placeholders.
@@ -48,10 +48,15 @@ Definition of done:
 
 ## Issue 2: Map the Box spreadsheet into the imported metadata layer
 
-Status: Open
+Status: In progress
 
 Goal:
 Use the Box SDK path with the real spreadsheet and normalize its columns into `SourceRecord`.
+
+Current status:
+- The pipeline can now parse the real `.xlsx` workbook structure directly.
+- The workbook-to-`SourceRecord` mapping is implemented for the current spreadsheet layout.
+- The remaining blocker is Box SDK approval and runtime authentication, so the automatic download step is still pending.
 
 Definition of done:
 - The runtime can authenticate to Box.

@@ -9,19 +9,38 @@ from pathlib import Path
 from zipfile import ZipFile
 
 from shape_metadata.pipeline import run_pipeline
+from shape_metadata.sources import _shape_doc_rows_to_records
 
 
 class PipelineTest(unittest.TestCase):
     def setUp(self) -> None:
         self._saved_env = {
             key: os.environ.get(key)
-            for key in ("SHAPE_IMPORTED_SNAPSHOT", "SHAPE_CODEBOOK_SNAPSHOT", "SHAPE_OBSERVED_SNAPSHOT")
+            for key in (
+                "SHAPE_IMPORTED_SNAPSHOT",
+                "SHAPE_CODEBOOK_SNAPSHOT",
+                "SHAPE_OBSERVED_SNAPSHOT",
+                "SHAPE_MSSQL_USER",
+                "SHAPE_MSSQL_PASSWORD",
+                "SHAPE_MSSQL_HOST",
+                "SHAPE_MSSQL_DATABASE",
+                "SHAPE_MSSQL_TABLE",
+            )
         }
         for key in self._saved_env:
             os.environ.pop(key, None)
 
     def tearDown(self) -> None:
-        for key in ("SHAPE_IMPORTED_SNAPSHOT", "SHAPE_CODEBOOK_SNAPSHOT", "SHAPE_OBSERVED_SNAPSHOT"):
+        for key in (
+            "SHAPE_IMPORTED_SNAPSHOT",
+            "SHAPE_CODEBOOK_SNAPSHOT",
+            "SHAPE_OBSERVED_SNAPSHOT",
+            "SHAPE_MSSQL_USER",
+            "SHAPE_MSSQL_PASSWORD",
+            "SHAPE_MSSQL_HOST",
+            "SHAPE_MSSQL_DATABASE",
+            "SHAPE_MSSQL_TABLE",
+        ):
             os.environ.pop(key, None)
         for key, value in self._saved_env.items():
             if value is not None:
@@ -226,6 +245,53 @@ class PipelineTest(unittest.TestCase):
             self.assertTrue(
                 any("stable enough measure" in caveat for caveat in imported_by_id["hints"]["caveats"])
             )
+
+    def test_shape_doc_rows_map_schema_descriptions_to_sources(self) -> None:
+        records = _shape_doc_rows_to_records(
+            [
+                {
+                    "schema_name": "BRFSS",
+                    "table_name": None,
+                    "column_name": None,
+                    "description": "Behavioral Risk Factor Surveillance System schema.",
+                    "updated_at": "2026-03-27T08:15:00-06:00",
+                },
+                {
+                    "schema_name": "HCI",
+                    "table_name": None,
+                    "column_name": None,
+                    "description": "Internal HCI schema documentation.",
+                    "updated_at": "2026-03-27T08:20:00-06:00",
+                },
+                {
+                    "schema_name": "BRFSS",
+                    "table_name": "question",
+                    "column_name": None,
+                    "description": "Should be ignored because it is table-level documentation.",
+                    "updated_at": "2026-03-27T08:25:00-06:00",
+                },
+                {
+                    "schema_name": None,
+                    "table_name": None,
+                    "column_name": None,
+                    "description": "Database-level row should be ignored for now.",
+                    "updated_at": "2026-03-27T08:30:00-06:00",
+                },
+            ]
+        )
+
+        by_id = {record.source_id: record.to_dict() for record in records}
+        self.assertEqual(sorted(by_id), ["brfss", "internal-hci-data"])
+        self.assertEqual(
+            by_id["brfss"]["short_description"],
+            "Behavioral Risk Factor Surveillance System schema.",
+        )
+        self.assertEqual(
+            by_id["internal-hci-data"]["short_description"],
+            "Internal HCI schema documentation.",
+        )
+        self.assertEqual(by_id["brfss"]["source_systems"], ["MS SQL Server"])
+        self.assertEqual(by_id["brfss"]["last_observed_at"], "2026-03-27T08:15:00-06:00")
 
     def _write_json(self, path: Path, payload: object) -> None:
         path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")

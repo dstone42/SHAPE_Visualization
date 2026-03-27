@@ -4,8 +4,8 @@ import io
 import json
 import os
 import re
-import sqlite3
 from dataclasses import dataclass, field
+from datetime import date, datetime
 from pathlib import Path
 from typing import Any
 from zipfile import ZipFile
@@ -38,6 +38,10 @@ SOURCE_ALIASES: dict[str, tuple[str, str]] = {
     "fcc": ("fcc", "FCC"),
     "hints": ("hints", "HINTS"),
     "hpv vaccination coalition": ("hpv-vaccination-coalition", "HPV Vaccination Coalition"),
+    "internal hci": ("internal-hci-data", "Internal HCI Data"),
+    "internal hci data": ("internal-hci-data", "Internal HCI Data"),
+    "internal hci dataset": ("internal-hci-data", "Internal HCI Data"),
+    "hci": ("internal-hci-data", "Internal HCI Data"),
     "nhis": ("nhis", "NHIS"),
     "ocoe": ("ocoe", "OCOE"),
     "seer": ("seer", "SEER"),
@@ -54,6 +58,10 @@ IGNORED_SOURCE_LABELS = {
     "sources currently in shape",
     "sources planned or active work in shape",
     "sources to be determined",
+}
+TITLE_CASE_SOURCE_NAMES = {
+    "census": "Census",
+    "rurality": "Rurality",
 }
 
 
@@ -75,10 +83,8 @@ def load_observed_records(root: Path) -> list[SourceRecord]:
     if snapshot_path:
         return _load_json_records(_resolve_input_path(root, snapshot_path))
 
-    sqlite_path = os.environ.get("SHAPE_SQLITE_PATH")
-    if sqlite_path:
-        table_name = os.environ.get("SHAPE_SQLITE_TABLE", "shape_metadata_inventory")
-        return _load_sqlite_records(Path(sqlite_path), table_name)
+    if os.environ.get("SHAPE_MSSQL_USER") and os.environ.get("SHAPE_MSSQL_PASSWORD"):
+        return _load_mssql_shape_doc_records()
 
     return _load_json_records(root / "data" / "inputs" / "observed_sample.json")
 
@@ -131,43 +137,145 @@ def _load_json_records(path: Path) -> list[SourceRecord]:
     return [SourceRecord.from_dict(record) for record in payload]
 
 
-def _load_sqlite_records(path: Path, table_name: str) -> list[SourceRecord]:
-    connection = sqlite3.connect(path)
-    connection.row_factory = sqlite3.Row
+def _load_mssql_shape_doc_records() -> list[SourceRecord]:
     try:
-        query = (
-            f"SELECT source_id, display_name, year, geographic_level, source_system "
-            f"FROM {table_name}"
-        )
-        records: dict[str, dict[str, Any]] = {}
-        for row in connection.execute(query):
-            source_id = row["source_id"]
-            current = records.setdefault(
-                source_id,
-                {
-                    "source_id": source_id,
-                    "display_name": row["display_name"] or source_id,
-                    "available_years": [],
-                    "geographic_levels": [],
-                    "source_systems": [],
-                },
-            )
-            if row["year"] is not None:
-                current["available_years"].append(int(row["year"]))
-            if row["geographic_level"]:
-                current["geographic_levels"].append(row["geographic_level"])
-            if row["source_system"]:
-                current["source_systems"].append(row["source_system"])
-        normalized: list[SourceRecord] = []
-        for record in records.values():
-            years = normalize_years(record.get("available_years", []))
-            record["available_years"] = years
-            record["year_start"] = years[0] if years else None
-            record["year_end"] = years[-1] if years else None
-            normalized.append(SourceRecord.from_dict(record))
-        return normalized
+        import pyodbc
+    except ImportError as exc:
+        raise RuntimeError(
+            "The SQL Server adapter requires the `pyodbc` package to be installed."
+        ) from exc
+
+    connection = _connect_mssql(pyodbc)
+    try:
+        cursor = connection.cursor()
+        table_name = os.environ.get("SHAPE_MSSQL_TABLE", "adm.shapeDoc")
+        query = f"""
+            SELECT
+                [schema] AS schema_name,
+                [table] AS table_name,
+                [column] AS column_name,
+                [description],
+                [updated_at]
+            FROM {table_name}
+            WHERE [schema] IS NOT NULL
+              AND [table] IS NULL
+              AND [column] IS NULL
+        """
+        rows = cursor.execute(query).fetchall()
+        columns = [column[0] for column in cursor.description]
+        payload = [dict(zip(columns, row)) for row in rows]
+        return _shape_doc_rows_to_records(payload)
     finally:
         connection.close()
+
+
+def _connect_mssql(pyodbc_module: Any) -> Any:
+    errors: list[str] = []
+    for driver in _mssql_driver_candidates(pyodbc_module):
+        try:
+            return pyodbc_module.connect(_build_mssql_connection_string(driver))
+        except pyodbc_module.Error as exc:
+            errors.append(f"{driver}: {exc}")
+
+    joined = "\n".join(errors) if errors else "No SQL Server ODBC driver candidates were available."
+    raise RuntimeError(
+        "Unable to connect to SQL Server with the configured ODBC drivers.\n"
+        f"Tried:\n{joined}"
+    )
+
+
+def _mssql_driver_candidates(pyodbc_module: Any) -> list[str]:
+    candidates: list[str] = []
+    seen: set[str] = set()
+
+    def add(candidate: str | None) -> None:
+        if not candidate:
+            return
+        normalized = candidate.strip()
+        if not normalized or normalized in seen:
+            return
+        seen.add(normalized)
+        candidates.append(normalized)
+
+    add(os.environ.get("SHAPE_MSSQL_DRIVER"))
+    add(os.environ.get("SHAPE_MSSQL_DRIVER_PATH"))
+
+    available_drivers = pyodbc_module.drivers()
+    preferred_name = "ODBC Driver 18 for SQL Server"
+    if preferred_name in available_drivers:
+        add(preferred_name)
+    for driver in available_drivers:
+        if "sql server" in driver.casefold():
+            add(driver)
+
+    add("/opt/homebrew/lib/libmsodbcsql.18.dylib")
+    return candidates
+
+
+def _build_mssql_connection_string(driver: str) -> str:
+    host = os.environ.get("SHAPE_MSSQL_HOST", "HCI-DB")
+    database = os.environ.get("SHAPE_MSSQL_DATABASE", "SHAPE")
+    user = os.environ["SHAPE_MSSQL_USER"]
+    password = os.environ["SHAPE_MSSQL_PASSWORD"]
+    encrypt = os.environ.get("SHAPE_MSSQL_ENCRYPT", "no")
+    trust_server_certificate = os.environ.get("SHAPE_MSSQL_TRUST_SERVER_CERTIFICATE", "yes")
+
+    return (
+        f"DRIVER={_format_mssql_driver(driver)};"
+        f"SERVER={host};"
+        f"DATABASE={database};"
+        f"UID={user};"
+        f"PWD={password};"
+        f"Encrypt={encrypt};"
+        f"TrustServerCertificate={trust_server_certificate};"
+    )
+
+
+def _format_mssql_driver(driver: str) -> str:
+    stripped = driver.strip()
+    if stripped.startswith("{") and stripped.endswith("}"):
+        return stripped
+    return f"{{{stripped}}}"
+
+
+def _shape_doc_rows_to_records(rows: list[dict[str, Any]]) -> list[SourceRecord]:
+    records: dict[str, dict[str, Any]] = {}
+    for row in rows:
+        schema_name = (row.get("schema_name") or row.get("schema") or "").strip()
+        table_name = row.get("table_name") or row.get("table")
+        column_name = row.get("column_name") or row.get("column")
+        description = (row.get("description") or "").strip()
+        if not schema_name or table_name is not None or column_name is not None:
+            continue
+
+        source_id, display_name = _normalize_source_reference(schema_name)
+        display_name = _database_display_name(source_id, schema_name, display_name)
+        current = records.setdefault(
+            source_id,
+            {
+                "source_id": source_id,
+                "display_name": display_name,
+                "source_systems": ["MS SQL Server"],
+            },
+        )
+        if description:
+            current["short_description"] = description
+
+        updated_at = _format_timestamp(row.get("updated_at"))
+        if updated_at:
+            current["last_observed_at"] = updated_at
+
+    return [SourceRecord.from_dict(record) for _, record in sorted(records.items())]
+
+
+def _format_timestamp(value: Any) -> str:
+    if value in (None, ""):
+        return ""
+    if isinstance(value, datetime):
+        return value.isoformat(timespec="seconds")
+    if isinstance(value, date):
+        return value.isoformat()
+    return str(value).strip()
 
 
 def _load_box_records() -> list[SourceRecord]:
@@ -555,6 +663,17 @@ def _normalize_source_reference(label: str) -> tuple[str, str]:
     source_id = normalized.replace(" ", "-")
     display_name = " ".join(word.upper() if word.isupper() else word.capitalize() for word in label.split())
     return source_id, display_name
+
+
+def _database_display_name(source_id: str, schema_name: str, fallback: str) -> str:
+    normalized = _normalize_source_key(schema_name)
+    if normalized in TITLE_CASE_SOURCE_NAMES:
+        return TITLE_CASE_SOURCE_NAMES[normalized]
+    if source_id == "internal-hci-data":
+        return "Internal HCI Data"
+    if "-" not in source_id:
+        return schema_name.upper()
+    return fallback
 
 
 def _normalize_source_key(label: str) -> str:
