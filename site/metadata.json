@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-27T09:31:03-06:00",
+  "generated_at": "2026-03-27T10:05:58-06:00",
   "records": [
     {
       "source_id": "acs",
@@ -351,59 +351,6 @@
       ]
     },
     {
-      "source_id": "ccsg",
-      "display_name": "CCSG",
-      "short_description": "",
-      "source_type": "",
-      "update_frequency": "",
-      "domains": [
-        "Clinical trials"
-      ],
-      "geographic_levels": [],
-      "available_years": [],
-      "year_start": null,
-      "year_end": null,
-      "year_notes": "",
-      "source_systems": [],
-      "provenance": {
-        "display_name": {
-          "source": "spreadsheet",
-          "detail": "imported reference metadata"
-        },
-        "domains": {
-          "source": "spreadsheet",
-          "detail": "imported reference metadata"
-        },
-        "notes": {
-          "source": "spreadsheet",
-          "detail": "imported reference metadata"
-        },
-        "review_status": {
-          "source": "spreadsheet",
-          "detail": "imported reference metadata"
-        },
-        "source_documents": {
-          "source": "spreadsheet",
-          "detail": "imported reference metadata"
-        }
-      },
-      "confidence": "",
-      "review_status": "draft",
-      "last_observed_at": "",
-      "last_reviewed_at": "",
-      "notes": [
-        "Workbook marks this source as containing PHI."
-      ],
-      "caveats": [],
-      "source_documents": [
-        {
-          "name": "CCSG worksheet",
-          "type": "spreadsheet",
-          "worksheet": "CCSG"
-        }
-      ]
-    },
-    {
       "source_id": "census",
       "display_name": "Census",
       "short_description": "The US Census data covers demographic data. We pull a few variables from the 2020 census for some base population measures (age, race and ethnicity, etc.). It is preferred to use the ACS data when possible because it's more recent. Additionally, the census data has FIPS codes which are unique geographic identifiers for each state, county, census tract, and so on. This is a rare case where a table from this schema could be joined with a table from another schema if that table uses a FIPS code instead of a name.",
@@ -717,71 +664,6 @@
       ]
     },
     {
-      "source_id": "edw",
-      "display_name": "EDW",
-      "short_description": "",
-      "source_type": "",
-      "update_frequency": "",
-      "domains": [
-        "Cancer incidence, stage & mortality",
-        "Clinical trials",
-        "Health behaviors",
-        "Health care access",
-        "Social determinants of health"
-      ],
-      "geographic_levels": [],
-      "available_years": [],
-      "year_start": null,
-      "year_end": null,
-      "year_notes": "",
-      "source_systems": [],
-      "provenance": {
-        "caveats": {
-          "source": "spreadsheet",
-          "detail": "imported reference metadata"
-        },
-        "display_name": {
-          "source": "spreadsheet",
-          "detail": "imported reference metadata"
-        },
-        "domains": {
-          "source": "spreadsheet",
-          "detail": "imported reference metadata"
-        },
-        "notes": {
-          "source": "spreadsheet",
-          "detail": "imported reference metadata"
-        },
-        "review_status": {
-          "source": "spreadsheet",
-          "detail": "imported reference metadata"
-        },
-        "source_documents": {
-          "source": "spreadsheet",
-          "detail": "imported reference metadata"
-        }
-      },
-      "confidence": "",
-      "review_status": "draft",
-      "last_observed_at": "",
-      "last_reviewed_at": "",
-      "notes": [
-        "Workbook marks this source as containing PHI."
-      ],
-      "caveats": [
-        "Financial toxicity*: **Not availabe, no substantial data found",
-        "Proportion of cancer patients enrolled: May be the same data from Kim",
-        "Representativeness of enrolled v. all patients: May be the same data from Kim"
-      ],
-      "source_documents": [
-        {
-          "name": "EDW worksheet",
-          "type": "spreadsheet",
-          "worksheet": "EDW"
-        }
-      ]
-    },
-    {
       "source_id": "epa",
       "display_name": "EPA",
       "short_description": "Environmental Protection Agency (EPA) has many data sources, but we only pull radon potential and air quality index (AQI).",
@@ -1085,7 +967,7 @@
     {
       "source_id": "hpv-vaccination-coalition",
       "display_name": "HPV Vaccination Coalition",
-      "short_description": "",
+      "short_description": "Vaccination Coverage Among Adolescents (VCAA) is used for HPV vaccination data. This has data for many geographic levels, age ranges, and years but they are all contained in the single table. It was released in 2023, but it has historical data as well.",
       "source_type": "",
       "update_frequency": "",
       "domains": [
@@ -1100,7 +982,9 @@
       "year_start": 2023,
       "year_end": 2023,
       "year_notes": "",
-      "source_systems": [],
+      "source_systems": [
+        "MS SQL Server"
+      ],
       "provenance": {
         "available_years": {
           "source": "spreadsheet",
@@ -1118,13 +1002,28 @@
           "source": "spreadsheet",
           "detail": "imported reference metadata"
         },
+        "last_observed_at": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
         "review_status": {
           "source": "spreadsheet",
           "detail": "imported reference metadata"
         },
+        "short_description": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
         "source_documents": {
           "source": "spreadsheet",
           "detail": "imported reference metadata"
+        },
+        "source_systems": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
         },
         "year_end": {
           "source": "spreadsheet",
@@ -1137,7 +1036,7 @@
       },
       "confidence": "",
       "review_status": "draft",
-      "last_observed_at": "",
+      "last_observed_at": "2026-03-26T21:09:13",
       "last_reviewed_at": "",
       "notes": [],
       "caveats": [],
@@ -1293,6 +1192,10 @@
           "detail": "reviewed registry",
           "timestamp": "2026-03-25"
         },
+        "source_documents": {
+          "source": "spreadsheet",
+          "detail": "imported reference metadata"
+        },
         "source_systems": {
           "source": "database",
           "detail": "observed metadata",
@@ -1334,7 +1237,18 @@
       "caveats": [
         "Older years can be extracted on request if a project requires them."
       ],
-      "source_documents": []
+      "source_documents": [
+        {
+          "name": "Internal HCI Data worksheet",
+          "type": "spreadsheet",
+          "worksheet": "CCSG"
+        },
+        {
+          "name": "Internal HCI Data worksheet",
+          "type": "spreadsheet",
+          "worksheet": "EDW"
+        }
+      ]
     },
     {
       "source_id": "nhis",
@@ -1783,56 +1697,6 @@
       "notes": [],
       "caveats": [],
       "source_documents": []
-    },
-    {
-      "source_id": "vcaa",
-      "display_name": "VCAA",
-      "short_description": "Vaccination Coverage Among Adolescents (VCAA) is used for HPV vaccination data. This has data for many geographic levels, age ranges, and years but they are all contained in the single table. It was released in 2023, but it has historical data as well.",
-      "source_type": "",
-      "update_frequency": "",
-      "domains": [],
-      "geographic_levels": [],
-      "available_years": [],
-      "year_start": null,
-      "year_end": null,
-      "year_notes": "",
-      "source_systems": [
-        "MS SQL Server"
-      ],
-      "provenance": {
-        "display_name": {
-          "source": "database",
-          "detail": "observed metadata",
-          "timestamp": "2026-03-26T21:09:13"
-        },
-        "last_observed_at": {
-          "source": "database",
-          "detail": "observed metadata",
-          "timestamp": "2026-03-26T21:09:13"
-        },
-        "review_status": {
-          "source": "database",
-          "detail": "observed metadata",
-          "timestamp": "2026-03-26T21:09:13"
-        },
-        "short_description": {
-          "source": "database",
-          "detail": "observed metadata",
-          "timestamp": "2026-03-26T21:09:13"
-        },
-        "source_systems": {
-          "source": "database",
-          "detail": "observed metadata",
-          "timestamp": "2026-03-26T21:09:13"
-        }
-      },
-      "confidence": "",
-      "review_status": "draft",
-      "last_observed_at": "2026-03-26T21:09:13",
-      "last_reviewed_at": "",
-      "notes": [],
-      "caveats": [],
-      "source_documents": []
     }
   ],
   "warnings": [
@@ -1860,16 +1724,6 @@
       "code": "needs_review",
       "severity": "info",
       "source_id": "ahar",
-      "message": "Source is not yet marked as reviewed.",
-      "field": "review_status",
-      "details": {
-        "review_status": "draft"
-      }
-    },
-    {
-      "code": "needs_review",
-      "severity": "info",
-      "source_id": "ccsg",
       "message": "Source is not yet marked as reviewed.",
       "field": "review_status",
       "details": {
@@ -1924,16 +1778,6 @@
           2023,
           2024
         ]
-      }
-    },
-    {
-      "code": "needs_review",
-      "severity": "info",
-      "source_id": "edw",
-      "message": "Source is not yet marked as reviewed.",
-      "field": "review_status",
-      "details": {
-        "review_status": "draft"
       }
     },
     {
@@ -2097,16 +1941,6 @@
       }
     },
     {
-      "code": "needs_review",
-      "severity": "info",
-      "source_id": "vcaa",
-      "message": "Source is not yet marked as reviewed.",
-      "field": "review_status",
-      "details": {
-        "review_status": "draft"
-      }
-    },
-    {
       "code": "missing_reviewed_registry_entry",
       "severity": "warning",
       "source_id": "acs",
@@ -2204,10 +2038,42 @@
     {
       "code": "missing_reviewed_registry_entry",
       "severity": "warning",
+      "source_id": "hpv-vaccination-coalition",
+      "message": "Source was observed or imported but is missing from the reviewed registry.",
+      "field": null,
+      "details": {}
+    },
+    {
+      "code": "missing_reviewed_registry_entry",
+      "severity": "warning",
       "source_id": "imfac",
       "message": "Source was observed or imported but is missing from the reviewed registry.",
       "field": null,
       "details": {}
+    },
+    {
+      "code": "domain_mismatch",
+      "severity": "warning",
+      "source_id": "internal-hci-data",
+      "message": "Imported domains differ from the reviewed registry.",
+      "field": "domains",
+      "details": {
+        "imported": [
+          "Cancer incidence, stage & mortality",
+          "Clinical trials",
+          "Health behaviors",
+          "Health care access",
+          "Social determinants of health"
+        ],
+        "reviewed": [
+          "Cancer diagnosis",
+          "Cancer stage/grade",
+          "Health care access",
+          "Insurance",
+          "Race/Ethnicity",
+          "Rurality"
+        ]
+      }
     },
     {
       "code": "missing_reviewed_registry_entry",
@@ -2253,14 +2119,6 @@
       "code": "missing_reviewed_registry_entry",
       "severity": "warning",
       "source_id": "usda",
-      "message": "Source was observed or imported but is missing from the reviewed registry.",
-      "field": null,
-      "details": {}
-    },
-    {
-      "code": "missing_reviewed_registry_entry",
-      "severity": "warning",
-      "source_id": "vcaa",
       "message": "Source was observed or imported but is missing from the reviewed registry.",
       "field": null,
       "details": {}

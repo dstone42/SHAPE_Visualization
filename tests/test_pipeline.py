@@ -243,6 +243,152 @@ class PipelineTest(unittest.TestCase):
                 any("stable enough measure" in caveat for caveat in imported_by_id["hints"]["caveats"])
             )
 
+    def test_pipeline_normalizes_spreadsheet_source_aliases(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            (root / "data" / "inputs").mkdir(parents=True)
+
+            workbook_path = root / "data" / "inputs" / "alias_snapshot.xlsx"
+            self._write_test_workbook(
+                workbook_path,
+                {
+                    "Current state of SHAPE": [
+                        ["Health Assessment Domain", "Base Measure", "In SHAPE?", "Sources Currently in SHAPE", "Sources Planned or Active work in SHAPE", "Sources to be determined"],
+                        ["", "Clinical trials", "", "", "", ""],
+                        ["", "Trial accrual", "Yes", "CCSG", "", ""],
+                        ["", "Health behaviors", "", "", "", ""],
+                        ["", "HPV vaccination", "Yes", "HPV Vaccination Coalition", "", ""],
+                    ],
+                    "Domains by data source": [
+                        ["", "CCSG", "HPV Vaccination Coalition"],
+                        ["Lowest geographic level", "State", "State"],
+                        ["Clinical trials", "Yes", ""],
+                        ["Health behaviors", "", "Yes"],
+                    ],
+                    "CCSG": [
+                        ["Base Measure", "Years Included", "Link"],
+                        ["Clinical trials", "", ""],
+                        ["Trial accrual", "2024", "https://example.test/ccsg"],
+                    ],
+                    "HPV Vaccination Coalition": [
+                        ["Base Measure", "Years Included", "Link"],
+                        ["Health behaviors", "", ""],
+                        ["HPV vaccination", "2023", "https://example.test/hpv"],
+                    ],
+                },
+            )
+
+            (root / ".env").write_text(
+                "SHAPE_IMPORTED_SNAPSHOT=data/inputs/alias_snapshot.xlsx\n",
+                encoding="utf-8",
+            )
+            self._write_json(
+                root / "data" / "reviewed_registry.json",
+                [
+                    {
+                        "source_id": "internal-hci-data",
+                        "display_name": "Internal HCI Data",
+                        "review_status": "reviewed",
+                        "last_reviewed_at": "2026-03-25",
+                    },
+                    {
+                        "source_id": "hpv-vaccination-coalition",
+                        "display_name": "HPV Vaccination Coalition",
+                        "review_status": "reviewed",
+                        "last_reviewed_at": "2026-03-25",
+                    },
+                ],
+            )
+
+            outputs = run_pipeline(root)
+            imported = json.loads((outputs["artifacts_dir"] / "imported_metadata.json").read_text())
+            imported_by_id = {record["source_id"]: record for record in imported}
+
+            self.assertIn("internal-hci-data", imported_by_id)
+            self.assertIn("hpv-vaccination-coalition", imported_by_id)
+            self.assertNotIn("ccsg", imported_by_id)
+            self.assertEqual(imported_by_id["internal-hci-data"]["display_name"], "Internal HCI Data")
+            self.assertEqual(
+                imported_by_id["hpv-vaccination-coalition"]["display_name"],
+                "HPV Vaccination Coalition",
+            )
+
+    def test_pipeline_normalizes_json_snapshot_source_aliases(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            (root / "data" / "inputs").mkdir(parents=True)
+
+            self._write_json(
+                root / "data" / "reviewed_registry.json",
+                [
+                    {
+                        "source_id": "internal-hci-data",
+                        "display_name": "Internal HCI Data",
+                        "review_status": "reviewed",
+                        "last_reviewed_at": "2026-03-25",
+                    },
+                    {
+                        "source_id": "hpv-vaccination-coalition",
+                        "display_name": "HPV Vaccination Coalition",
+                        "review_status": "reviewed",
+                        "last_reviewed_at": "2026-03-25",
+                    },
+                ],
+            )
+            self._write_json(
+                root / "data" / "inputs" / "observed_snapshot.json",
+                [
+                    {
+                        "source_id": "edw",
+                        "display_name": "EDW",
+                        "short_description": "Warehouse source",
+                        "source_systems": ["Warehouse"],
+                        "last_observed_at": "2026-03-25T08:00:00-06:00",
+                    },
+                    {
+                        "source_id": "vcaa",
+                        "display_name": "VCAA",
+                        "short_description": "Vaccination source",
+                        "source_systems": ["Warehouse"],
+                        "last_observed_at": "2026-03-25T08:01:00-06:00",
+                    },
+                ],
+            )
+            self._write_json(
+                root / "data" / "inputs" / "imported_snapshot.json",
+                [
+                    {
+                        "source_id": "ccsg",
+                        "display_name": "CCSG",
+                        "domains": ["Clinical trials"],
+                    },
+                    {
+                        "source_id": "hpv-vaccination-coalition",
+                        "display_name": "HPV Vaccination Coalition",
+                        "domains": ["Health behaviors"],
+                    },
+                ],
+            )
+
+            os.environ["SHAPE_OBSERVED_SNAPSHOT"] = str(root / "data" / "inputs" / "observed_snapshot.json")
+            os.environ["SHAPE_IMPORTED_SNAPSHOT"] = str(root / "data" / "inputs" / "imported_snapshot.json")
+
+            outputs = run_pipeline(root)
+            merged = json.loads((outputs["artifacts_dir"] / "reviewed_registry_draft.json").read_text())
+            merged_by_id = {record["source_id"]: record for record in merged}
+
+            self.assertIn("internal-hci-data", merged_by_id)
+            self.assertIn("hpv-vaccination-coalition", merged_by_id)
+            self.assertNotIn("edw", merged_by_id)
+            self.assertNotIn("ccsg", merged_by_id)
+            self.assertNotIn("vcaa", merged_by_id)
+            self.assertEqual(merged_by_id["internal-hci-data"]["domains"], ["Clinical trials"])
+            self.assertEqual(merged_by_id["internal-hci-data"]["display_name"], "Internal HCI Data")
+            self.assertEqual(
+                merged_by_id["hpv-vaccination-coalition"]["display_name"],
+                "HPV Vaccination Coalition",
+            )
+
     def test_shape_doc_rows_map_schema_descriptions_to_sources(self) -> None:
         records = _shape_doc_rows_to_records(
             [
@@ -289,6 +435,43 @@ class PipelineTest(unittest.TestCase):
         )
         self.assertEqual(by_id["brfss"]["source_systems"], ["MS SQL Server"])
         self.assertEqual(by_id["brfss"]["last_observed_at"], "2026-03-27T08:15:00-06:00")
+
+    def test_shape_doc_rows_normalize_database_source_aliases(self) -> None:
+        records = _shape_doc_rows_to_records(
+            [
+                {
+                    "schema_name": "EDW",
+                    "table_name": None,
+                    "column_name": None,
+                    "description": "Enterprise data warehouse schema documentation.",
+                    "updated_at": "2026-03-27T08:15:00-06:00",
+                },
+                {
+                    "schema_name": "VCAA",
+                    "table_name": None,
+                    "column_name": None,
+                    "description": "Vaccination Coverage Among Adolescents schema documentation.",
+                    "updated_at": "2026-03-27T08:20:00-06:00",
+                },
+            ]
+        )
+
+        by_id = {record.source_id: record.to_dict() for record in records}
+        self.assertEqual(sorted(by_id), ["hpv-vaccination-coalition", "internal-hci-data"])
+        self.assertEqual(by_id["internal-hci-data"]["display_name"], "Internal HCI Data")
+        self.assertEqual(
+            by_id["hpv-vaccination-coalition"]["display_name"],
+            "HPV Vaccination Coalition",
+        )
+        self.assertEqual(
+            by_id["internal-hci-data"]["short_description"],
+            "Enterprise data warehouse schema documentation.",
+        )
+        self.assertEqual(
+            by_id["hpv-vaccination-coalition"]["short_description"],
+            "Vaccination Coverage Among Adolescents schema documentation.",
+        )
+
 
     def _write_json(self, path: Path, payload: object) -> None:
         path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")

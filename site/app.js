@@ -1,3 +1,5 @@
+const SHOW_REVIEW_WARNING_STRIP = false;
+
 const state = {
   dataset: null,
   search: "",
@@ -93,6 +95,9 @@ function renderShell(dataset) {
     .join("");
 
   const warningStrip = document.getElementById("warningStrip");
+  if (!warningStrip || !SHOW_REVIEW_WARNING_STRIP) {
+    return;
+  }
   if (warnings.length === 0) {
     warningStrip.classList.add("hidden");
     return;

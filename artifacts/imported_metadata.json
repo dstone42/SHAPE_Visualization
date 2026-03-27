@@ -119,38 +119,6 @@
     ]
   },
   {
-    "source_id": "ccsg",
-    "display_name": "CCSG",
-    "short_description": "",
-    "source_type": "",
-    "update_frequency": "",
-    "domains": [
-      "Clinical trials"
-    ],
-    "geographic_levels": [],
-    "available_years": [],
-    "year_start": null,
-    "year_end": null,
-    "year_notes": "",
-    "source_systems": [],
-    "provenance": {},
-    "confidence": "",
-    "review_status": "draft",
-    "last_observed_at": "",
-    "last_reviewed_at": "",
-    "notes": [
-      "Workbook marks this source as containing PHI."
-    ],
-    "caveats": [],
-    "source_documents": [
-      {
-        "name": "CCSG worksheet",
-        "type": "spreadsheet",
-        "worksheet": "CCSG"
-      }
-    ]
-  },
-  {
     "source_id": "chas",
     "display_name": "CHAS",
     "short_description": "",
@@ -298,46 +266,6 @@
         "name": "CIF reference",
         "type": "reference",
         "url": "In general, see https://cancerinfocus.org/datasources/ for this source."
-      }
-    ]
-  },
-  {
-    "source_id": "edw",
-    "display_name": "EDW",
-    "short_description": "",
-    "source_type": "",
-    "update_frequency": "",
-    "domains": [
-      "Cancer incidence, stage & mortality",
-      "Clinical trials",
-      "Health behaviors",
-      "Health care access",
-      "Social determinants of health"
-    ],
-    "geographic_levels": [],
-    "available_years": [],
-    "year_start": null,
-    "year_end": null,
-    "year_notes": "",
-    "source_systems": [],
-    "provenance": {},
-    "confidence": "",
-    "review_status": "draft",
-    "last_observed_at": "",
-    "last_reviewed_at": "",
-    "notes": [
-      "Workbook marks this source as containing PHI."
-    ],
-    "caveats": [
-      "Financial toxicity*: **Not availabe, no substantial data found",
-      "Proportion of cancer patients enrolled: May be the same data from Kim",
-      "Representativeness of enrolled v. all patients: May be the same data from Kim"
-    ],
-    "source_documents": [
-      {
-        "name": "EDW worksheet",
-        "type": "spreadsheet",
-        "worksheet": "EDW"
       }
     ]
   },
@@ -516,6 +444,51 @@
         "name": "HPV Vaccination Coalition reference",
         "type": "reference",
         "url": "https://www.cdc.gov/teenvaxview/interactive/index.html"
+      }
+    ]
+  },
+  {
+    "source_id": "internal-hci-data",
+    "display_name": "Internal HCI Data",
+    "short_description": "",
+    "source_type": "",
+    "update_frequency": "",
+    "domains": [
+      "Cancer incidence, stage & mortality",
+      "Clinical trials",
+      "Health behaviors",
+      "Health care access",
+      "Social determinants of health"
+    ],
+    "geographic_levels": [],
+    "available_years": [],
+    "year_start": null,
+    "year_end": null,
+    "year_notes": "",
+    "source_systems": [],
+    "provenance": {},
+    "confidence": "",
+    "review_status": "draft",
+    "last_observed_at": "",
+    "last_reviewed_at": "",
+    "notes": [
+      "Workbook marks this source as containing PHI."
+    ],
+    "caveats": [
+      "Financial toxicity*: **Not availabe, no substantial data found",
+      "Proportion of cancer patients enrolled: May be the same data from Kim",
+      "Representativeness of enrolled v. all patients: May be the same data from Kim"
+    ],
+    "source_documents": [
+      {
+        "name": "Internal HCI Data worksheet",
+        "type": "spreadsheet",
+        "worksheet": "CCSG"
+      },
+      {
+        "name": "Internal HCI Data worksheet",
+        "type": "spreadsheet",
+        "worksheet": "EDW"
       }
     ]
   },

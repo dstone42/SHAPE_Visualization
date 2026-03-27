@@ -32,16 +32,6 @@
   {
     "code": "needs_review",
     "severity": "info",
-    "source_id": "ccsg",
-    "message": "Source is not yet marked as reviewed.",
-    "field": "review_status",
-    "details": {
-      "review_status": "draft"
-    }
-  },
-  {
-    "code": "needs_review",
-    "severity": "info",
     "source_id": "census",
     "message": "Source is not yet marked as reviewed.",
     "field": "review_status",
@@ -87,16 +77,6 @@
         2023,
         2024
       ]
-    }
-  },
-  {
-    "code": "needs_review",
-    "severity": "info",
-    "source_id": "edw",
-    "message": "Source is not yet marked as reviewed.",
-    "field": "review_status",
-    "details": {
-      "review_status": "draft"
     }
   },
   {
@@ -260,16 +240,6 @@
     }
   },
   {
-    "code": "needs_review",
-    "severity": "info",
-    "source_id": "vcaa",
-    "message": "Source is not yet marked as reviewed.",
-    "field": "review_status",
-    "details": {
-      "review_status": "draft"
-    }
-  },
-  {
     "code": "missing_reviewed_registry_entry",
     "severity": "warning",
     "source_id": "acs",
@@ -367,10 +337,42 @@
   {
     "code": "missing_reviewed_registry_entry",
     "severity": "warning",
+    "source_id": "hpv-vaccination-coalition",
+    "message": "Source was observed or imported but is missing from the reviewed registry.",
+    "field": null,
+    "details": {}
+  },
+  {
+    "code": "missing_reviewed_registry_entry",
+    "severity": "warning",
     "source_id": "imfac",
     "message": "Source was observed or imported but is missing from the reviewed registry.",
     "field": null,
     "details": {}
+  },
+  {
+    "code": "domain_mismatch",
+    "severity": "warning",
+    "source_id": "internal-hci-data",
+    "message": "Imported domains differ from the reviewed registry.",
+    "field": "domains",
+    "details": {
+      "imported": [
+        "Cancer incidence, stage & mortality",
+        "Clinical trials",
+        "Health behaviors",
+        "Health care access",
+        "Social determinants of health"
+      ],
+      "reviewed": [
+        "Cancer diagnosis",
+        "Cancer stage/grade",
+        "Health care access",
+        "Insurance",
+        "Race/Ethnicity",
+        "Rurality"
+      ]
+    }
   },
   {
     "code": "missing_reviewed_registry_entry",
@@ -416,14 +418,6 @@
     "code": "missing_reviewed_registry_entry",
     "severity": "warning",
     "source_id": "usda",
-    "message": "Source was observed or imported but is missing from the reviewed registry.",
-    "field": null,
-    "details": {}
-  },
-  {
-    "code": "missing_reviewed_registry_entry",
-    "severity": "warning",
-    "source_id": "vcaa",
     "message": "Source was observed or imported but is missing from the reviewed registry.",
     "field": null,
     "details": {}

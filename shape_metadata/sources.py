@@ -23,8 +23,8 @@ SOURCE_ALIASES: dict[str, tuple[str, str]] = {
     "apcd": ("apcd", "APCD"),
     "brffs": ("brfss", "BRFSS"),
     "brfss": ("brfss", "BRFSS"),
-    "ccsg": ("ccsg", "CCSG"),
-    "ccsg clinical trial hci patients": ("ccsg", "CCSG"),
+    "ccsg": ("internal-hci-data", "Internal HCI Data"),
+    "ccsg clinical trial hci patients": ("internal-hci-data", "Internal HCI Data"),
     "chas": ("chas", "CHAS"),
     "chas 1": ("chas", "CHAS"),
     "cif": ("cif", "CIF"),
@@ -32,8 +32,8 @@ SOURCE_ALIASES: dict[str, tuple[str, str]] = {
     "doh": ("doh", "DOH"),
     "dun and bradstreet": ("dun-bradstreet", "Dun & Bradstreet"),
     "dun bradstreet": ("dun-bradstreet", "Dun & Bradstreet"),
-    "edw": ("edw", "EDW"),
-    "edw no substantial data available": ("edw", "EDW"),
+    "edw": ("internal-hci-data", "Internal HCI Data"),
+    "edw no substantial data available": ("internal-hci-data", "Internal HCI Data"),
     "epa": ("epa", "EPA"),
     "fcc": ("fcc", "FCC"),
     "hints": ("hints", "HINTS"),
@@ -49,6 +49,7 @@ SOURCE_ALIASES: dict[str, tuple[str, str]] = {
     "shape-derived": ("shape-derived", "SHAPE-derived"),
     "ucr": ("ucr", "UCR"),
     "ucr utah only": ("ucr", "UCR"),
+    "vcaa": ("hpv-vaccination-coalition", "HPV Vaccination Coalition"),
 }
 
 FOOTNOTE_MARKER_PATTERN = re.compile(r"(\*+)$")
@@ -134,7 +135,8 @@ def _load_imported_snapshot(path: Path) -> list[SourceRecord]:
 
 def _load_json_records(path: Path) -> list[SourceRecord]:
     payload = json.loads(path.read_text(encoding="utf-8"))
-    return [SourceRecord.from_dict(record) for record in payload]
+    records = [SourceRecord.from_dict(record) for record in payload]
+    return _canonicalize_records(records)
 
 
 def _load_mssql_shape_doc_records() -> list[SourceRecord]:
@@ -317,6 +319,71 @@ def _merge_reference_records(
         )
         existing.source_documents = existing.source_documents + codebook_record.source_documents
     return list(merged.values())
+
+
+def _canonicalize_records(records: list[SourceRecord]) -> list[SourceRecord]:
+    canonical_records: dict[str, SourceRecord] = {}
+    for record in records:
+        source_id, display_name = _normalize_source_reference(record.display_name or record.source_id)
+        canonical_record = SourceRecord.from_dict(record.to_dict())
+        canonical_record.source_id = source_id
+        if display_name:
+            canonical_record.display_name = display_name
+
+        existing = canonical_records.get(source_id)
+        if existing is None:
+            canonical_records[source_id] = canonical_record
+            continue
+        _merge_canonical_record(existing, canonical_record)
+
+    return [canonical_records[source_id] for source_id in sorted(canonical_records)]
+
+
+def _merge_canonical_record(existing: SourceRecord, incoming: SourceRecord) -> None:
+    existing.display_name = existing.display_name or incoming.display_name
+    existing.short_description = existing.short_description or incoming.short_description
+    existing.source_type = existing.source_type or incoming.source_type
+    existing.update_frequency = existing.update_frequency or incoming.update_frequency
+    existing.year_notes = existing.year_notes or incoming.year_notes
+    existing.confidence = existing.confidence or incoming.confidence
+    existing.review_status = _merge_review_status(existing.review_status, incoming.review_status)
+    existing.last_observed_at = max(existing.last_observed_at, incoming.last_observed_at)
+    existing.last_reviewed_at = max(existing.last_reviewed_at, incoming.last_reviewed_at)
+    existing.domains = sorted(set(existing.domains + incoming.domains), key=str.casefold)
+    existing.geographic_levels = sorted(
+        set(existing.geographic_levels + incoming.geographic_levels), key=str.casefold
+    )
+    existing.available_years = normalize_years(existing.available_years + incoming.available_years)
+    existing.source_systems = sorted(set(existing.source_systems + incoming.source_systems), key=str.casefold)
+    existing.notes = sorted(set(existing.notes + incoming.notes), key=str.casefold)
+    existing.caveats = sorted(set(existing.caveats + incoming.caveats), key=str.casefold)
+    existing.source_documents = _merge_source_documents(
+        existing.source_documents,
+        incoming.source_documents,
+    )
+    for field_name, provenance in incoming.provenance.items():
+        existing.provenance.setdefault(field_name, provenance)
+
+
+def _merge_review_status(existing: str, incoming: str) -> str:
+    if existing.casefold() == "reviewed" or incoming.casefold() == "reviewed":
+        return "reviewed"
+    return existing or incoming
+
+
+def _merge_source_documents(
+    existing: list[dict[str, Any]],
+    incoming: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    merged: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for document in existing + incoming:
+        signature = json.dumps(document, sort_keys=True)
+        if signature in seen:
+            continue
+        seen.add(signature)
+        merged.append(document)
+    return merged
 
 
 def _resolve_input_path(root: Path, raw_path: str) -> Path:

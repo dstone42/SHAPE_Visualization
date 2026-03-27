@@ -240,6 +240,30 @@
     "source_documents": []
   },
   {
+    "source_id": "hpv-vaccination-coalition",
+    "display_name": "HPV Vaccination Coalition",
+    "short_description": "Vaccination Coverage Among Adolescents (VCAA) is used for HPV vaccination data. This has data for many geographic levels, age ranges, and years but they are all contained in the single table. It was released in 2023, but it has historical data as well.",
+    "source_type": "",
+    "update_frequency": "",
+    "domains": [],
+    "geographic_levels": [],
+    "available_years": [],
+    "year_start": null,
+    "year_end": null,
+    "year_notes": "",
+    "source_systems": [
+      "MS SQL Server"
+    ],
+    "provenance": {},
+    "confidence": "",
+    "review_status": "draft",
+    "last_observed_at": "2026-03-26T21:09:13",
+    "last_reviewed_at": "",
+    "notes": [],
+    "caveats": [],
+    "source_documents": []
+  },
+  {
     "source_id": "imfac",
     "display_name": "IMFAC",
     "short_description": "Integrated Metropolitan-to-Frontier Area Codes (IMFAC) classifies each census tract or county as metropolitan, micropolitan, noncore, or frontier. It is a new alternative to RUCA that is more expressive for areas like ours that have lots of frontier area. It uses FIPS codes, so it would need to be joined with another dataset to be interpretable.",
@@ -411,30 +435,6 @@
     "source_id": "usda",
     "display_name": "USDA",
     "short_description": "US Department of Agriculture (USDA) has many data sources, but we only pull their data on poverty. This is the preferred data source for poverty. It is available at the county and census tract level.",
-    "source_type": "",
-    "update_frequency": "",
-    "domains": [],
-    "geographic_levels": [],
-    "available_years": [],
-    "year_start": null,
-    "year_end": null,
-    "year_notes": "",
-    "source_systems": [
-      "MS SQL Server"
-    ],
-    "provenance": {},
-    "confidence": "",
-    "review_status": "draft",
-    "last_observed_at": "2026-03-26T21:09:13",
-    "last_reviewed_at": "",
-    "notes": [],
-    "caveats": [],
-    "source_documents": []
-  },
-  {
-    "source_id": "vcaa",
-    "display_name": "VCAA",
-    "short_description": "Vaccination Coverage Among Adolescents (VCAA) is used for HPV vaccination data. This has data for many geographic levels, age ranges, and years but they are all contained in the single table. It was released in 2023, but it has historical data as well.",
     "source_type": "",
     "update_frequency": "",
     "domains": [],

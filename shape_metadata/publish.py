@@ -7,6 +7,8 @@ from pathlib import Path
 
 from .models import SourceRecord, ValidationWarning
 
+SHOW_REVIEW_WARNING_STRIP = False
+
 
 def publish_site(
     records: list[SourceRecord],
@@ -114,6 +116,10 @@ def generated_timestamp() -> str:
 
 
 def _site_html(generated_at: str, embedded_json: str) -> str:
+    warning_strip_classes = "summary-strip"
+    if not SHOW_REVIEW_WARNING_STRIP:
+        warning_strip_classes += " hidden"
+
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -135,7 +141,7 @@ def _site_html(generated_at: str, embedded_json: str) -> str:
       <p class="stamp">Updated <span id="generatedAt">{html.escape(generated_at)}</span></p>
     </section>
 
-    <section class="summary-strip" id="warningStrip"></section>
+    <section class="{warning_strip_classes}" id="warningStrip"></section>
 
     <section class="controls">
       <div class="controls-top">
@@ -734,6 +740,8 @@ th {
 
 def _app_js() -> str:
     return """\
+const SHOW_REVIEW_WARNING_STRIP = __SHOW_REVIEW_WARNING_STRIP__;
+
 const state = {
   dataset: null,
   search: "",
@@ -829,6 +837,9 @@ function renderShell(dataset) {
     .join("");
 
   const warningStrip = document.getElementById("warningStrip");
+  if (!warningStrip || !SHOW_REVIEW_WARNING_STRIP) {
+    return;
+  }
   if (warnings.length === 0) {
     warningStrip.classList.add("hidden");
     return;
@@ -1146,4 +1157,4 @@ boot().catch((error) => {
   warningStrip.classList.remove("hidden");
   warningStrip.textContent = `Failed to load SHAPE metadata: ${error.message}`;
 });
-"""
+""".replace("__SHOW_REVIEW_WARNING_STRIP__", "true" if SHOW_REVIEW_WARNING_STRIP else "false")
