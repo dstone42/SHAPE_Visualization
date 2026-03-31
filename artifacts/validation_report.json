@@ -162,6 +162,16 @@
   {
     "code": "needs_review",
     "severity": "info",
+    "source_id": "internal-hci-data",
+    "message": "Source is not yet marked as reviewed.",
+    "field": "review_status",
+    "details": {
+      "review_status": "draft"
+    }
+  },
+  {
+    "code": "needs_review",
+    "severity": "info",
     "source_id": "nhis",
     "message": "Source is not yet marked as reviewed.",
     "field": "review_status",
@@ -238,14 +248,6 @@
     "details": {
       "review_status": "draft"
     }
-  },
-  {
-    "code": "missing_reviewed_registry_entry",
-    "severity": "warning",
-    "source_id": "acs",
-    "message": "Source was observed or imported but is missing from the reviewed registry.",
-    "field": null,
-    "details": {}
   },
   {
     "code": "missing_reviewed_registry_entry",
@@ -351,28 +353,12 @@
     "details": {}
   },
   {
-    "code": "domain_mismatch",
+    "code": "missing_reviewed_registry_entry",
     "severity": "warning",
     "source_id": "internal-hci-data",
-    "message": "Imported domains differ from the reviewed registry.",
-    "field": "domains",
-    "details": {
-      "imported": [
-        "Cancer incidence, stage & mortality",
-        "Clinical trials",
-        "Health behaviors",
-        "Health care access",
-        "Social determinants of health"
-      ],
-      "reviewed": [
-        "Cancer diagnosis",
-        "Cancer stage/grade",
-        "Health care access",
-        "Insurance",
-        "Race/Ethnicity",
-        "Rurality"
-      ]
-    }
+    "message": "Source was observed or imported but is missing from the reviewed registry.",
+    "field": null,
+    "details": {}
   },
   {
     "code": "missing_reviewed_registry_entry",

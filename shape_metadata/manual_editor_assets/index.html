@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SHAPE Manual Registry Editor</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">SHAPE Manual Registry Editor</p>
+        <h1>Edit the reviewed registry without hand-editing the full JSON file.</h1>
+        <p class="hero-copy">
+          This tool writes back to <code>data/reviewed_registry.json</code> using the same schema the
+          pipeline already reads. Database and spreadsheet records are loaded as context only.
+        </p>
+      </div>
+      <div class="hero-actions">
+        <button type="button" class="primary-button" id="saveButton">Save reviewed registry</button>
+        <button type="button" class="secondary-button" id="reloadButton">Reload from disk</button>
+      </div>
+      <p class="status-banner" id="saveStatus" aria-live="polite"></p>
+      <div class="error-stack hidden" id="loadErrors"></div>
+    </section>
+
+    <section class="workspace">
+      <aside class="sidebar panel">
+        <div class="sidebar-header">
+          <div>
+            <p class="eyebrow">Registry Sources</p>
+            <h2>Manual records and suggestions</h2>
+          </div>
+          <button type="button" class="secondary-button" id="newRecordButton">New blank record</button>
+        </div>
+
+        <label class="search-field">
+          <span>Search sources</span>
+          <input id="sourceSearch" type="search" placeholder="Search by source, id, or domain">
+        </label>
+
+        <div class="list-section">
+          <div class="list-heading">
+            <h3>Manual registry</h3>
+            <span class="pill-count" id="manualCount"></span>
+          </div>
+          <div class="source-list" id="manualList"></div>
+        </div>
+
+        <div class="list-section">
+          <div class="list-heading">
+            <h3>Missing manual entries</h3>
+            <span class="pill-count" id="suggestionCount"></span>
+          </div>
+          <div class="source-list" id="suggestionList"></div>
+        </div>
+      </aside>
+
+      <section class="editor panel">
+        <div class="editor-header">
+          <div>
+            <p class="eyebrow">Selected Record</p>
+            <h2 id="editorTitle">Choose a source</h2>
+          </div>
+          <div class="editor-actions">
+            <button type="button" class="secondary-button" id="duplicateButton">Duplicate</button>
+            <button type="button" class="secondary-button" id="seedButton">Replace with merged context</button>
+            <button type="button" class="danger-button" id="deleteButton">Delete</button>
+          </div>
+        </div>
+
+        <form id="editorForm" class="editor-form">
+          <div class="empty-panel" id="emptyState">
+            Select an existing record or add one from the suggestion list.
+          </div>
+          <div class="form-grid hidden" id="formFields">
+            <section class="form-section">
+              <h3>Identity</h3>
+              <div class="field-grid two-column">
+                <label class="field">
+                  <span>Source ID</span>
+                  <input type="text" data-field="source_id" autocomplete="off">
+                </label>
+                <label class="field">
+                  <span>Display name</span>
+                  <input type="text" data-field="display_name" autocomplete="off">
+                </label>
+                <label class="field">
+                  <span>Source type</span>
+                  <input type="text" data-field="source_type" autocomplete="off">
+                </label>
+                <label class="field">
+                  <span>Update frequency</span>
+                  <input type="text" data-field="update_frequency" autocomplete="off">
+                </label>
+                <label class="field">
+                  <span>Confidence</span>
+                  <input type="text" data-field="confidence" autocomplete="off">
+                </label>
+                <label class="field">
+                  <span>Review status</span>
+                  <select data-field="review_status">
+                    <option value="draft">draft</option>
+                    <option value="reviewed">reviewed</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>Last reviewed</span>
+                  <input type="date" data-field="last_reviewed_at">
+                </label>
+              </div>
+
+              <label class="field">
+                <span>Short description</span>
+                <textarea rows="5" data-field="short_description"></textarea>
+              </label>
+            </section>
+
+            <section class="form-section">
+              <h3>Coverage and structure</h3>
+              <div class="field-grid two-column">
+                <label class="field">
+                  <span>Domains</span>
+                  <textarea rows="6" data-list-field="domains" data-list-mode="lines"></textarea>
+                  <small>One value per line.</small>
+                </label>
+                <label class="field">
+                  <span>Geographic levels</span>
+                  <textarea rows="6" data-list-field="geographic_levels" data-list-mode="lines"></textarea>
+                  <small>One value per line.</small>
+                </label>
+                <label class="field">
+                  <span>Available years</span>
+                  <input type="text" data-list-field="available_years" data-list-mode="years" placeholder="2021, 2022, 2023">
+                  <small>Comma-separated or spaced years.</small>
+                </label>
+                <label class="field">
+                  <span>Source systems</span>
+                  <textarea rows="4" data-list-field="source_systems" data-list-mode="lines"></textarea>
+                  <small>One value per line.</small>
+                </label>
+              </div>
+
+              <label class="field">
+                <span>Year notes</span>
+                <textarea rows="4" data-field="year_notes"></textarea>
+              </label>
+            </section>
+
+            <section class="form-section">
+              <h3>Interpretive notes</h3>
+              <div class="field-grid two-column">
+                <label class="field">
+                  <span>Notes</span>
+                  <textarea rows="6" data-list-field="notes" data-list-mode="lines"></textarea>
+                  <small>One value per line.</small>
+                </label>
+                <label class="field">
+                  <span>Caveats</span>
+                  <textarea rows="6" data-list-field="caveats" data-list-mode="lines"></textarea>
+                  <small>One value per line.</small>
+                </label>
+              </div>
+            </section>
+
+            <section class="form-section">
+              <div class="section-header">
+                <h3>Source documents</h3>
+                <button type="button" class="secondary-button" id="addDocumentButton">Add document</button>
+              </div>
+              <p class="helper-copy">
+                Keep this structured when possible. Use worksheet names, URLs, and the stale flag when they apply.
+              </p>
+              <div class="document-list" id="documentList"></div>
+            </section>
+          </div>
+        </form>
+      </section>
+
+      <aside class="context panel">
+        <div class="context-header">
+          <div>
+            <p class="eyebrow">Upstream Context</p>
+            <h2>Spreadsheet, database, and merged hints</h2>
+          </div>
+        </div>
+        <div class="context-stack" id="contextPanel"></div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,43 +1,48 @@
 [
   {
-    "source_id": "internal-hci-data",
-    "display_name": "Internal HCI Data",
-    "short_description": "Patient data for all HCI, HCI Registry, and treatment trials.",
-    "source_type": "Internal clinical source",
-    "update_frequency": "Pulled nightly, extracted annually",
+    "source_id": "acs",
+    "display_name": "ACS",
+    "short_description": "American Community Survey (ACS) contains base population data. It collects similar data to the census but is run every year, so it has more up to date data but is slightly less accurate due to being a survey rather than a census. We pull a selection of variables relating to demographics, insurance, education, poverty, veteran status, etc.. The same variables can be available at different geographic levels (for example, DemographicState5YR2023 is also available for county and census tract). The estimates can be obtained on different years, so the year is listed in the table name. As indicated on each table, we only obtained 5-year estimates although ACS provides other windows.",
+    "source_type": "Public Survey",
+    "update_frequency": "Annual",
     "domains": [
-      "Cancer diagnosis",
-      "Cancer stage/grade",
       "Health care access",
-      "Insurance",
-      "Race/Ethnicity",
-      "Rurality"
+      "Internet and broadband/cellular access",
+      "Social determinants of health"
     ],
     "geographic_levels": [
-      "Mountain West",
-      "State",
-      "Zip code"
+      "State"
     ],
-    "available_years": [2019, 2020, 2021, 2022, 2023, 2024],
-    "year_notes": "Live data also contains the current year and pre-2019 records, but direct use of the live layer is not typical for SHAPE reporting.",
+    "available_years": [
+      2022
+    ],
+    "year_notes": "Access to internet: 2022 (5 year cycle)\nFinancial toxicity*: 2022 (5 year cycle)\nFood insecurity: 2022 (5 year cycle)\nInsurance type: 2022 (5 year cycle)\nPersons below 150% of poverty, 2017-2021: 2022 (5 year cycle)",
     "source_systems": [
-      "HCI Registry",
-      "Treatment Trials"
+      "MS SQL Server"
     ],
-    "confidence": "high",
-    "review_status": "reviewed",
-    "last_reviewed_at": "2026-03-25",
-    "notes": [
-      "Domains listed here reflect SHAPE usage rather than the source's full variable inventory."
-    ],
-    "caveats": [
-      "Older years can be extracted on request if a project requires them."
+    "review_status": "draft",
+    "last_reviewed_at": "2026-03-27",
+    "source_documents": [
+      {
+        "name": "ACS worksheet",
+        "type": "spreadsheet",
+        "worksheet": "ACS"
+      },
+      {
+        "name": "ACS reference",
+        "type": "reference",
+        "url": "https://usa.ipums.org/usa-action/source_documents/enum_form_ACS(2022)_tag.xml"
+      },
+      {
+        "name": "ACS reference",
+        "type": "reference",
+        "url": "https://data.census.gov/table/ACSST5Y2022.S1701?q=acs%20poverty"
+      }
     ]
   },
   {
     "source_id": "brfss",
     "display_name": "BRFSS",
-    "short_description": "Behavioral Risk Factor Surveillance System.",
     "source_type": "Public survey",
     "update_frequency": "Annual",
     "domains": [
@@ -54,10 +59,14 @@
       "State",
       "US"
     ],
-    "available_years": [2022, 2023, 2024],
+    "available_years": [
+      2022,
+      2023,
+      2024
+    ],
     "year_notes": "Coverage varies by geography and by domain across years.",
     "source_systems": [
-      "CDC BRFSS"
+      "MS SQL Server"
     ],
     "confidence": "medium",
     "review_status": "reviewed",
@@ -67,6 +76,18 @@
     ],
     "caveats": [
       "Not every geography is available for every year in the published SHAPE extracts."
+    ],
+    "source_documents": [
+      {
+        "name": "BRFSS worksheet",
+        "type": "spreadsheet",
+        "worksheet": "BRFSS"
+      },
+      {
+        "name": "BRFSS reference",
+        "type": "reference",
+        "url": "https://www.cdc.gov/brfss/annual_data/annual_data.htm"
+      }
     ]
   }
 ]

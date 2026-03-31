@@ -16,7 +16,7 @@
         what geographic levels are included, and how frequently sources are updated.
       </p>
       <dl class="hero-stats" id="heroStats"></dl>
-      <p class="stamp">Updated <span id="generatedAt">2026-03-27T10:05:58-06:00</span></p>
+      <p class="stamp">Updated <span id="generatedAt">2026-03-27T12:32:04-06:00</span></p>
     </section>
 
     <section class="summary-strip hidden" id="warningStrip"></section>
@@ -66,14 +66,14 @@
   </main>
 
   <script id="shapeMetadata" type="application/json">{
-  "generated_at": "2026-03-27T10:05:58-06:00",
+  "generated_at": "2026-03-27T12:32:04-06:00",
   "records": [
     {
       "source_id": "acs",
       "display_name": "ACS",
       "short_description": "American Community Survey (ACS) contains base population data. It collects similar data to the census but is run every year, so it has more up to date data but is slightly less accurate due to being a survey rather than a census. We pull a selection of variables relating to demographics, insurance, education, poverty, veteran status, etc.. The same variables can be available at different geographic levels (for example, DemographicState5YR2023 is also available for county and census tract). The estimates can be obtained on different years, so the year is listed in the table name. As indicated on each table, we only obtained 5-year estimates although ACS provides other windows.",
-      "source_type": "",
-      "update_frequency": "",
+      "source_type": "Public Survey",
+      "update_frequency": "Annual",
       "domains": [
         "Health care access",
         "Internet and broadband/cellular access",
@@ -93,61 +93,85 @@
       ],
       "provenance": {
         "available_years": {
-          "source": "spreadsheet",
-          "detail": "imported reference metadata"
+          "source": "manual",
+          "detail": "reviewed registry",
+          "timestamp": "2026-03-27"
         },
         "display_name": {
-          "source": "spreadsheet",
-          "detail": "imported reference metadata"
+          "source": "manual",
+          "detail": "reviewed registry",
+          "timestamp": "2026-03-27"
         },
         "domains": {
-          "source": "spreadsheet",
-          "detail": "imported reference metadata"
+          "source": "manual",
+          "detail": "reviewed registry",
+          "timestamp": "2026-03-27"
         },
         "geographic_levels": {
-          "source": "spreadsheet",
-          "detail": "imported reference metadata"
+          "source": "manual",
+          "detail": "reviewed registry",
+          "timestamp": "2026-03-27"
         },
         "last_observed_at": {
           "source": "database",
           "detail": "observed metadata",
           "timestamp": "2026-03-26T21:09:13"
         },
+        "last_reviewed_at": {
+          "source": "manual",
+          "detail": "reviewed registry",
+          "timestamp": "2026-03-27"
+        },
         "review_status": {
-          "source": "spreadsheet",
-          "detail": "imported reference metadata"
+          "source": "manual",
+          "detail": "reviewed registry",
+          "timestamp": "2026-03-27"
         },
         "short_description": {
-          "source": "database",
-          "detail": "observed metadata",
-          "timestamp": "2026-03-26T21:09:13"
+          "source": "manual",
+          "detail": "reviewed registry",
+          "timestamp": "2026-03-27"
         },
         "source_documents": {
-          "source": "spreadsheet",
-          "detail": "imported reference metadata"
+          "source": "manual",
+          "detail": "reviewed registry",
+          "timestamp": "2026-03-27"
         },
         "source_systems": {
           "source": "database",
           "detail": "observed metadata",
           "timestamp": "2026-03-26T21:09:13"
         },
+        "source_type": {
+          "source": "manual",
+          "detail": "reviewed registry",
+          "timestamp": "2026-03-27"
+        },
+        "update_frequency": {
+          "source": "manual",
+          "detail": "reviewed registry",
+          "timestamp": "2026-03-27"
+        },
         "year_end": {
-          "source": "spreadsheet",
-          "detail": "imported reference metadata"
+          "source": "manual",
+          "detail": "reviewed registry",
+          "timestamp": "2026-03-27"
         },
         "year_notes": {
-          "source": "spreadsheet",
-          "detail": "imported reference metadata"
+          "source": "manual",
+          "detail": "reviewed registry",
+          "timestamp": "2026-03-27"
         },
         "year_start": {
-          "source": "spreadsheet",
-          "detail": "imported reference metadata"
+          "source": "manual",
+          "detail": "reviewed registry",
+          "timestamp": "2026-03-27"
         }
       },
       "confidence": "",
       "review_status": "draft",
       "last_observed_at": "2026-03-26T21:09:13",
-      "last_reviewed_at": "",
+      "last_reviewed_at": "2026-03-27",
       "notes": [],
       "caveats": [],
       "source_documents": [
@@ -275,7 +299,7 @@
     {
       "source_id": "brfss",
       "display_name": "BRFSS",
-      "short_description": "Behavioral Risk Factor Surveillance System.",
+      "short_description": "Behavioral Risk Factor Surveillance System (BRFSS) contains health risk behaviors. The data we pull mainly covers cancer screening and tobacco usage. It's available For the nation, the AWS, and the state.",
       "source_type": "Public survey",
       "update_frequency": "Annual",
       "domains": [
@@ -355,13 +379,14 @@
           "timestamp": "2026-03-25"
         },
         "short_description": {
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
+        },
+        "source_documents": {
           "source": "manual",
           "detail": "reviewed registry",
           "timestamp": "2026-03-25"
-        },
-        "source_documents": {
-          "source": "spreadsheet",
-          "detail": "imported reference metadata"
         },
         "source_systems": {
           "source": "database",
@@ -1173,91 +1198,54 @@
     {
       "source_id": "internal-hci-data",
       "display_name": "Internal HCI Data",
-      "short_description": "Patient data for all HCI, HCI Registry, and treatment trials.",
-      "source_type": "Internal clinical source",
-      "update_frequency": "Pulled nightly, extracted annually",
+      "short_description": "Huntsman Cancer Institute (HCI). This schema has a single table listing the locations of HCI and its affiliates.",
+      "source_type": "",
+      "update_frequency": "",
       "domains": [
-        "Cancer diagnosis",
-        "Cancer stage/grade",
+        "Cancer incidence, stage & mortality",
+        "Clinical trials",
+        "Health behaviors",
         "Health care access",
-        "Insurance",
-        "Race/Ethnicity",
-        "Rurality"
+        "Social determinants of health"
       ],
-      "geographic_levels": [
-        "Mountain West",
-        "State",
-        "Zip code"
-      ],
-      "available_years": [
-        2019,
-        2020,
-        2021,
-        2022,
-        2023,
-        2024
-      ],
-      "year_start": 2019,
-      "year_end": 2024,
-      "year_notes": "Live data also contains the current year and pre-2019 records, but direct use of the live layer is not typical for SHAPE reporting.",
+      "geographic_levels": [],
+      "available_years": [],
+      "year_start": null,
+      "year_end": null,
+      "year_notes": "",
       "source_systems": [
         "MS SQL Server"
       ],
       "provenance": {
-        "available_years": {
-          "source": "manual",
-          "detail": "reviewed registry",
-          "timestamp": "2026-03-25"
-        },
         "caveats": {
-          "source": "manual",
-          "detail": "reviewed registry",
-          "timestamp": "2026-03-25"
-        },
-        "confidence": {
-          "source": "manual",
-          "detail": "reviewed registry",
-          "timestamp": "2026-03-25"
+          "source": "spreadsheet",
+          "detail": "imported reference metadata"
         },
         "display_name": {
-          "source": "manual",
-          "detail": "reviewed registry",
-          "timestamp": "2026-03-25"
+          "source": "spreadsheet",
+          "detail": "imported reference metadata"
         },
         "domains": {
-          "source": "manual",
-          "detail": "reviewed registry",
-          "timestamp": "2026-03-25"
-        },
-        "geographic_levels": {
-          "source": "manual",
-          "detail": "reviewed registry",
-          "timestamp": "2026-03-25"
+          "source": "spreadsheet",
+          "detail": "imported reference metadata"
         },
         "last_observed_at": {
           "source": "database",
           "detail": "observed metadata",
           "timestamp": "2026-03-26T21:09:13"
         },
-        "last_reviewed_at": {
-          "source": "manual",
-          "detail": "reviewed registry",
-          "timestamp": "2026-03-25"
-        },
         "notes": {
-          "source": "manual",
-          "detail": "reviewed registry",
-          "timestamp": "2026-03-25"
+          "source": "spreadsheet",
+          "detail": "imported reference metadata"
         },
         "review_status": {
-          "source": "manual",
-          "detail": "reviewed registry",
-          "timestamp": "2026-03-25"
+          "source": "spreadsheet",
+          "detail": "imported reference metadata"
         },
         "short_description": {
-          "source": "manual",
-          "detail": "reviewed registry",
-          "timestamp": "2026-03-25"
+          "source": "database",
+          "detail": "observed metadata",
+          "timestamp": "2026-03-26T21:09:13"
         },
         "source_documents": {
           "source": "spreadsheet",
@@ -1267,42 +1255,19 @@
           "source": "database",
           "detail": "observed metadata",
           "timestamp": "2026-03-26T21:09:13"
-        },
-        "source_type": {
-          "source": "manual",
-          "detail": "reviewed registry",
-          "timestamp": "2026-03-25"
-        },
-        "update_frequency": {
-          "source": "manual",
-          "detail": "reviewed registry",
-          "timestamp": "2026-03-25"
-        },
-        "year_end": {
-          "source": "manual",
-          "detail": "reviewed registry",
-          "timestamp": "2026-03-25"
-        },
-        "year_notes": {
-          "source": "manual",
-          "detail": "reviewed registry",
-          "timestamp": "2026-03-25"
-        },
-        "year_start": {
-          "source": "manual",
-          "detail": "reviewed registry",
-          "timestamp": "2026-03-25"
         }
       },
-      "confidence": "high",
-      "review_status": "reviewed",
+      "confidence": "",
+      "review_status": "draft",
       "last_observed_at": "2026-03-26T21:09:13",
-      "last_reviewed_at": "2026-03-25",
+      "last_reviewed_at": "",
       "notes": [
-        "Domains listed here reflect SHAPE usage rather than the source's full variable inventory."
+        "Workbook marks this source as containing PHI."
       ],
       "caveats": [
-        "Older years can be extracted on request if a project requires them."
+        "Financial toxicity*: **Not availabe, no substantial data found",
+        "Proportion of cancer patients enrolled: May be the same data from Kim",
+        "Representativeness of enrolled v. all patients: May be the same data from Kim"
       ],
       "source_documents": [
         {
@@ -1930,6 +1895,16 @@
     {
       "code": "needs_review",
       "severity": "info",
+      "source_id": "internal-hci-data",
+      "message": "Source is not yet marked as reviewed.",
+      "field": "review_status",
+      "details": {
+        "review_status": "draft"
+      }
+    },
+    {
+      "code": "needs_review",
+      "severity": "info",
       "source_id": "nhis",
       "message": "Source is not yet marked as reviewed.",
       "field": "review_status",
@@ -2006,14 +1981,6 @@
       "details": {
         "review_status": "draft"
       }
-    },
-    {
-      "code": "missing_reviewed_registry_entry",
-      "severity": "warning",
-      "source_id": "acs",
-      "message": "Source was observed or imported but is missing from the reviewed registry.",
-      "field": null,
-      "details": {}
     },
     {
       "code": "missing_reviewed_registry_entry",
@@ -2119,28 +2086,12 @@
       "details": {}
     },
     {
-      "code": "domain_mismatch",
+      "code": "missing_reviewed_registry_entry",
       "severity": "warning",
       "source_id": "internal-hci-data",
-      "message": "Imported domains differ from the reviewed registry.",
-      "field": "domains",
-      "details": {
-        "imported": [
-          "Cancer incidence, stage & mortality",
-          "Clinical trials",
-          "Health behaviors",
-          "Health care access",
-          "Social determinants of health"
-        ],
-        "reviewed": [
-          "Cancer diagnosis",
-          "Cancer stage/grade",
-          "Health care access",
-          "Insurance",
-          "Race/Ethnicity",
-          "Rurality"
-        ]
-      }
+      "message": "Source was observed or imported but is missing from the reviewed registry.",
+      "field": null,
+      "details": {}
     },
     {
       "code": "missing_reviewed_registry_entry",

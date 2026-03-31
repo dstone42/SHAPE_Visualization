@@ -34,6 +34,23 @@ Or:
 python3 -m shape_metadata --root .
 ```
 
+## Manual registry editor
+
+The reviewed registry is still stored in `data/reviewed_registry.json`, but there is now a local editor for it:
+
+```bash
+python3 -m shape_metadata.manual_editor --root .
+```
+
+That starts a small local server for the editor at `http://127.0.0.1:8765`.
+
+The editor:
+
+- loads and saves `data/reviewed_registry.json`
+- keeps the JSON schema the pipeline already expects
+- shows spreadsheet and database context side-by-side when those inputs are configured
+- lets you add missing manual entries from the merged upstream source list
+
 ## Real source integration
 
 ### Observed metadata

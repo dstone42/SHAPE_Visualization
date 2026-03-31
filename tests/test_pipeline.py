@@ -8,6 +8,7 @@ from html import escape
 from pathlib import Path
 from zipfile import ZipFile
 
+from shape_metadata.manual_editor import load_editor_context, save_reviewed_registry
 from shape_metadata.pipeline import run_pipeline
 from shape_metadata.sources import _shape_doc_rows_to_records
 
@@ -472,6 +473,73 @@ class PipelineTest(unittest.TestCase):
             "Vaccination Coverage Among Adolescents schema documentation.",
         )
 
+    def test_save_reviewed_registry_canonicalizes_and_strips_generated_fields(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            payload = [
+                {
+                    "source_id": "brffs",
+                    "display_name": "BRFFS",
+                    "available_years": [2024],
+                    "review_status": "reviewed",
+                    "last_reviewed_at": "2026-03-27",
+                    "provenance": {"display_name": {"source": "manual"}},
+                    "last_observed_at": "2026-03-27T09:00:00-06:00",
+                    "year_start": 2024,
+                    "year_end": 2024,
+                }
+            ]
+
+            save_reviewed_registry(root, payload)
+            written = json.loads((root / "data" / "reviewed_registry.json").read_text())
+
+            self.assertEqual(written[0]["source_id"], "brfss")
+            self.assertEqual(written[0]["display_name"], "BRFSS")
+            self.assertEqual(written[0]["available_years"], [2024])
+            self.assertNotIn("provenance", written[0])
+            self.assertNotIn("last_observed_at", written[0])
+            self.assertNotIn("year_start", written[0])
+            self.assertNotIn("year_end", written[0])
+
+    def test_manual_editor_context_reflects_saved_reviewed_registry(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            (root / "data").mkdir(parents=True)
+            self._write_json(
+                root / "data" / "reviewed_registry.json",
+                [
+                    {
+                        "source_id": "alpha",
+                        "display_name": "Alpha",
+                        "review_status": "draft",
+                    }
+                ],
+            )
+
+            save_reviewed_registry(
+                root,
+                [
+                    {
+                        "source_id": "alpha",
+                        "display_name": "Alpha",
+                        "review_status": "reviewed",
+                        "last_reviewed_at": "2026-03-27",
+                    },
+                    {
+                        "source_id": "brffs",
+                        "display_name": "BRFFS",
+                        "review_status": "draft",
+                    },
+                ],
+            )
+
+            payload = load_editor_context(root)
+            reviewed_ids = [record["source_id"] for record in payload["reviewed_records"]]
+            self.assertEqual(reviewed_ids, ["alpha", "brfss"])
+
+            written = json.loads((root / "data" / "reviewed_registry.json").read_text())
+            self.assertEqual([record["source_id"] for record in written], ["alpha", "brfss"])
+            self.assertEqual(written[1]["display_name"], "BRFSS")
 
     def _write_json(self, path: Path, payload: object) -> None:
         path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
