@@ -2,6 +2,12 @@
 
 This workspace now treats SHAPE source metadata as data, not as hand-authored HTML.
 
+## Project notes
+
+Important architecture and handoff context lives in `docs/PROJECT_NOTES.md`.
+
+That file captures the current decision points, the two portal distinction, source-of-truth files, generated files, local dependencies, and move/copy notes.
+
 ## What it produces
 
 Running the pipeline generates:
