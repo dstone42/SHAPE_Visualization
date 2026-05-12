@@ -94,18 +94,30 @@ Supported modes:
 
 - `SHAPE_IMPORTED_SNAPSHOT=/path/to/file.json`
 - `SHAPE_IMPORTED_SNAPSHOT=/path/to/file.xlsx`
-- `BOX_DEVELOPER_TOKEN=...` and `BOX_FILE_ID=...`
+- `BOX_JWT_CONFIG_PATH=/path/to/shape_box.json` and `BOX_FILE_ID=...`
 
-The import layer now expects the spreadsheet in `.xlsx` form. The Box adapter downloads an Excel workbook by default, or JSON if `BOX_FILE_FORMAT=json` is set.
+The import layer now expects the spreadsheet in `.xlsx` form. When Box is configured, the pipeline tries to refresh from Box first. If the live import parses successfully, it atomically updates `SHAPE_IMPORTED_SNAPSHOT` and uses the refreshed workbook. If Box refresh fails, the pipeline warns and falls back to the cached snapshot when one exists. Keeping the Box app config as JSON is recommended because it preserves the multiline private key and nested Box app settings without `.env` escaping.
 
 ### Local environment variables
 
 If a `.env` file exists at the workspace root, the pipeline loads it automatically before reading inputs.
 
-Example:
+Cached snapshot:
 
 ```dotenv
 SHAPE_IMPORTED_SNAPSHOT=data/inputs/Metrics captured by database_ACTIVE.xlsx
+```
+
+Live Box refresh:
+
+```dotenv
+BOX_JWT_CONFIG_PATH=config/shape_box.json
+BOX_FILE_ID=1438504655299
+```
+
+Database connection settings:
+
+```dotenv
 SHAPE_MSSQL_HOST=HCI-DB
 SHAPE_MSSQL_DATABASE=SHAPE
 SHAPE_MSSQL_DRIVER=/opt/homebrew/lib/libmsodbcsql.18.dylib

@@ -1,8 +1,11 @@
 from __future__ import annotations
 
 import json
+import io
 import os
+import sys
 import tempfile
+import types
 import unittest
 from html import escape
 from pathlib import Path
@@ -26,6 +29,10 @@ class PipelineTest(unittest.TestCase):
                 "SHAPE_MSSQL_HOST",
                 "SHAPE_MSSQL_DATABASE",
                 "SHAPE_MSSQL_TABLE",
+                "BOX_JWT_CONFIG_PATH",
+                "BOX_CONFIG_PATH",
+                "BOX_FILE_ID",
+                "BOX_FILE_FORMAT",
             )
         }
         for key in self._saved_env:
@@ -41,6 +48,10 @@ class PipelineTest(unittest.TestCase):
             "SHAPE_MSSQL_HOST",
             "SHAPE_MSSQL_DATABASE",
             "SHAPE_MSSQL_TABLE",
+            "BOX_JWT_CONFIG_PATH",
+            "BOX_CONFIG_PATH",
+            "BOX_FILE_ID",
+            "BOX_FILE_FORMAT",
         ):
             os.environ.pop(key, None)
         for key, value in self._saved_env.items():
@@ -243,6 +254,233 @@ class PipelineTest(unittest.TestCase):
             self.assertTrue(
                 any("stable enough measure" in caveat for caveat in imported_by_id["hints"]["caveats"])
             )
+
+    def test_pipeline_downloads_box_import_with_jwt_config(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            (root / "data" / "inputs").mkdir(parents=True)
+            (root / "raw_data" / "config").mkdir(parents=True)
+
+            workbook_path = root / "data" / "inputs" / "box_snapshot.xlsx"
+            self._write_test_workbook(
+                workbook_path,
+                {
+                    "Current state of SHAPE": [
+                        ["Health Assessment Domain", "Base Measure", "In SHAPE?", "Sources Currently in SHAPE", "Sources Planned or Active work in SHAPE", "Sources to be determined"],
+                        ["", "Health behaviors", "", "", "", ""],
+                        ["", "Breast cancer screening", "Yes", "BRFSS", "", ""],
+                    ],
+                    "Domains by data source": [
+                        ["", "BRFSS"],
+                        ["Lowest geographic level", "State/County"],
+                        ["Health behaviors", ""],
+                        ["Breast cancer screening", "Yes"],
+                    ],
+                    "BRFFS": [
+                        ["Base Measure", "Years Included", "Link"],
+                        ["Health behaviors", "", ""],
+                        ["Breast cancer screening", "2022", "https://example.test/brfss"],
+                    ],
+                },
+            )
+
+            self._write_json(
+                root / "raw_data" / "config" / "shape_box.json",
+                {
+                    "boxAppSettings": {
+                        "clientID": "client-id",
+                        "clientSecret": "client-secret",
+                        "appAuth": {
+                            "publicKeyID": "key-id",
+                            "privateKey": "private-key",
+                            "passphrase": "passphrase",
+                        },
+                    },
+                    "enterpriseID": "enterprise-id",
+                },
+            )
+            (root / ".env").write_text(
+                "BOX_JWT_CONFIG_PATH=raw_data/config/shape_box.json\n"
+                "BOX_FILE_ID=1438504655299\n",
+                encoding="utf-8",
+            )
+            self._write_json(
+                root / "data" / "reviewed_registry.json",
+                [
+                    {
+                        "source_id": "brfss",
+                        "display_name": "BRFSS",
+                        "review_status": "reviewed",
+                        "last_reviewed_at": "2026-03-25",
+                    }
+                ],
+            )
+
+            calls: dict[str, object] = {}
+            previous_box_sdk_gen = self._install_fake_box_sdk_gen(workbook_path.read_bytes(), calls)
+            try:
+                outputs = run_pipeline(root)
+            finally:
+                self._restore_box_sdk_gen(previous_box_sdk_gen)
+
+            imported = json.loads((outputs["artifacts_dir"] / "imported_metadata.json").read_text())
+            imported_by_id = {record["source_id"]: record for record in imported}
+
+            self.assertEqual(calls["file_id"], "1438504655299")
+            self.assertEqual(
+                calls["jwt_config"],
+                {
+                    "client_id": "client-id",
+                    "client_secret": "client-secret",
+                    "jwt_key_id": "key-id",
+                    "private_key": "private-key",
+                    "private_key_passphrase": "passphrase",
+                    "enterprise_id": "enterprise-id",
+                },
+            )
+            self.assertEqual(imported_by_id["brfss"]["available_years"], [2022])
+            self.assertEqual(imported_by_id["brfss"]["geographic_levels"], ["County", "State"])
+
+    def test_pipeline_refreshes_cached_snapshot_after_box_download(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            (root / "data" / "inputs").mkdir(parents=True)
+            (root / "raw_data" / "config").mkdir(parents=True)
+
+            cached_workbook_path = root / "data" / "inputs" / "imported_snapshot.xlsx"
+            downloaded_workbook_path = root / "data" / "inputs" / "downloaded_snapshot.xlsx"
+            self._write_test_workbook(
+                cached_workbook_path,
+                {
+                    "Current state of SHAPE": [
+                        ["Health Assessment Domain", "Base Measure", "In SHAPE?", "Sources Currently in SHAPE", "Sources Planned or Active work in SHAPE", "Sources to be determined"],
+                        ["", "Health behaviors", "", "", "", ""],
+                        ["", "Confidence in getting cancer information", "Yes", "HINTS", "", ""],
+                    ],
+                    "Domains by data source": [
+                        ["", "HINTS"],
+                        ["Lowest geographic level", "State"],
+                        ["Health behaviors", ""],
+                        ["Confidence in getting cancer information", "Yes"],
+                    ],
+                    "HINTS": [
+                        ["Base Measure", "Years Included", "Link"],
+                        ["Confidence in getting cancer information", "2021", "https://example.test/hints"],
+                    ],
+                },
+            )
+            self._write_test_workbook(
+                downloaded_workbook_path,
+                {
+                    "Current state of SHAPE": [
+                        ["Health Assessment Domain", "Base Measure", "In SHAPE?", "Sources Currently in SHAPE", "Sources Planned or Active work in SHAPE", "Sources to be determined"],
+                        ["", "Health behaviors", "", "", "", ""],
+                        ["", "Breast cancer screening", "Yes", "BRFSS", "", ""],
+                    ],
+                    "Domains by data source": [
+                        ["", "BRFSS"],
+                        ["Lowest geographic level", "State/County"],
+                        ["Health behaviors", ""],
+                        ["Breast cancer screening", "Yes"],
+                    ],
+                    "BRFFS": [
+                        ["Base Measure", "Years Included", "Link"],
+                        ["Breast cancer screening", "2024", "https://example.test/brfss"],
+                    ],
+                },
+            )
+            self._write_box_config(root / "raw_data" / "config" / "shape_box.json")
+            self._write_json(
+                root / "data" / "reviewed_registry.json",
+                [
+                    {
+                        "source_id": "brfss",
+                        "display_name": "BRFSS",
+                        "review_status": "reviewed",
+                    }
+                ],
+            )
+            (root / ".env").write_text(
+                "SHAPE_IMPORTED_SNAPSHOT=data/inputs/imported_snapshot.xlsx\n"
+                "BOX_JWT_CONFIG_PATH=raw_data/config/shape_box.json\n"
+                "BOX_FILE_ID=1438504655299\n",
+                encoding="utf-8",
+            )
+
+            downloaded_payload = downloaded_workbook_path.read_bytes()
+            previous_box_sdk_gen = self._install_fake_box_sdk_gen(downloaded_payload, {})
+            try:
+                outputs = run_pipeline(root)
+            finally:
+                self._restore_box_sdk_gen(previous_box_sdk_gen)
+
+            imported = json.loads((outputs["artifacts_dir"] / "imported_metadata.json").read_text())
+            imported_by_id = {record["source_id"]: record for record in imported}
+
+            self.assertIn("brfss", imported_by_id)
+            self.assertNotIn("hints", imported_by_id)
+            self.assertEqual(imported_by_id["brfss"]["available_years"], [2024])
+            self.assertEqual(cached_workbook_path.read_bytes(), downloaded_payload)
+
+    def test_pipeline_falls_back_to_cached_snapshot_when_box_download_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            (root / "data" / "inputs").mkdir(parents=True)
+            (root / "raw_data" / "config").mkdir(parents=True)
+
+            cached_workbook_path = root / "data" / "inputs" / "imported_snapshot.xlsx"
+            self._write_test_workbook(
+                cached_workbook_path,
+                {
+                    "Current state of SHAPE": [
+                        ["Health Assessment Domain", "Base Measure", "In SHAPE?", "Sources Currently in SHAPE", "Sources Planned or Active work in SHAPE", "Sources to be determined"],
+                        ["", "Health behaviors", "", "", "", ""],
+                        ["", "Confidence in getting cancer information", "Yes", "HINTS", "", ""],
+                    ],
+                    "Domains by data source": [
+                        ["", "HINTS"],
+                        ["Lowest geographic level", "State"],
+                        ["Health behaviors", ""],
+                        ["Confidence in getting cancer information", "Yes"],
+                    ],
+                    "HINTS": [
+                        ["Base Measure", "Years Included", "Link"],
+                        ["Confidence in getting cancer information", "2021", "https://example.test/hints"],
+                    ],
+                },
+            )
+            cached_payload = cached_workbook_path.read_bytes()
+            self._write_box_config(root / "raw_data" / "config" / "shape_box.json")
+            self._write_json(
+                root / "data" / "reviewed_registry.json",
+                [
+                    {
+                        "source_id": "hints",
+                        "display_name": "HINTS",
+                        "review_status": "reviewed",
+                    }
+                ],
+            )
+            (root / ".env").write_text(
+                "SHAPE_IMPORTED_SNAPSHOT=data/inputs/imported_snapshot.xlsx\n"
+                "BOX_JWT_CONFIG_PATH=raw_data/config/shape_box.json\n"
+                "BOX_FILE_ID=1438504655299\n",
+                encoding="utf-8",
+            )
+
+            previous_box_sdk_gen = self._install_fake_box_sdk_gen(RuntimeError("network unavailable"), {})
+            try:
+                with self.assertWarnsRegex(RuntimeWarning, "Box import refresh failed"):
+                    outputs = run_pipeline(root)
+            finally:
+                self._restore_box_sdk_gen(previous_box_sdk_gen)
+
+            imported = json.loads((outputs["artifacts_dir"] / "imported_metadata.json").read_text())
+            imported_by_id = {record["source_id"]: record for record in imported}
+
+            self.assertIn("hints", imported_by_id)
+            self.assertEqual(imported_by_id["hints"]["available_years"], [2021])
+            self.assertEqual(cached_workbook_path.read_bytes(), cached_payload)
 
     def test_pipeline_normalizes_spreadsheet_source_aliases(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -543,6 +781,60 @@ class PipelineTest(unittest.TestCase):
 
     def _write_json(self, path: Path, payload: object) -> None:
         path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+
+    def _write_box_config(self, path: Path) -> None:
+        self._write_json(
+            path,
+            {
+                "boxAppSettings": {
+                    "clientID": "client-id",
+                    "clientSecret": "client-secret",
+                    "appAuth": {
+                        "publicKeyID": "key-id",
+                        "privateKey": "private-key",
+                        "passphrase": "passphrase",
+                    },
+                },
+                "enterpriseID": "enterprise-id",
+            },
+        )
+
+    def _install_fake_box_sdk_gen(
+        self, payload_or_error: bytes | BaseException, calls: dict[str, object]
+    ) -> types.ModuleType | None:
+        class JWTConfig:
+            def __init__(self, **kwargs: object) -> None:
+                calls["jwt_config"] = kwargs
+
+        class BoxJWTAuth:
+            def __init__(self, *, config: JWTConfig) -> None:
+                calls["auth_config"] = config
+
+        class Downloads:
+            def download_file(self, file_id: str) -> io.BytesIO:
+                calls["file_id"] = file_id
+                if isinstance(payload_or_error, BaseException):
+                    raise payload_or_error
+                return io.BytesIO(payload_or_error)
+
+        class BoxClient:
+            def __init__(self, *, auth: BoxJWTAuth) -> None:
+                calls["client_auth"] = auth
+                self.downloads = Downloads()
+
+        fake_box_sdk_gen = types.ModuleType("box_sdk_gen")
+        fake_box_sdk_gen.JWTConfig = JWTConfig
+        fake_box_sdk_gen.BoxJWTAuth = BoxJWTAuth
+        fake_box_sdk_gen.BoxClient = BoxClient
+        previous_box_sdk_gen = sys.modules.get("box_sdk_gen")
+        sys.modules["box_sdk_gen"] = fake_box_sdk_gen
+        return previous_box_sdk_gen
+
+    def _restore_box_sdk_gen(self, previous_box_sdk_gen: types.ModuleType | None) -> None:
+        if previous_box_sdk_gen is None:
+            sys.modules.pop("box_sdk_gen", None)
+        else:
+            sys.modules["box_sdk_gen"] = previous_box_sdk_gen
 
     def _write_test_workbook(self, path: Path, sheets: dict[str, list[list[str]]]) -> None:
         with ZipFile(path, "w") as archive:

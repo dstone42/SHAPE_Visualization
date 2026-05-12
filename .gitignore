@@ -7,3 +7,4 @@ __pycache__/
 .env
 .codex/
 data/inputs/~$*.xlsx
+config/*.json

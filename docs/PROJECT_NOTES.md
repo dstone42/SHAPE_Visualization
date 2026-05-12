@@ -148,8 +148,10 @@ Configuration:
 
 - `SHAPE_IMPORTED_SNAPSHOT=/path/to/file.json`
 - `SHAPE_IMPORTED_SNAPSHOT=/path/to/file.xlsx`
-- `BOX_DEVELOPER_TOKEN` and `BOX_FILE_ID`
+- `BOX_JWT_CONFIG_PATH=/path/to/shape_box.json` and `BOX_FILE_ID`
 - optional `SHAPE_CODEBOOK_SNAPSHOT=/path/to/file.json`
+
+When Box is configured, imported metadata refreshes from Box first. A successful live pull is parsed before it replaces the cached snapshot, then the snapshot is updated atomically. If the Box refresh fails and the cached snapshot exists, the pipeline emits a warning and uses that cached file.
 
 The current workbook snapshot lives under:
 
@@ -218,7 +220,8 @@ Other runtime expectations:
 
 - `.codex/environments/environment.toml` currently refers to a conda environment named `shape-visualization`.
 - Live database loading requires network and credential access to `HCI-DB`.
-- Box loading requires Box credentials and the relevant file ID.
+- If the database connection times out, the usual cause is that the VPN is not connected. Remind David to turn on the VPN first, then retry the connection. If it still times out after the VPN is connected, investigate other network, credential, driver, or database availability problems.
+- Box loading requires a local Box JWT app config JSON file and the relevant file ID. Prefer storing the full Box config JSON outside git and pointing `.env` at it with `BOX_JWT_CONFIG_PATH`; this avoids fragile multiline private-key escaping in `.env`. Keep `SHAPE_IMPORTED_SNAPSHOT` set as the local cache path so failed Box refreshes can fall back to the last good workbook.
 
 ## GitHub CLI Auth Workaround
 

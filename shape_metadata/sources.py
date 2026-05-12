@@ -4,6 +4,8 @@ import io
 import json
 import os
 import re
+import tempfile
+import warnings
 from dataclasses import dataclass, field
 from datetime import date, datetime
 from pathlib import Path
@@ -92,10 +94,10 @@ def load_observed_records(root: Path) -> list[SourceRecord]:
 
 def load_imported_records(root: Path) -> list[SourceRecord]:
     snapshot_path = os.environ.get("SHAPE_IMPORTED_SNAPSHOT")
-    if snapshot_path:
+    if _box_jwt_config_path() and os.environ.get("BOX_FILE_ID"):
+        imported_records = _load_box_records(root, snapshot_path)
+    elif snapshot_path:
         imported_records = _load_imported_snapshot(_resolve_input_path(root, snapshot_path))
-    elif os.environ.get("BOX_DEVELOPER_TOKEN") and os.environ.get("BOX_FILE_ID"):
-        imported_records = _load_box_records()
     else:
         imported_records = []
 
@@ -280,28 +282,90 @@ def _format_timestamp(value: Any) -> str:
     return str(value).strip()
 
 
-def _load_box_records() -> list[SourceRecord]:
+def _box_jwt_config_path() -> str:
+    return os.environ.get("BOX_JWT_CONFIG_PATH") or os.environ.get("BOX_CONFIG_PATH", "")
+
+
+def _load_box_records(root: Path, snapshot_path: str | None = None) -> list[SourceRecord]:
+    resolved_snapshot_path = _resolve_input_path(root, snapshot_path) if snapshot_path else None
     try:
-        from boxsdk import Client, OAuth2
-    except ImportError as exc:
+        payload = _download_box_file(root)
+        imported_records = _load_imported_payload(payload)
+        if resolved_snapshot_path:
+            _write_snapshot_atomically(resolved_snapshot_path, payload)
+        return imported_records
+    except Exception as exc:
+        if resolved_snapshot_path and resolved_snapshot_path.exists():
+            warnings.warn(
+                "Box import refresh failed; using cached imported snapshot at "
+                f"{resolved_snapshot_path}. Original error: {exc}",
+                RuntimeWarning,
+                stacklevel=2,
+            )
+            return _load_imported_snapshot(resolved_snapshot_path)
+        if resolved_snapshot_path:
+            raise RuntimeError(
+                "Box import refresh failed and the configured cached imported snapshot "
+                f"does not exist: {resolved_snapshot_path}"
+            ) from exc
         raise RuntimeError(
-            "The Box adapter requires the `boxsdk` package to be installed."
+            "Box import refresh failed and no SHAPE_IMPORTED_SNAPSHOT fallback is configured."
         ) from exc
 
-    token = os.environ["BOX_DEVELOPER_TOKEN"]
+
+def _download_box_file(root: Path) -> bytes:
+    try:
+        from box_sdk_gen import BoxClient, BoxJWTAuth, JWTConfig
+    except ImportError as exc:
+        raise RuntimeError(
+            "The Box adapter requires the `box-sdk-gen` package to be installed."
+        ) from exc
+
+    config_path = _resolve_input_path(root, _box_jwt_config_path())
     file_id = os.environ["BOX_FILE_ID"]
+    config_payload = json.loads(config_path.read_text(encoding="utf-8"))
+    box_settings = config_payload["boxAppSettings"]
+    app_auth = box_settings["appAuth"]
 
-    auth = OAuth2(None, None, access_token=token)
-    client = Client(auth)
-    stream = io.BytesIO()
-    client.file(file_id).download_to(stream)
-    stream.seek(0)
+    config = JWTConfig(
+        client_id=box_settings["clientID"],
+        client_secret=box_settings["clientSecret"],
+        jwt_key_id=app_auth["publicKeyID"],
+        private_key=app_auth["privateKey"],
+        private_key_passphrase=app_auth["passphrase"],
+        enterprise_id=config_payload["enterpriseID"],
+    )
+    auth = BoxJWTAuth(config=config)
+    client = BoxClient(auth=auth)
+    contents = client.downloads.download_file(file_id)
+    return contents.read()
 
+
+def _load_imported_payload(payload: bytes) -> list[SourceRecord]:
     if os.environ.get("BOX_FILE_FORMAT", "xlsx").lower() == "json":
-        payload = json.loads(stream.read().decode("utf-8"))
-        return [SourceRecord.from_dict(record) for record in payload]
+        records = json.loads(payload.decode("utf-8"))
+        return _canonicalize_records([SourceRecord.from_dict(record) for record in records])
 
-    return _load_xlsx_records_from_bytes(stream.getvalue())
+    return _load_xlsx_records_from_bytes(payload)
+
+
+def _write_snapshot_atomically(path: Path, payload: bytes) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary_path: Path | None = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            dir=path.parent,
+            prefix=f".{path.name}.",
+            suffix=".tmp",
+            delete=False,
+        ) as temporary_file:
+            temporary_path = Path(temporary_file.name)
+            temporary_file.write(payload)
+        os.replace(temporary_path, path)
+    except Exception:
+        if temporary_path and temporary_path.exists():
+            temporary_path.unlink()
+        raise
 
 
 def _merge_reference_records(
