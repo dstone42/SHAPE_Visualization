@@ -543,8 +543,6 @@
       "County"
     ],
     "available_years": [
-      2015,
-      2017,
       2018,
       2019,
       2020,
@@ -553,7 +551,7 @@
       2023,
       2024
     ],
-    "year_start": 2015,
+    "year_start": 2018,
     "year_end": 2024,
     "year_notes": "Travel time to lung cancer screening: Live\nTravel time to nearest colonoscopy: Live\nTravel time to nearest mammography: Live",
     "source_systems": [
@@ -699,12 +697,10 @@
       "County"
     ],
     "available_years": [
-      1980,
-      2023,
-      2024
+      2023
     ],
-    "year_start": 1980,
-    "year_end": 2024,
+    "year_start": 2023,
+    "year_end": 2023,
     "year_notes": "Radon in area of residence: Not sure...",
     "source_systems": [
       "MS SQL Server"

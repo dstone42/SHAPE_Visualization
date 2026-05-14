@@ -60,26 +60,6 @@
     }
   },
   {
-    "code": "non_contiguous_years",
-    "severity": "info",
-    "source_id": "cif",
-    "message": "Available years are non-contiguous.",
-    "field": "available_years",
-    "details": {
-      "available_years": [
-        2015,
-        2017,
-        2018,
-        2019,
-        2020,
-        2021,
-        2022,
-        2023,
-        2024
-      ]
-    }
-  },
-  {
     "code": "needs_review",
     "severity": "info",
     "source_id": "epa",
@@ -87,20 +67,6 @@
     "field": "review_status",
     "details": {
       "review_status": "draft"
-    }
-  },
-  {
-    "code": "non_contiguous_years",
-    "severity": "info",
-    "source_id": "epa",
-    "message": "Available years are non-contiguous.",
-    "field": "available_years",
-    "details": {
-      "available_years": [
-        1980,
-        2023,
-        2024
-      ]
     }
   },
   {

@@ -14,11 +14,17 @@
       "State"
     ],
     "available_years": [
-      2022
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
     ],
-    "year_start": 2022,
-    "year_end": 2022,
-    "year_notes": "Access to internet: 2022 (5 year cycle)\nFinancial toxicity*: 2022 (5 year cycle)\nFood insecurity: 2022 (5 year cycle)\nInsurance type: 2022 (5 year cycle)\nPersons below 150% of poverty, 2017-2021: 2022 (5 year cycle)",
+    "year_start": 2018,
+    "year_end": 2024,
+    "year_notes": "Access to internet: 2018-2022 (5 year cycle)\nFinancial toxicity*: 2019-2023, 2020-2024 (5 year cycles)\nInsurance type: 2019-2023, 2020-2024 (5 year cycles)\nPersons below 150% of poverty: 2019-2023, 2020-2024 (5 year cycles)",
     "source_systems": [],
     "provenance": {},
     "confidence": "",
@@ -85,10 +91,11 @@
     ],
     "available_years": [
       2022,
-      2023
+      2023,
+      2024
     ],
     "year_start": 2022,
-    "year_end": 2023,
+    "year_end": 2024,
     "year_notes": "",
     "source_systems": [],
     "provenance": {},
@@ -180,8 +187,6 @@
       "County"
     ],
     "available_years": [
-      2015,
-      2017,
       2018,
       2019,
       2020,
@@ -190,7 +195,7 @@
       2023,
       2024
     ],
-    "year_start": 2015,
+    "year_start": 2018,
     "year_end": 2024,
     "year_notes": "Travel time to lung cancer screening: Live\nTravel time to nearest colonoscopy: Live\nTravel time to nearest mammography: Live",
     "source_systems": [],
@@ -282,12 +287,10 @@
       "County"
     ],
     "available_years": [
-      1980,
-      2023,
-      2024
+      2023
     ],
-    "year_start": 1980,
-    "year_end": 2024,
+    "year_start": 2023,
+    "year_end": 2023,
     "year_notes": "Radon in area of residence: Not sure...",
     "source_systems": [],
     "provenance": {},

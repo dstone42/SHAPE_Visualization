@@ -16,7 +16,7 @@
         what geographic levels are included, and how frequently sources are updated.
       </p>
       <dl class="hero-stats" id="heroStats"></dl>
-      <p class="stamp">Updated <span id="generatedAt">2026-05-12T12:37:18-06:00</span></p>
+      <p class="stamp">Updated <span id="generatedAt">2026-05-13T12:56:09-06:00</span></p>
     </section>
 
     <section class="summary-strip hidden" id="warningStrip"></section>
@@ -66,7 +66,7 @@
   </main>
 
   <script id="shapeMetadata" type="application/json">{
-  "generated_at": "2026-05-12T12:37:18-06:00",
+  "generated_at": "2026-05-13T12:56:09-06:00",
   "records": [
     {
       "source_id": "acs",
@@ -612,8 +612,6 @@
         "County"
       ],
       "available_years": [
-        2015,
-        2017,
         2018,
         2019,
         2020,
@@ -622,7 +620,7 @@
         2023,
         2024
       ],
-      "year_start": 2015,
+      "year_start": 2018,
       "year_end": 2024,
       "year_notes": "Travel time to lung cancer screening: Live\nTravel time to nearest colonoscopy: Live\nTravel time to nearest mammography: Live",
       "source_systems": [
@@ -768,12 +766,10 @@
         "County"
       ],
       "available_years": [
-        1980,
-        2023,
-        2024
+        2023
       ],
-      "year_start": 1980,
-      "year_end": 2024,
+      "year_start": 2023,
+      "year_end": 2023,
       "year_notes": "Radon in area of residence: Not sure...",
       "source_systems": [
         "MS SQL Server"
@@ -1793,26 +1789,6 @@
       }
     },
     {
-      "code": "non_contiguous_years",
-      "severity": "info",
-      "source_id": "cif",
-      "message": "Available years are non-contiguous.",
-      "field": "available_years",
-      "details": {
-        "available_years": [
-          2015,
-          2017,
-          2018,
-          2019,
-          2020,
-          2021,
-          2022,
-          2023,
-          2024
-        ]
-      }
-    },
-    {
       "code": "needs_review",
       "severity": "info",
       "source_id": "epa",
@@ -1820,20 +1796,6 @@
       "field": "review_status",
       "details": {
         "review_status": "draft"
-      }
-    },
-    {
-      "code": "non_contiguous_years",
-      "severity": "info",
-      "source_id": "epa",
-      "message": "Available years are non-contiguous.",
-      "field": "available_years",
-      "details": {
-        "available_years": [
-          1980,
-          2023,
-          2024
-        ]
       }
     },
     {
